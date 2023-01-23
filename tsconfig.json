@@ -19,13 +19,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@services": ["src/services"],
-      "@types": ["src/types"],
-      "@interfaces": ["src/interfaces"],
-      "@components": ["src/components"],
-      "@constants": ["src/constants"],
-      "@pages": ["src/pages"],
-      "@utils": ["src/utils"]
+      "@components": ["src/components"]
     }
   },
   "include": ["src", "**/*.ts", "**/*.tsx", "**/*.js", "*.cjs"],
