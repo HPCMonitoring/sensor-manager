@@ -1,0 +1,5 @@
+{
+  "directory": ["./src/components", "./src/constants", "./src/pages", "./src/types", "./src/services", "./src/interfaces"],
+  "exclude": [".test.ts"],
+  "delete": true
+}
