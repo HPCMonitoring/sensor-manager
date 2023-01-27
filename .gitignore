@@ -24,3 +24,7 @@ dist-ssr
 
 # Ignore database
 *.db
+
+# Ignore env
+.env*
+!.env.example
