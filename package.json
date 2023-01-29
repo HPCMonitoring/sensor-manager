@@ -11,7 +11,8 @@
     "lint": "eslint '**/*.{tsx,ts,js}'",
     "format": "prettier '**/*.{tsx,ts,js,json,md,yml,yaml}' --write",
     "prepare": "is-ci || husky install",
-    "style": "npx tailwindcss -i src/index.css -o src/index.css"
+    "style": "npx tailwindcss -i src/index.css -o src/index.css",
+    "clean:git": "git branch --merged >/tmp/merged-branches && nano /tmp/merged-branches && xargs git branch -D </tmp/merged-branches && git fetch --prune --all"
   },
   "dependencies": {
     "@material-tailwind/react": "^1.2.5",
