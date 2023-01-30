@@ -49,6 +49,7 @@ jobs:
 
       - name: Deploy
         uses: appleboy/ssh-action@master
+        if: github.event_name == 'push'
         with:
           host: ${{ secrets.VPS_HOST }}
           port: ${{ secrets.VPS_PORT }}
