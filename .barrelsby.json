@@ -1,5 +1,5 @@
 {
-  "directory": ["./src/components"],
+  "directory": ["./src/components", "./src/constants", "./src/pages", "./src/interfaces", "./src/types"],
   "exclude": [".test.ts"],
   "delete": true
 }

@@ -19,7 +19,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@components": ["src/components"]
+      "@components": ["src/components"],
+      "@pages": ["src/pages"],
+      "@constants": ["src/constants"]
     }
   },
   "include": ["src", "**/*.ts", "**/*.tsx", "**/*.js", "*.cjs"],

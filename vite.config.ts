@@ -14,6 +14,26 @@ export default defineConfig({
       {
         find: "@components",
         replacement: path.resolve(__dirname, "src/components")
+      },
+      {
+        find: "@pages",
+        replacement: path.resolve(__dirname, "src/pages")
+      },
+      {
+        find: "@constants",
+        replacement: path.resolve(__dirname, "src/constants")
+      },
+      {
+        find: "@interfaces",
+        replacement: path.resolve(__dirname, "src/interfaces")
+      },
+      {
+        find: "@types",
+        replacement: path.resolve(__dirname, "src/types")
+      },
+      {
+        find: "@states",
+        replacement: path.resolve(__dirname, "src/states")
       }
     ]
   }
