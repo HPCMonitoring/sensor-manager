@@ -1,7 +1,18 @@
 import { Sidebar } from "flowbite-react";
-import { ArrowRightOnRectangleIcon, BellAlertIcon, Squares2X2Icon, WrenchScrewdriverIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowRightOnRectangleIcon,
+  BellAlertIcon,
+  MoonIcon,
+  Squares2X2Icon,
+  SunIcon,
+  WrenchScrewdriverIcon
+} from "@heroicons/react/24/solid";
+import { useDarkTheme } from "@states";
 
 export function AppSidebar() {
+  const darkTheme = useDarkTheme((state) => state.dark);
+  const toggleDarkTheme = useDarkTheme((state) => state.toggle);
+
   return (
     <Sidebar aria-label='Default sidebar example' className='fb-sidebar w-64'>
       <div className='flex flex-col h-full'>
@@ -26,11 +37,18 @@ export function AppSidebar() {
             </Sidebar.Item>
           </Sidebar.ItemGroup>
 
-          <Sidebar.ItemGroup>
-            <Sidebar.Item href='#' icon={ArrowRightOnRectangleIcon}>
-              Sign out
-            </Sidebar.Item>
-          </Sidebar.ItemGroup>
+          <div>
+            <Sidebar.ItemGroup onClick={toggleDarkTheme}>
+              <Sidebar.Item href='#' icon={darkTheme ? SunIcon : MoonIcon}>
+                {"Use " + (darkTheme ? "light" : "dark") + " theme"}
+              </Sidebar.Item>
+            </Sidebar.ItemGroup>
+            <Sidebar.ItemGroup>
+              <Sidebar.Item href='#' icon={ArrowRightOnRectangleIcon}>
+                Sign out
+              </Sidebar.Item>
+            </Sidebar.ItemGroup>
+          </div>
         </Sidebar.Items>
       </div>
     </Sidebar>

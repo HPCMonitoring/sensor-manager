@@ -21,7 +21,9 @@
     "paths": {
       "@components": ["src/components"],
       "@pages": ["src/pages"],
-      "@constants": ["src/constants"]
+      "@constants": ["src/constants"],
+      "@states": ["src/states"],
+      "@types": ["src/types"]
     }
   },
   "include": ["src", "**/*.ts", "**/*.tsx", "**/*.js", "*.cjs"],

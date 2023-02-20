@@ -33,6 +33,7 @@ yarn dev
  ┣ 📂components                 # Reusable components across the web page
  ┣ 📂interfaces                 # Interfaces of class, function ...
  ┣ 📂pages                      # Screen components
+ ┣ 📂states                     # Global states
  ┣ 📂types                      # Types for variables, objects ...
  ┣ 📜App.tsx                    # App component
  ┗ 📜main.tsx                   # Program entry
