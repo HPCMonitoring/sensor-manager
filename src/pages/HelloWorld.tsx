@@ -1,3 +1,3 @@
 export function HelloWorld() {
-  return <>Hello cc !</>;
+  return <>Hello World :3 !</>;
 }
