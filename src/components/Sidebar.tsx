@@ -8,15 +8,18 @@ import {
   WrenchScrewdriverIcon
 } from "@heroicons/react/24/solid";
 import { useClustersStore, useDarkThemeStore } from "@states";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Logo from "../assets/vite.svg";
 
 export function AppSidebar() {
   const darkTheme = useDarkThemeStore((state) => state.dark);
   const toggleDarkTheme = useDarkThemeStore((state) => state.toggle);
-
   const clusters = useClustersStore((state) => state.clusters);
+  const [clusterExpand, setClusterExpand] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     console.log("VINH", clusters);
@@ -35,22 +38,33 @@ export function AppSidebar() {
 
         <Sidebar.Items className='flex flex-col justify-between h-full'>
           <Sidebar.ItemGroup>
-            <Link to={`/clusters`}>
-              <Sidebar.Collapse icon={Squares2X2Icon} label='Clusters'>
-                {clusters.map((cluster) => (
-                  <Link to={`/clusters/${cluster.id}`}>
-                    <Sidebar.Item key={cluster.id}>{cluster.name}</Sidebar.Item>
-                  </Link>
-                ))}
-              </Sidebar.Collapse>
-            </Link>
+            <Sidebar.Collapse
+              icon={Squares2X2Icon}
+              label='Clusters'
+              open={clusterExpand}
+              onClick={(e) => {
+                navigate("/clusters");
+                e.preventDefault();
+                if ("/clusters" === location.pathname) {
+                  setClusterExpand(!clusterExpand);
+                }
+              }}
+            >
+              {clusters.map((cluster) => (
+                <Link to={`/clusters/${cluster.id}`}>
+                  <Sidebar.Item key={cluster.id}>{cluster.name}</Sidebar.Item>
+                </Link>
+              ))}
+            </Sidebar.Collapse>
 
-            <Sidebar.Item icon={BellAlertIcon} label='3'>
-              <Link to={"/notifications"}>Notifications</Link>
-            </Sidebar.Item>
-            <Sidebar.Item icon={WrenchScrewdriverIcon}>
-              <Link to={"/settings"}>Settings</Link>
-            </Sidebar.Item>
+            <Link to={"/notifications"}>
+              <Sidebar.Item icon={BellAlertIcon} label='3'>
+                Notifications
+              </Sidebar.Item>
+            </Link>
+            <Link to={"/settings"}>
+              <Sidebar.Item icon={WrenchScrewdriverIcon}>Settings</Sidebar.Item>
+            </Link>
           </Sidebar.ItemGroup>
 
           <div>
