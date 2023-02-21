@@ -1,9 +1,10 @@
 import { StoreName } from "@constants";
+import { ICluster } from "src/interfaces";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 interface Clusters {
-  clusters: { id: string; name: string }[];
+  clusters: ICluster[];
   fetch: () => void;
 }
 
@@ -15,9 +16,27 @@ export const useClustersStore = create<Clusters>()(
         fetch: () =>
           set(() => ({
             clusters: [
-              { id: "1915940", name: "BK HPC Laboratory" },
-              { id: "1456984", name: "TickLab cloud" },
-              { id: "1111111", name: "UIT Cluster" }
+              {
+                id: "1915940",
+                name: "BK HPC Laboratory",
+                numOfSensors: 10,
+                numOfActiveSensors: 8,
+                remarks: null
+              },
+              {
+                id: "1456984",
+                name: "TickLab cloud",
+                numOfSensors: 10,
+                numOfActiveSensors: 8,
+                remarks: null
+              },
+              {
+                id: "1433976",
+                name: "UIT Cluster",
+                numOfSensors: 10,
+                numOfActiveSensors: 8,
+                remarks: null
+              }
             ]
           }))
       }),
