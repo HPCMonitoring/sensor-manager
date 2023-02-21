@@ -7,7 +7,7 @@ interface DarkTheme {
   toggle: () => void;
 }
 
-export const useDarkTheme = create<DarkTheme>()(
+export const useDarkThemeStore = create<DarkTheme>()(
   devtools(
     persist(
       (set) => ({

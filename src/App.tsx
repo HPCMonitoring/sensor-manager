@@ -1,12 +1,15 @@
 import { SidebarWidth } from "@constants";
 import { Route, Routes } from "react-router-dom";
 import { AppSidebar } from "@components";
-import { HelloWorld } from "@pages";
-import { useDarkTheme } from "@states";
+import { ClusterDetailPage, ClustersPage, NotificationPage, SettingPage } from "@pages";
+import { useClustersStore, useDarkThemeStore } from "@states";
 import { useEffect } from "react";
 
 export default function App() {
-  const darkTheme = useDarkTheme((state) => state.dark);
+  const darkTheme = useDarkThemeStore((state) => state.dark);
+  const fetchClusters = useClustersStore((state) => state.fetch);
+
+  useEffect(() => fetchClusters(), []);
 
   useEffect(() => {
     console.log(darkTheme);
@@ -21,7 +24,11 @@ export default function App() {
 
       <div id='main' style={{ marginLeft: `${SidebarWidth.EXPAND}px` }}>
         <Routes>
-          <Route path='/' element={<HelloWorld />} />
+          <Route path='/' element={<ClustersPage />} />
+          <Route path='/clusters' element={<ClustersPage />} />
+          <Route path='/clusters/:clusterId' element={<ClusterDetailPage />} />
+          <Route path='/notifications' element={<NotificationPage />} />
+          <Route path='/settings' element={<SettingPage />} />
         </Routes>
       </div>
     </div>
