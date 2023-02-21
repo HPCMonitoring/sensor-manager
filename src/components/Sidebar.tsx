@@ -7,33 +7,49 @@ import {
   SunIcon,
   WrenchScrewdriverIcon
 } from "@heroicons/react/24/solid";
-import { useDarkTheme } from "@states";
+import { useClustersStore, useDarkThemeStore } from "@states";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import Logo from "../assets/vite.svg";
 
 export function AppSidebar() {
-  const darkTheme = useDarkTheme((state) => state.dark);
-  const toggleDarkTheme = useDarkTheme((state) => state.toggle);
+  const darkTheme = useDarkThemeStore((state) => state.dark);
+  const toggleDarkTheme = useDarkThemeStore((state) => state.toggle);
+
+  const clusters = useClustersStore((state) => state.clusters);
+
+  useEffect(() => {
+    console.log("VINH", clusters);
+  }, [clusters]);
 
   return (
     <Sidebar aria-label='Default sidebar example' className='fb-sidebar w-64'>
       <div className='flex flex-col h-full'>
         <div className='flex-none'>
-          <Sidebar.Logo href='#' img='vite.svg' imgAlt='Logo'>
-            BKTracker
-          </Sidebar.Logo>
+          <Link to={`/clusters`}>
+            <Sidebar.Logo href='#' img={Logo} imgAlt='Logo'>
+              BKTracker
+            </Sidebar.Logo>
+          </Link>
         </div>
 
         <Sidebar.Items className='flex flex-col justify-between h-full'>
           <Sidebar.ItemGroup>
-            <Sidebar.Collapse icon={Squares2X2Icon} label='Clusters'>
-              <Sidebar.Item href='#'> BK HPC Laboratory </Sidebar.Item>
-              <Sidebar.Item href='#'> UIT Cluster </Sidebar.Item>
-              <Sidebar.Item href='#'> TickLab cloud </Sidebar.Item>
-            </Sidebar.Collapse>
-            <Sidebar.Item href='#' icon={BellAlertIcon} label='3'>
-              Notifications
+            <Link to={`/clusters`}>
+              <Sidebar.Collapse icon={Squares2X2Icon} label='Clusters'>
+                {clusters.map((cluster) => (
+                  <Link to={`/clusters/${cluster.id}`}>
+                    <Sidebar.Item key={cluster.id}>{cluster.name}</Sidebar.Item>
+                  </Link>
+                ))}
+              </Sidebar.Collapse>
+            </Link>
+
+            <Sidebar.Item icon={BellAlertIcon} label='3'>
+              <Link to={"/notifications"}>Notifications</Link>
             </Sidebar.Item>
-            <Sidebar.Item href='#' icon={WrenchScrewdriverIcon}>
-              Setting
+            <Sidebar.Item icon={WrenchScrewdriverIcon}>
+              <Link to={"/settings"}>Settings</Link>
             </Sidebar.Item>
           </Sidebar.ItemGroup>
 
