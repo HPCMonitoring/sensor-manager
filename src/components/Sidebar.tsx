@@ -51,6 +51,7 @@ export function AppSidebar() {
                   setClusterExpand(!clusterExpand);
                 }
               }}
+              className='hover'
             >
               {clusters.map((cluster) => (
                 <div
@@ -59,6 +60,7 @@ export function AppSidebar() {
                     navigate(`/clusters/${cluster.id}`);
                   }}
                   key={cluster.id}
+                  className='hover'
                 >
                   <Sidebar.Item>{cluster.name}</Sidebar.Item>
                 </div>
@@ -71,7 +73,7 @@ export function AppSidebar() {
                 navigate(`/notifications`);
               }}
             >
-              <Sidebar.Item icon={BellAlertIcon} label='3'>
+              <Sidebar.Item icon={BellAlertIcon} label='3' className='hover'>
                 Notifications
               </Sidebar.Item>
             </div>
@@ -82,18 +84,20 @@ export function AppSidebar() {
                 navigate(`/settings`);
               }}
             >
-              <Sidebar.Item icon={WrenchScrewdriverIcon}>Settings</Sidebar.Item>
+              <Sidebar.Item icon={WrenchScrewdriverIcon} className='hover'>
+                Settings
+              </Sidebar.Item>
             </div>
           </Sidebar.ItemGroup>
 
           <div>
             <Sidebar.ItemGroup onClick={toggleDarkTheme}>
-              <Sidebar.Item href='#' icon={darkTheme ? SunIcon : MoonIcon}>
+              <Sidebar.Item icon={darkTheme ? SunIcon : MoonIcon} className='hover'>
                 {"Use " + (darkTheme ? "light" : "dark") + " theme"}
               </Sidebar.Item>
             </Sidebar.ItemGroup>
             <Sidebar.ItemGroup>
-              <Sidebar.Item href='#' icon={ArrowRightOnRectangleIcon}>
+              <Sidebar.Item icon={ArrowRightOnRectangleIcon} className='hover'>
                 Sign out
               </Sidebar.Item>
             </Sidebar.ItemGroup>

@@ -1,14 +1,10 @@
 import { StoreName } from "@constants";
-import { ICluster } from "src/interfaces";
+import { IClusterModalStore, IClusterStore } from "@interfaces";
+import { ModalOpenMode } from "@types";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
-interface Clusters {
-  clusters: ICluster[];
-  fetch: () => void;
-}
-
-export const useClustersStore = create<Clusters>()(
+export const useClustersStore = create<IClusterStore>()(
   devtools(
     persist(
       (set) => ({
@@ -42,6 +38,22 @@ export const useClustersStore = create<Clusters>()(
       }),
       {
         name: StoreName.CLUSTERS
+      }
+    )
+  )
+);
+
+export const useClusterModalStore = create<IClusterModalStore>()(
+  devtools(
+    persist(
+      (set) => ({
+        mode: "create", // Init state,
+        isOpen: false,
+        open: (mode: ModalOpenMode) => set(() => ({ mode, isOpen: true })),
+        close: () => set((state) => ({ ...state, isOpen: false }))
+      }),
+      {
+        name: StoreName.CLUSTER_MODAL
       }
     )
   )

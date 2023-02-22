@@ -14,6 +14,8 @@
     "clean:git": "git branch --merged >/tmp/merged-branches && nano /tmp/merged-branches && xargs git branch -D </tmp/merged-branches && git fetch --prune --all"
   },
   "dependencies": {
+    "@animxyz/core": "^0.6.6",
+    "@animxyz/react": "^0.6.7",
     "@babel/core": "^7.0.0-0",
     "@heroicons/react": "^2.0.16",
     "flowbite": "^1.6.3",

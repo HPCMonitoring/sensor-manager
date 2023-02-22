@@ -1,29 +1,32 @@
 import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { useClustersStore, useDarkThemeStore } from "@states";
+import { useClusterModalStore, useClustersStore, useDarkThemeStore } from "@states";
 import { Badge, Button, Table, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import { ClusterModal } from "@components";
 
 export function ClustersPage() {
   const clusters = useClustersStore((state) => state.clusters);
   const navigate = useNavigate();
   const darkTheme = useDarkThemeStore((state) => state.dark);
 
+  const openModal = useClusterModalStore((state) => state.open);
+
   return (
     <div>
+      <ClusterModal />
+
       <div className='flex mb-4 justify-between'>
         <div className='flex flex-row items-center'>
           <Badge size='2xl' color={darkTheme ? "gray" : "info"}>
-            {" "}
             {clusters.length} Clusters
           </Badge>
           <Badge size='2xl' color={darkTheme ? "gray" : "info"} className='ml-2'>
-            {" "}
             {clusters.reduce((numSensors: number, cluster) => numSensors + cluster.numOfSensors, 0)} Sensors
           </Badge>
         </div>
         <div className='flex flex-row'>
           <TextInput type='text' icon={MagnifyingGlassIcon} placeholder='Search ...' required={true} />
-          <Button gradientMonochrome='info' className='ml-2'>
+          <Button gradientMonochrome='info' className='ml-2' onClick={() => openModal("create")}>
             New cluster
           </Button>
         </div>
@@ -50,7 +53,15 @@ export function ClustersPage() {
               <Table.Cell>{cluster.numOfSensors}</Table.Cell>
               <Table.Cell>{cluster.remarks ? cluster.remarks : ""}</Table.Cell>
               <Table.Cell className='flex justify-end'>
-                <Button gradientMonochrome='info' onClick={(e) => e.stopPropagation()} size='sm' className='mr-2'>
+                <Button
+                  gradientMonochrome='info'
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openModal("update");
+                  }}
+                  size='sm'
+                  className='mr-2'
+                >
                   Edit
                   <PencilIcon className='ml-2 h-4 w-4' />
                 </Button>
