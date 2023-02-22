@@ -6,23 +6,12 @@ import { useClustersStore, useDarkThemeStore } from "@states";
 import { useEffect } from "react";
 
 export default function App() {
-  const darkTheme = useDarkThemeStore((state) => state.dark);
   const fetchClusters = useClustersStore((state) => state.fetch);
-
-  useEffect(() => fetchClusters(), []);
-
+  const toggleTheme = useDarkThemeStore((state) => state.toggleTheme);
   useEffect(() => {
-    document.documentElement.classList.toggle("dark");
-
-    const isDark = document.documentElement.classList.contains("dark-bg");
-    if (isDark) {
-      document.documentElement.classList.remove("dark-bg");
-      document.documentElement.classList.add("white-bg");
-    } else {
-      document.documentElement.classList.remove("white-bg");
-      document.documentElement.classList.add("dark-bg");
-    }
-  }, [darkTheme]);
+    toggleTheme();
+    fetchClusters();
+  }, []);
 
   return (
     <div>

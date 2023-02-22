@@ -8,32 +8,34 @@ import {
   WrenchScrewdriverIcon
 } from "@heroicons/react/24/solid";
 import { useClustersStore, useDarkThemeStore } from "@states";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Logo from "../assets/vite.svg";
 
 export function AppSidebar() {
   const darkTheme = useDarkThemeStore((state) => state.dark);
-  const toggleDarkTheme = useDarkThemeStore((state) => state.toggle);
+  const toggleDarkTheme = useDarkThemeStore((state) => state.toggleTheme);
   const clusters = useClustersStore((state) => state.clusters);
   const [clusterExpand, setClusterExpand] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    console.log("VINH", clusters);
-  }, [clusters]);
-
   return (
     <Sidebar aria-label='Default sidebar example' className='fb-sidebar w-64'>
       <div className='flex flex-col h-full'>
         <div className='flex-none'>
-          <Link to={`/clusters`}>
-            <Sidebar.Logo href='#' img={Logo} imgAlt='Logo'>
-              BKTracker
-            </Sidebar.Logo>
-          </Link>
+          <Sidebar.Logo
+            href='#'
+            img={Logo}
+            imgAlt='Logo'
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/clusters");
+            }}
+          >
+            BKTracker
+          </Sidebar.Logo>
         </div>
 
         <Sidebar.Items className='flex flex-col justify-between h-full'>
@@ -51,20 +53,37 @@ export function AppSidebar() {
               }}
             >
               {clusters.map((cluster) => (
-                <Link to={`/clusters/${cluster.id}`}>
-                  <Sidebar.Item key={cluster.id}>{cluster.name}</Sidebar.Item>
-                </Link>
+                <div
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/clusters/${cluster.id}`);
+                  }}
+                  key={cluster.id}
+                >
+                  <Sidebar.Item>{cluster.name}</Sidebar.Item>
+                </div>
               ))}
             </Sidebar.Collapse>
 
-            <Link to={"/notifications"}>
+            <div
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(`/notifications`);
+              }}
+            >
               <Sidebar.Item icon={BellAlertIcon} label='3'>
                 Notifications
               </Sidebar.Item>
-            </Link>
-            <Link to={"/settings"}>
+            </div>
+
+            <div
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(`/settings`);
+              }}
+            >
               <Sidebar.Item icon={WrenchScrewdriverIcon}>Settings</Sidebar.Item>
-            </Link>
+            </div>
           </Sidebar.ItemGroup>
 
           <div>
