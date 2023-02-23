@@ -19,3 +19,9 @@ export interface IClusterModalStore {
   open: (mode: ModalOpenMode) => void;
   close: () => void;
 }
+
+export interface IDeleteClusterModalStore {
+  isOpen: boolean;
+  open: () => void;
+  close: () => void;
+}

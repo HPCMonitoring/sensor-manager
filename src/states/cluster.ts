@@ -1,5 +1,5 @@
 import { StoreName } from "@constants";
-import { IClusterModalStore, IClusterStore } from "@interfaces";
+import { IDeleteClusterModalStore, IClusterModalStore, IClusterStore } from "@interfaces";
 import { ModalOpenMode } from "@types";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
@@ -54,6 +54,21 @@ export const useClusterModalStore = create<IClusterModalStore>()(
       }),
       {
         name: StoreName.CLUSTER_MODAL
+      }
+    )
+  )
+);
+
+export const useDeleteClusterModalStore = create<IDeleteClusterModalStore>()(
+  devtools(
+    persist(
+      (set) => ({
+        isOpen: false,
+        open: () => set(() => ({ isOpen: true })),
+        close: () => set(() => ({ isOpen: false }))
+      }),
+      {
+        name: StoreName.DELETE_CLUSTER_MODAL
       }
     )
   )

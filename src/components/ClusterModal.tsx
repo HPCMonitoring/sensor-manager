@@ -1,5 +1,6 @@
+import { ClusterFormField } from "@constants";
 import { useClusterModalStore } from "@states";
-import { Button, Label, Modal, TextInput } from "flowbite-react";
+import { Button, Label, Modal, Textarea, TextInput } from "flowbite-react";
 import { useMemo } from "react";
 
 export function ClusterModal() {
@@ -12,19 +13,31 @@ export function ClusterModal() {
     <Modal show={isOpen} onClose={close}>
       <Modal.Header>{header}</Modal.Header>
       <Modal.Body>
-        <div className='mb-2 block'>
-          <Label htmlFor='base' value='Base input' />
-        </div>
-        <TextInput id='base' type='text' sizing='md' />
-        <div className='flex justify-end mt-4'>
-          <Button color={"light"} onClick={close}>
-            Cancel
-          </Button>
-          <Button gradientMonochrome='teal' className='ml-2' onClick={close}>
-            {" "}
-            {mode[0].toUpperCase() + mode.slice(1)}
-          </Button>
-        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <div className='mb-4 block'>
+            <Label htmlFor={ClusterFormField.NAME} value='Cluster name*' className='mb-2' placeholder='Insert cluster name ...' />
+            <TextInput id={ClusterFormField.NAME} type='text' required={true} shadow />
+          </div>
+
+          <div className='mb-4 block'>
+            <Label htmlFor={ClusterFormField.REMARKS} value='Remarks' />
+            <Textarea id={ClusterFormField.REMARKS} placeholder='Insert remarks ...' rows={4} shadow />
+          </div>
+
+          <div className='flex justify-end'>
+            <Button color={"light"} onClick={close}>
+              Cancel
+            </Button>
+            <Button gradientMonochrome='teal' className='ml-2' onClick={close} type='submit'>
+              {" "}
+              {mode[0].toUpperCase() + mode.slice(1)}
+            </Button>
+          </div>
+        </form>
       </Modal.Body>
     </Modal>
   );
