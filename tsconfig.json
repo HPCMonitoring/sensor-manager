@@ -23,6 +23,7 @@
       "@pages": ["src/pages"],
       "@constants": ["src/constants"],
       "@states": ["src/states"],
+      "@interfaces": ["src/interfaces"],
       "@types": ["src/types"]
     }
   },

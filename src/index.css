@@ -1,6 +1,10 @@
+@import '@animxyz/core';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@include xyz-all;
+@include xyz-core;
+@include xyz-utilities;
 
 .fb-sidebar {
     height: 100vh;
