@@ -7,9 +7,9 @@ import { useEffect } from "react";
 
 export default function App() {
   const fetchClusters = useClustersStore((state) => state.fetch);
-  const toggleTheme = useDarkThemeStore((state) => state.toggleTheme);
+  const loadTheme = useDarkThemeStore((state) => state.loadTheme);
   useEffect(() => {
-    toggleTheme();
+    loadTheme();
     fetchClusters();
   }, []);
 

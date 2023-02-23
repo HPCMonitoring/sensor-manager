@@ -11,6 +11,7 @@ import { useClustersStore, useDarkThemeStore } from "@states";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Logo from "../assets/vite.svg";
+import { DEFAULT_PATH } from "@constants";
 
 export function AppSidebar() {
   const darkTheme = useDarkThemeStore((state) => state.dark);
@@ -47,7 +48,7 @@ export function AppSidebar() {
               onClick={(e) => {
                 navigate("/clusters");
                 e.preventDefault();
-                if ("/clusters" === location.pathname) {
+                if (DEFAULT_PATH.includes(location.pathname)) {
                   setClusterExpand(!clusterExpand);
                 }
               }}

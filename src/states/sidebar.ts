@@ -26,12 +26,23 @@ export const useDarkThemeStore = create<DarkTheme>()(
               document.documentElement.classList.add("white-bg");
               document.documentElement.classList.remove("dark-bg");
             }
+            window.localStorage.setItem("dark", isDark ? "true" : "false");
             return { dark: isDark };
           }),
         loadTheme: () =>
-          set(() => ({
-            dark: window.localStorage.getItem("dark") === "true"
-          }))
+          set(() => {
+            const isDark = window.localStorage.getItem("dark") === "true";
+            if (isDark) {
+              document.documentElement.classList.add("dark-bg");
+              document.documentElement.classList.add("dark");
+              document.documentElement.classList.remove("white-bg");
+            } else {
+              document.documentElement.classList.remove("dark");
+              document.documentElement.classList.add("white-bg");
+              document.documentElement.classList.remove("dark-bg");
+            }
+            return { dark: isDark };
+          })
       }),
       {
         name: StoreName.DARK_THEME
