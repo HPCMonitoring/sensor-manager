@@ -3,3 +3,5 @@
  */
 
 export * from "./cluster";
+export * from "./sensor";
+export * from "./sidebar";

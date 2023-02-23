@@ -1,4 +1,4 @@
-import { StoreName } from "@constants";
+import { mockClusters, StoreName } from "@constants";
 import { IDeleteClusterModalStore, IClusterModalStore, IClusterStore } from "@interfaces";
 import { ModalOpenMode } from "@types";
 import { create } from "zustand";
@@ -9,32 +9,7 @@ export const useClustersStore = create<IClusterStore>()(
     persist(
       (set) => ({
         clusters: [], // Init state
-        fetch: () =>
-          set(() => ({
-            clusters: [
-              {
-                id: "1915940",
-                name: "BK HPC Laboratory",
-                numOfSensors: 7,
-                numOfActiveSensors: 5,
-                remarks: null
-              },
-              {
-                id: "1456984",
-                name: "TickLab cloud",
-                numOfSensors: 4,
-                numOfActiveSensors: 3,
-                remarks: null
-              },
-              {
-                id: "1433976",
-                name: "UIT Cluster",
-                numOfSensors: 6,
-                numOfActiveSensors: 5,
-                remarks: null
-              }
-            ]
-          }))
+        fetch: () => set(() => ({ clusters: mockClusters }))
       }),
       {
         name: StoreName.CLUSTERS

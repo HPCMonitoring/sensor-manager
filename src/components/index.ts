@@ -4,4 +4,5 @@
 
 export * from "./ClusterModal";
 export * from "./DeleteClusterModal";
+export * from "./SensorConfigModal";
 export * from "./Sidebar";
