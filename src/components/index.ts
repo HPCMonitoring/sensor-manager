@@ -3,4 +3,5 @@
  */
 
 export * from "./ClusterModal";
+export * from "./DeleteClusterModal";
 export * from "./Sidebar";

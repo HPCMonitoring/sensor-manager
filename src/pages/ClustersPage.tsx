@@ -1,19 +1,21 @@
 import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { useClusterModalStore, useClustersStore, useDarkThemeStore } from "@states";
+import { useClusterModalStore, useClustersStore, useDarkThemeStore, useDeleteClusterModalStore } from "@states";
 import { Badge, Button, Table, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import { ClusterModal } from "@components";
+import { ClusterModal, DeleteClusterModal } from "@components";
 
 export function ClustersPage() {
   const clusters = useClustersStore((state) => state.clusters);
   const navigate = useNavigate();
   const darkTheme = useDarkThemeStore((state) => state.dark);
 
-  const openModal = useClusterModalStore((state) => state.open);
+  const openClusterModal = useClusterModalStore((state) => state.open);
+  const openDeleteClusterModal = useDeleteClusterModalStore((state) => state.open);
 
   return (
     <div>
       <ClusterModal />
+      <DeleteClusterModal />
 
       <div className='flex mb-4 justify-between'>
         <div className='flex flex-row items-center'>
@@ -26,7 +28,7 @@ export function ClustersPage() {
         </div>
         <div className='flex flex-row'>
           <TextInput type='text' icon={MagnifyingGlassIcon} placeholder='Search ...' required={true} />
-          <Button gradientMonochrome='info' className='ml-2' onClick={() => openModal("create")}>
+          <Button gradientMonochrome='info' className='ml-2' onClick={() => openClusterModal("create")}>
             New cluster
           </Button>
         </div>
@@ -57,7 +59,7 @@ export function ClustersPage() {
                   gradientMonochrome='info'
                   onClick={(e) => {
                     e.stopPropagation();
-                    openModal("update");
+                    openClusterModal("update");
                   }}
                   size='sm'
                   className='mr-2'
@@ -65,7 +67,14 @@ export function ClustersPage() {
                   Edit
                   <PencilIcon className='ml-2 h-4 w-4' />
                 </Button>
-                <Button gradientMonochrome='failure' onClick={(e) => e.stopPropagation()} size='sm'>
+                <Button
+                  gradientMonochrome='failure'
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openDeleteClusterModal();
+                  }}
+                  size='sm'
+                >
                   Delete
                   <TrashIcon className='ml-2 h-4 w-4' />
                 </Button>
