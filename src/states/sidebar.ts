@@ -1,14 +1,9 @@
 import { StoreName } from "@constants";
+import { IClusterExpandStore, IDarkThemeStore } from "@interfaces";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
-interface DarkTheme {
-  dark: boolean;
-  toggleTheme: () => void;
-  loadTheme: () => void;
-}
-
-export const useDarkThemeStore = create<DarkTheme>()(
+export const useDarkThemeStore = create<IDarkThemeStore>()(
   devtools(
     persist(
       (set) => ({
@@ -46,6 +41,21 @@ export const useDarkThemeStore = create<DarkTheme>()(
       }),
       {
         name: StoreName.DARK_THEME
+      }
+    )
+  )
+);
+
+export const useClusterExpandStore = create<IClusterExpandStore>()(
+  devtools(
+    persist(
+      (set) => ({
+        isExpand: false, // Init state
+        expand: () => set(() => ({ isExpand: true })),
+        collapse: () => set(() => ({ isExpand: false }))
+      }),
+      {
+        name: StoreName.CLUSTER_UI_EXPAND
       }
     )
   )

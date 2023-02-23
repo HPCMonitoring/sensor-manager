@@ -7,9 +7,8 @@ import {
   SunIcon,
   WrenchScrewdriverIcon
 } from "@heroicons/react/24/solid";
-import { useClustersStore, useDarkThemeStore } from "@states";
+import { useClusterExpandStore, useClustersStore, useDarkThemeStore } from "@states";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import Logo from "../assets/vite.svg";
 import { DEFAULT_PATH } from "@constants";
 
@@ -17,7 +16,7 @@ export function AppSidebar() {
   const darkTheme = useDarkThemeStore((state) => state.dark);
   const toggleDarkTheme = useDarkThemeStore((state) => state.toggleTheme);
   const clusters = useClustersStore((state) => state.clusters);
-  const [clusterExpand, setClusterExpand] = useState(false);
+  const { isExpand: clusterExpand, expand: expandSidebarClusters, collapse: collapseSidebarClustes } = useClusterExpandStore();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,7 +48,8 @@ export function AppSidebar() {
                 navigate("/clusters");
                 e.preventDefault();
                 if (DEFAULT_PATH.includes(location.pathname)) {
-                  setClusterExpand(!clusterExpand);
+                  if (clusterExpand) collapseSidebarClustes();
+                  else expandSidebarClusters();
                 }
               }}
               className='hover'
@@ -59,6 +59,7 @@ export function AppSidebar() {
                   onClick={(e) => {
                     e.preventDefault();
                     navigate(`/clusters/${cluster.id}`);
+                    expandSidebarClusters();
                   }}
                   key={cluster.id}
                   className='hover'

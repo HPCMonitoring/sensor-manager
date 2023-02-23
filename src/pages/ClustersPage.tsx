@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { useClusterModalStore, useClustersStore, useDarkThemeStore, useDeleteClusterModalStore } from "@states";
+import { useClusterExpandStore, useClusterModalStore, useClustersStore, useDarkThemeStore, useDeleteClusterModalStore } from "@states";
 import { Badge, Button, Table, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { ClusterModal, DeleteClusterModal } from "@components";
@@ -11,6 +11,8 @@ export function ClustersPage() {
 
   const openClusterModal = useClusterModalStore((state) => state.open);
   const openDeleteClusterModal = useDeleteClusterModalStore((state) => state.open);
+
+  const expandSidebarClusters = useClusterExpandStore((state) => state.expand);
 
   return (
     <div>
@@ -48,12 +50,15 @@ export function ClustersPage() {
             <Table.Row
               className='bg-white dark:border-gray-700 dark:bg-gray-800 hover'
               key={cluster.id}
-              onClick={() => navigate(`/clusters/${cluster.id}`)}
+              onClick={() => {
+                navigate(`/clusters/${cluster.id}`);
+                expandSidebarClusters();
+              }}
             >
               <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>{cluster.name}</Table.Cell>
               <Table.Cell>{cluster.numOfSensors}</Table.Cell>
               <Table.Cell>{cluster.numOfSensors}</Table.Cell>
-              <Table.Cell>{cluster.remarks ? cluster.remarks : ""}</Table.Cell>
+              <Table.Cell>{cluster.remarks ? cluster.remarks : "--"}</Table.Cell>
               <Table.Cell className='flex justify-end'>
                 <Button
                   gradientMonochrome='info'
