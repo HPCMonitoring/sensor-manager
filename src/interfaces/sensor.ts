@@ -1,6 +1,6 @@
 import { SensorStatus } from "@constants";
 
-interface ISensorDetail extends ISensor {
+export interface ISensorDetail {
   kernelName: string;
   hostName: string;
   arch: string;
@@ -16,12 +16,6 @@ export interface ISensor {
   ipAddr: string;
   status: SensorStatus;
   detail?: ISensorDetail;
-}
-
-export interface ISensorConfigModalStore {
-  isOpen: boolean;
-  open: () => void;
-  close: () => void;
 }
 
 export interface ISensorStore {

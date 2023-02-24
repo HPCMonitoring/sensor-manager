@@ -1,7 +1,7 @@
-import { SensorConfigModal } from "@components";
+import { RemoveSensorModal, ConfigSensorModal } from "@components";
 import { mockKafkaBrokers, mockKafkaTopics, SensorStatus } from "@constants";
 import { Cog6ToothIcon, MinusCircleIcon, PaperAirplaneIcon, SignalSlashIcon, StopIcon, WifiIcon } from "@heroicons/react/24/solid";
-import { useClustersStore, useSensorConfigModalStore, useSensorsStore } from "@states";
+import { useClustersStore, useConfigSensorModalStore, useRemoveSensorModalStore, useSensorsStore } from "@states";
 import { Badge, Button, Dropdown, Table, Tooltip } from "flowbite-react";
 import { useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
@@ -37,13 +37,15 @@ export function ClusterDetailPage() {
 
   const sensors = useSensorsStore((state) => state.sensors);
   const fetchSensors = useSensorsStore((state) => state.fetch);
-  const { open: openSensorConfigModal } = useSensorConfigModalStore();
+  const openConfigSensorModal = useConfigSensorModalStore((state) => state.open);
+  const openRemoveSensorModal = useRemoveSensorModalStore((state) => state.open);
 
   useEffect(() => fetchSensors(), [clusterId]);
 
   return (
     <div>
-      <SensorConfigModal />
+      <ConfigSensorModal />
+      <RemoveSensorModal />
       <div className='flex mb-4 justify-between align-middle text-gray-800 dark:text-gray-200'>
         <Badge className='text-xl font-semibold' color={"gray"}>
           {clusterName}
@@ -106,7 +108,7 @@ export function ClusterDetailPage() {
                     color={"info"}
                     onClick={(e) => {
                       e.stopPropagation();
-                      openSensorConfigModal();
+                      openConfigSensorModal();
                     }}
                     size='xs'
                     className='ml-2'
@@ -120,6 +122,7 @@ export function ClusterDetailPage() {
                     color={"failure"}
                     onClick={(e) => {
                       e.stopPropagation();
+                      openRemoveSensorModal();
                     }}
                     size='xs'
                     className='ml-2'
