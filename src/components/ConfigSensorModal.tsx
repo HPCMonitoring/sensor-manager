@@ -22,7 +22,16 @@ export function ConfigSensorModal() {
         <Label htmlFor={SensorFormField.SYSTEM_INFO} value='SYSTEM INFO' className='mb-2' />
         <Card className='mb-4 mt-1' id={SensorFormField.SYSTEM_INFO}>
           {Object.entries(mockSensorDetailInfo).map((entry) => (
-            <SystemInfo key={entry[0]} attr={entry[0]} value={entry[1]} />
+            <SystemInfo
+              key={entry[0]}
+              attr={entry[0]
+                .replace(/([A-Z])/g, " $1")
+                // uppercase the first character
+                .replace(/^./, function (str) {
+                  return str.toUpperCase();
+                })}
+              value={entry[1]}
+            />
           ))}
         </Card>
         <form

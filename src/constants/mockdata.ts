@@ -11,7 +11,7 @@ export const mockClusters: ICluster[] = [
   },
   {
     id: "1456984",
-    name: "TickLab cloud",
+    name: "TL cloud",
     numOfSensors: 4,
     numOfActiveSensors: 3,
     remarks: null
