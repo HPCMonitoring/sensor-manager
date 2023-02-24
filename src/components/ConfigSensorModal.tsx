@@ -16,11 +16,10 @@ export function ConfigSensorModal() {
   const closeConfigSensorModal = useConfigSensorModalStore((state) => state.close);
 
   return (
-    <Modal show={isOpenConfigSensorModal} onClose={closeConfigSensorModal}>
-      {/* <Modal.Header>Config sensor</Modal.Header> */}
+    <Modal show={isOpenConfigSensorModal} onClose={closeConfigSensorModal} size='md' dismissible position={"top-center"}>
       <Modal.Body>
         <Label htmlFor={SensorFormField.SYSTEM_INFO} value='SYSTEM INFO' className='mb-2' />
-        <Card className='mb-4 mt-1' id={SensorFormField.SYSTEM_INFO}>
+        <Card className='mb-4 mt-1 p-0' id={SensorFormField.SYSTEM_INFO}>
           {Object.entries(mockSensorDetailInfo).map((entry) => (
             <SystemInfo
               key={entry[0]}
@@ -46,8 +45,10 @@ export function ConfigSensorModal() {
 
           <div className='mb-4 block'>
             <Label htmlFor={SensorFormField.REMARKS} value='Remarks' />
-            <Textarea id={SensorFormField.REMARKS} placeholder='Insert remarks ...' rows={3} shadow />
+            <Textarea id={SensorFormField.REMARKS} placeholder='Insert remarks ...' rows={2} shadow />
           </div>
+
+          <Label className='text-lg' value='Topics' />
 
           <div className='flex justify-end'>
             <Button color={"light"} onClick={closeConfigSensorModal}>

@@ -3,6 +3,7 @@
  */
 
 export * from "./cluster";
+export * from "./errorMessage";
 export * from "./mockdata";
 export * from "./sensor";
 export * from "./sidebar";

@@ -1,4 +1,4 @@
-import { StoreName } from "@constants";
+import { LocalStorageName } from "@constants";
 import { IClusterExpandStore, IDarkThemeStore } from "@interfaces";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
@@ -11,7 +11,6 @@ export const useDarkThemeStore = create<IDarkThemeStore>()(
         toggleTheme: () =>
           set((state) => {
             const isDark = !state.dark;
-
             if (isDark) {
               document.documentElement.classList.add("dark-bg");
               document.documentElement.classList.add("dark");
@@ -40,7 +39,7 @@ export const useDarkThemeStore = create<IDarkThemeStore>()(
           })
       }),
       {
-        name: StoreName.DARK_THEME
+        name: LocalStorageName.DARK_THEME
       }
     )
   )
@@ -55,7 +54,7 @@ export const useClusterExpandStore = create<IClusterExpandStore>()(
         collapse: () => set(() => ({ isExpand: false }))
       }),
       {
-        name: StoreName.CLUSTER_UI_EXPAND
+        name: LocalStorageName.CLUSTER_UI_EXPAND
       }
     )
   )
