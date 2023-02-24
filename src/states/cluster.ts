@@ -1,5 +1,5 @@
 import { mockClusters, StoreName } from "@constants";
-import { IDeleteClusterModalStore, IClusterModalStore, IClusterStore } from "@interfaces";
+import { IClusterModalStore, IClusterStore, ISimpleModal } from "@interfaces";
 import { ModalOpenMode } from "@types";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
@@ -34,7 +34,7 @@ export const useClusterModalStore = create<IClusterModalStore>()(
   )
 );
 
-export const useDeleteClusterModalStore = create<IDeleteClusterModalStore>()(
+export const useDeleteClusterModalStore = create<ISimpleModal>()(
   devtools(
     persist(
       (set) => ({

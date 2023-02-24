@@ -1,4 +1,4 @@
-import { ICluster, ISensor } from "@interfaces";
+import { ICluster, ISensor, ISensorDetail } from "@interfaces";
 import { SensorStatus } from "./sensor";
 
 export const mockClusters: ICluster[] = [
@@ -58,3 +58,10 @@ export const mockSensors: ISensor[] = [
 
 export const mockKafkaBrokers: string[] = ["All", "localhost:9092", "bkhpc.hcmut.edu.vn:1456"];
 export const mockKafkaTopics: string[] = ["All", "memory", "cpu-each-process"];
+export const mockSensorDetailInfo: ISensorDetail = {
+  kernelName: "Linux",
+  kernelVersion: "5.19.0-32-generic",
+  arch: "x86_64",
+  hostName: "PhucVinh",
+  rootUser: "root"
+};
