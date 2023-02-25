@@ -19,7 +19,7 @@ function SensorStatusBadge(props: { status: SensorStatus }) {
   }, [props.status]);
 
   return (
-    <Badge color={color} icon={icon} className='w-fit px-2'>
+    <Badge color={color} icon={icon} className='w-fit px-2 hover'>
       {props.status}
     </Badge>
   );
@@ -29,10 +29,10 @@ export function ClusterDetailPage() {
   const { clusterId } = useParams();
   const clusters = useClustersStore((state) => state.clusters);
 
-  const { name: clusterName } = useMemo(() => {
+  const clusterName = useMemo(() => {
     const cluster = clusters.find((item) => item.id === clusterId);
-    if (!cluster) throw new Error("Cluster not found !");
-    return cluster;
+    if (!cluster) return "";
+    return cluster.name;
   }, [clusterId, clusters]);
 
   const sensors = useSensorsStore((state) => state.sensors);
@@ -46,6 +46,7 @@ export function ClusterDetailPage() {
     <div>
       <ConfigSensorModal />
       <RemoveSensorModal />
+
       <div className='flex mb-4 justify-between align-middle text-gray-800 dark:text-gray-200'>
         <Badge className='text-xl font-semibold' color={"gray"}>
           {clusterName}

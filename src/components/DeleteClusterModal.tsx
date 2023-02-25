@@ -6,7 +6,7 @@ export function DeleteClusterModal() {
   const { isOpen, close } = useDeleteClusterModalStore();
   return (
     <div>
-      <Modal show={isOpen} size='md' popup={true} onClose={close}>
+      <Modal show={isOpen} size='md' popup={true} onClose={close} dismissible>
         <Modal.Header />
         <Modal.Body>
           <div className='text-center'>

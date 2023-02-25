@@ -10,7 +10,7 @@ export function ClusterModal() {
   const close = useClusterModalStore((state) => state.close);
 
   return (
-    <Modal show={isOpen} onClose={close}>
+    <Modal show={isOpen} onClose={close} dismissible position={"top-center"}>
       <Modal.Header>{header}</Modal.Header>
       <Modal.Body>
         <form
