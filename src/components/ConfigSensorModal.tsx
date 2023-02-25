@@ -34,10 +34,10 @@ export function ConfigSensorModal() {
             e.preventDefault();
           }}
         >
-          <div className='grid grid-cols-12 grid-flow-col border-b-2 dark:border-gray-600 mb-4'>
-            <div className={`${isOpenTopicConfig ? "col-span-5" : "col-span-12"}`}>
+          <div className='border-b-2 dark:border-gray-600 mb-4 w-full flex'>
+            <div className={isOpenTopicConfig ? "flex-none w-5/12" : "w-full"}>
               <Label htmlFor={SensorFormField.SYSTEM_INFO} value='SYSTEM INFO' className='mb-2' />
-              <Card className='mb-4 mt-1 p-0' id={SensorFormField.SYSTEM_INFO}>
+              <Card className='mb-4 mt-1 p-0 w-full' id={SensorFormField.SYSTEM_INFO}>
                 {Object.entries(mockSensorDetailInfo).map((entry) => (
                   <SystemInfo
                     key={entry[0]}
@@ -71,7 +71,7 @@ export function ConfigSensorModal() {
               </div>
             </div>
 
-            <div className={isOpenTopicConfig ? "" : "hidden"}>asdasdasd</div>
+            <div style={{ display: isOpenTopicConfig ? "block" : "none" }}>asdasdasd</div>
           </div>
 
           <div className='flex justify-end'>

@@ -1,3 +1,3 @@
 export function NotificationPage() {
-  return <div>Notification page</div>;
+  return <div className='w-1/2'>Notification page</div>;
 }
