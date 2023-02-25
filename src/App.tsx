@@ -11,6 +11,7 @@ export default function App() {
   useEffect(() => {
     loadTheme();
     fetchClusters();
+    console.log("Asdasd");
   }, []);
 
   return (
