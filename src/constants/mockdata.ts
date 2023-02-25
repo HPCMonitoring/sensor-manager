@@ -65,3 +65,16 @@ export const mockSensorDetailInfo: ISensorDetail = {
   hostName: "PhucVinh",
   rootUser: "root"
 };
+
+export const kafkaTopicConfigs = [
+  {
+    broker: { url: "http://localhost:8080", name: "Local host" },
+    topic: { name: "ram-cpu-usage", alias: "RAM & CPU" },
+    usingTemplate: "Template for RAM & CPU"
+  },
+  {
+    broker: { url: "https://hpcc.tl.vn:9092", name: "HPCC Center" },
+    topic: { name: "process-basic", alias: "Process basic" },
+    usingTemplate: null
+  }
+];
