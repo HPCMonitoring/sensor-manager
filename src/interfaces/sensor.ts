@@ -8,6 +8,12 @@ export interface ISensorDetail {
   rootUser: string;
 }
 
+export interface ISensorKafkaTopic {
+  brokerUrl: string;
+  topicName: string;
+  filterRule: string; // In SQL
+}
+
 export interface ISensor {
   clusterId?: string;
   id: string;

@@ -1,6 +1,7 @@
 import { mockSensorDetailInfo, SensorFormField } from "@constants";
-import { useConfigSensorModalStore } from "@states";
-import { Button, Card, Label, Modal, Textarea, TextInput } from "flowbite-react";
+import { SquaresPlusIcon } from "@heroicons/react/24/outline";
+import { useConfigSensorModalStore, useDarkThemeStore } from "@states";
+import { Button, Card, Label, Modal, Textarea, TextInput, Tooltip } from "flowbite-react";
 
 function SystemInfo(props: { attr: string; value: string }) {
   return (
@@ -14,6 +15,7 @@ function SystemInfo(props: { attr: string; value: string }) {
 export function ConfigSensorModal() {
   const isOpenConfigSensorModal = useConfigSensorModalStore((state) => state.isOpen);
   const closeConfigSensorModal = useConfigSensorModalStore((state) => state.close);
+  const darkTheme = useDarkThemeStore((state) => state.dark);
 
   return (
     <Modal show={isOpenConfigSensorModal} onClose={closeConfigSensorModal} size='md' dismissible position={"top-center"}>
@@ -48,16 +50,32 @@ export function ConfigSensorModal() {
             <Textarea id={SensorFormField.REMARKS} placeholder='Insert remarks ...' rows={2} shadow />
           </div>
 
-          <Label className='text-lg' value='Topics' />
+          {/* <hr className="border-gray-400 dark:border-gray-600 mb-4"/> */}
 
-          <div className='flex justify-end'>
-            <Button color={"light"} onClick={closeConfigSensorModal}>
-              Cancel
-            </Button>
-            <Button gradientMonochrome='teal' className='ml-2' onClick={closeConfigSensorModal} type='submit'>
-              {" "}
-              Save
-            </Button>
+          <h4 className='text-gray-800 dark:text-gray-100 font-bold mb-4'>Kafka Topics</h4>
+
+          <div className='flex justify-between'>
+            <Tooltip content='Add a Kafka topic' placement='bottom' style={darkTheme ? "light" : "dark"}>
+              <Button
+                gradientMonochrome='info'
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                className='mr-2'
+              >
+                <SquaresPlusIcon className='h-4 w-4' />
+              </Button>
+            </Tooltip>
+
+            <div className='flex'>
+              <Button color={"light"} onClick={closeConfigSensorModal}>
+                Cancel
+              </Button>
+              <Button gradientMonochrome='teal' className='ml-2' onClick={closeConfigSensorModal} type='submit'>
+                {" "}
+                Save
+              </Button>
+            </div>
           </div>
         </form>
       </Modal.Body>
