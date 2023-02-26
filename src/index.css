@@ -1,23 +1,19 @@
-@import '@animxyz/core';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@include xyz-all;
-@include xyz-core;
-@include xyz-utilities;
 
 .fb-sidebar {
-    height: 100vh;
+  height: 100vh;
 }
 
 .hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .dark-bg {
-    background-color: #161b22;
+  background-color: #161b22;
 }
 
 .white-bg {
-    background-color: #f6f6f6;
+  background-color: #f6f6f6;
 }

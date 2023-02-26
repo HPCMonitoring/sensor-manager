@@ -32,7 +32,7 @@ export function ClusterModal() {
             <Button color={"light"} onClick={close}>
               Cancel
             </Button>
-            <Button gradientMonochrome='teal' className='ml-2' onClick={close} type='submit'>
+            <Button gradientMonochrome='info' className='ml-2' onClick={close} type='submit'>
               {" "}
               {mode[0].toUpperCase() + mode.slice(1)}
             </Button>
