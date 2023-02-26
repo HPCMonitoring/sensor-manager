@@ -1,8 +1,7 @@
-import { mockCodeYaml } from "@constants";
 import Editor from "@monaco-editor/react";
 import { useDarkThemeStore } from "@states";
 
-export function YamlCodeBlock() {
+export function YamlCodeBlock(props: { code: string }) {
   const darkTheme = useDarkThemeStore((state) => state.dark);
-  return <Editor height='90vh' language='yaml' defaultValue={mockCodeYaml} theme={darkTheme ? "vs-dark" : "vs"} />;
+  return <Editor height='45vh' language='yaml' defaultValue={props.code} theme={darkTheme ? "vs-dark" : "vs"} />;
 }

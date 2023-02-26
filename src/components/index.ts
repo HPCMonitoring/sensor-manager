@@ -3,9 +3,9 @@
  */
 
 export * from "./ClusterModal";
-export * from "./YamlCodeBlock";
 export * from "./ConfigSensorModal";
 export * from "./DeleteClusterModal";
 export * from "./KafkaTopicUsageTable";
 export * from "./RemoveSensorModal";
 export * from "./Sidebar";
+export * from "./YamlCodeBlock";
