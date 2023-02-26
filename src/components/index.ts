@@ -3,6 +3,7 @@
  */
 
 export * from "./ClusterModal";
+export * from "./YamlCodeBlock";
 export * from "./ConfigSensorModal";
 export * from "./DeleteClusterModal";
 export * from "./KafkaTopicUsageTable";
