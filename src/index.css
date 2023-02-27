@@ -6,10 +6,6 @@
   height: 100vh;
 }
 
-.hover {
-  cursor: pointer;
-}
-
 .dark-bg {
   background-color: #161b22;
 }

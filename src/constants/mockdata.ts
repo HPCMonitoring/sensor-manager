@@ -79,7 +79,7 @@ export const kafkaTopicConfigs = [
   }
 ];
 
-export const mockCodeYaml = `name: CD
+const longYamlCode = `name: CD
 
 on:
   push:
@@ -130,3 +130,23 @@ jobs:
           push: \${{ github.event_name == 'push' }} # Only publish image when push to master
           tags: \${{ env.REGISTRY }}/\${{ env.IMAGE_NAME }}:\${{ env.IMAGE_TAG }}
 `;
+
+const shortYamlCode = `name: CD
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+`;
+
+export const filterTemplates = [
+  {
+    name: "Sample Kafka Topic rule",
+    value: longYamlCode
+  },
+  {
+    name: "Short Yaml Rule",
+    value: shortYamlCode
+  }
+];

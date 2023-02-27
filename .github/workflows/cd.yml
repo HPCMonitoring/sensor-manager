@@ -1,0 +1,41 @@
+name: CD
+
+on:
+  push:
+    branches: ["master"]
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # Image name MUST have a pattern like <org_name_lowercase>/<repo_name_lowercase>
+  IMAGE_NAME: hpcmonitoring/sensor-manager
+  IMAGE_TAG: 0.1.0
+  # username login to ghcr MUST be organization's name in lower case
+  ORG_USERNAME: hpcmonitoring
+
+permissions:
+  packages: write
+
+jobs:
+  deploy:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        if: github.event_name == 'push'
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          port: ${{ secrets.VPS_PORT }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_PASSWORD }}
+
+          # TODO: Remove docker volumes in Dev stage only
+          script: |
+            export CR_PAT=${{ secrets.GITHUB_TOKEN }}
+            echo $CR_PAT | docker login ${{ env.REGISTRY }} -u ${{ env.ORG_USERNAME }} --password-stdin
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            docker rm -f hpcmonitoring_sensor_manager
+            docker run --name hpcmonitoring_sensor_manager -p 3000:3000 --restart always -d ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            docker logout ${{ env.REGISTRY }}
+            

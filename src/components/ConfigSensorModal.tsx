@@ -63,7 +63,7 @@ export function ConfigSensorModal() {
               </div>
 
               <div
-                className='hover text-gray-500 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-500 font-bold outline-none bg-none w-full flex justify-between py-2 px-1 rounded'
+                className='cursor-pointer text-gray-500 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-500 font-bold outline-none bg-none w-full flex justify-between py-2 px-1 rounded'
                 onClick={(e) => {
                   e.preventDefault();
                   setIsOpenAdvancedConfig(!isOpenAdvancedConfig);
