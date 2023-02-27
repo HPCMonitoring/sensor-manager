@@ -48,7 +48,7 @@ export function ClusterDetailPage() {
       <RemoveSensorModal />
 
       <div className='flex mb-4 justify-between align-middle text-gray-800 dark:text-gray-200'>
-        <Badge className='text-xl font-semibold' color={"gray"}>
+        <Badge size={"xl"} className='font-semibold' color={"gray"}>
           {clusterName}
         </Badge>
         <Button.Group>
