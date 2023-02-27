@@ -88,7 +88,7 @@ export function ConfigSensorModal() {
                     e.stopPropagation();
                   }}
                   size='xs'
-                  className='w-full text-left hover'
+                  className='w-full text-left cursor-pointer'
                 >
                   <PlusCircleIcon className='h-5 w-5 mr-2' />
                   Add topic
@@ -104,7 +104,7 @@ export function ConfigSensorModal() {
                     e.stopPropagation();
                   }}
                   size='xs'
-                  className='w-full text-left hover'
+                  className='w-full text-left cursor-pointer'
                 >
                   <PlusCircleIcon className='h-5 w-5 mr-2' />
                   Add alert rule
