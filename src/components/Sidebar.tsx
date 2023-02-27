@@ -52,7 +52,7 @@ export function AppSidebar() {
                   else expandSidebarClusters();
                 }
               }}
-              className='hover'
+              className='cursor-pointer'
             >
               {clusters.map((cluster) => (
                 <div
@@ -62,7 +62,7 @@ export function AppSidebar() {
                     expandSidebarClusters();
                   }}
                   key={cluster.id}
-                  className='hover'
+                  className='cursor-pointer'
                 >
                   <Sidebar.Item>{cluster.name}</Sidebar.Item>
                 </div>
@@ -75,7 +75,7 @@ export function AppSidebar() {
                 navigate(`/notifications`);
               }}
             >
-              <Sidebar.Item icon={BellAlertIcon} label='3' className='hover'>
+              <Sidebar.Item icon={BellAlertIcon} label='3' className='cursor-pointer'>
                 Notifications
               </Sidebar.Item>
             </div>
@@ -86,7 +86,7 @@ export function AppSidebar() {
                 navigate(`/settings`);
               }}
             >
-              <Sidebar.Item icon={WrenchScrewdriverIcon} className='hover'>
+              <Sidebar.Item icon={WrenchScrewdriverIcon} className='cursor-pointer'>
                 Settings
               </Sidebar.Item>
             </div>
@@ -94,12 +94,12 @@ export function AppSidebar() {
 
           <div>
             <Sidebar.ItemGroup onClick={toggleDarkTheme}>
-              <Sidebar.Item icon={darkTheme ? SunIcon : MoonIcon} className='hover'>
+              <Sidebar.Item icon={darkTheme ? SunIcon : MoonIcon} className='cursor-pointer'>
                 {"Use " + (darkTheme ? "light" : "dark") + " theme"}
               </Sidebar.Item>
             </Sidebar.ItemGroup>
             <Sidebar.ItemGroup>
-              <Sidebar.Item icon={ArrowRightOnRectangleIcon} className='hover'>
+              <Sidebar.Item icon={ArrowRightOnRectangleIcon} className='cursor-pointer'>
                 Sign out
               </Sidebar.Item>
             </Sidebar.ItemGroup>

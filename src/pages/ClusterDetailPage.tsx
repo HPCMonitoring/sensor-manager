@@ -19,7 +19,7 @@ function SensorStatusBadge(props: { status: SensorStatus }) {
   }, [props.status]);
 
   return (
-    <Badge color={color} icon={icon} className='w-fit px-2 hover'>
+    <Badge color={color} icon={icon} className='w-fit px-2 cursor-pointer'>
       {props.status}
     </Badge>
   );

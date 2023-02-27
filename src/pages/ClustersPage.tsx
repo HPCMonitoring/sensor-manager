@@ -48,7 +48,7 @@ export function ClustersPage() {
         <Table.Body className='divide-y'>
           {clusters.map((cluster) => (
             <Table.Row
-              className='bg-white dark:border-gray-700 dark:bg-gray-800 hover'
+              className='bg-white dark:border-gray-700 dark:bg-gray-800 cursor-pointer'
               key={cluster.id}
               onClick={() => {
                 navigate(`/clusters/${cluster.id}`);
