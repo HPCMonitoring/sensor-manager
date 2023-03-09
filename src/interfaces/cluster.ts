@@ -10,7 +10,7 @@ export interface ICluster {
 
 export interface IClusterStore {
   clusters: ICluster[];
-  fetch: () => void;
+  fetch: () => Promise<void>;
 }
 
 export interface IClusterModalStore {

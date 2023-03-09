@@ -1,5 +1,5 @@
-import { mockClusters } from "@constants";
 import { IClusterModalStore, IClusterStore } from "@interfaces";
+import { clusterService } from "@services";
 import { ModalOpenMode } from "@types";
 import { createSimpleModalStore } from "@utils";
 import { create } from "zustand";
@@ -8,7 +8,11 @@ import { devtools } from "zustand/middleware";
 export const useClustersStore = create<IClusterStore>()(
   devtools((set) => ({
     clusters: [], // Init state
-    fetch: () => set(() => ({ clusters: mockClusters }))
+    fetch: async () => {
+      const clusters = await clusterService.getAll();
+
+      set(() => ({ clusters }));
+    }
   }))
 );
 
