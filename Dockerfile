@@ -6,8 +6,6 @@ WORKDIR /usr/src/app
 
 COPY package.json yarn.lock tsconfig.json tsconfig.node.json vite.config.ts index.html *.config.cjs ./
 COPY ./src ./src
-COPY ./public ./public
-
 COPY .env.production .env
 
 RUN yarn install && yarn build

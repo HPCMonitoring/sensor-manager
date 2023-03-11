@@ -3,6 +3,7 @@ import { useClusterExpandStore, useClusterModalStore, useClustersStore, useDarkT
 import { Badge, Button, Table, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { ClusterModal, DeleteClusterModal } from "@components";
+import { useState } from "react";
 
 export function ClustersPage() {
   const clusters = useClustersStore((state) => state.clusters);
@@ -13,11 +14,12 @@ export function ClustersPage() {
   const openDeleteClusterModal = useDeleteClusterModalStore((state) => state.open);
 
   const expandSidebarClusters = useClusterExpandStore((state) => state.expand);
+  const [deleteClusterId, setDeleteClusterId] = useState("");
 
   return (
     <div>
       <ClusterModal />
-      <DeleteClusterModal />
+      <DeleteClusterModal clusterId={deleteClusterId} />
 
       <div className='flex mb-4 justify-between'>
         <div className='flex flex-row items-center'>
@@ -29,8 +31,8 @@ export function ClustersPage() {
           </Badge>
         </div>
         <div className='flex flex-row'>
-          <TextInput type='text' icon={MagnifyingGlassIcon} placeholder='Search ...' required={true} />
-          <Button gradientMonochrome='info' className='ml-2' onClick={() => openClusterModal("create")}>
+          <TextInput type='text' autoComplete='off' icon={MagnifyingGlassIcon} placeholder='Search ...' required={true} />
+          <Button gradientMonochrome='info' className='ml-2' onClick={() => openClusterModal({ action: "create" })}>
             New cluster
           </Button>
         </div>
@@ -64,7 +66,7 @@ export function ClustersPage() {
                   gradientMonochrome='info'
                   onClick={(e) => {
                     e.stopPropagation();
-                    openClusterModal("update");
+                    openClusterModal({ action: "update", id: cluster.id });
                   }}
                   size='sm'
                   className='mr-2'
@@ -77,6 +79,7 @@ export function ClustersPage() {
                   onClick={(e) => {
                     e.stopPropagation();
                     openDeleteClusterModal();
+                    setDeleteClusterId(cluster.id);
                   }}
                   size='sm'
                 >

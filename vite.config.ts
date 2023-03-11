@@ -28,16 +28,16 @@ export default defineConfig({
         replacement: path.resolve(__dirname, "src/interfaces")
       },
       {
-        find: "@types",
-        replacement: path.resolve(__dirname, "src/types")
-      },
-      {
         find: "@states",
         replacement: path.resolve(__dirname, "src/states")
       },
       {
         find: "@utils",
         replacement: path.resolve(__dirname, "src/utils")
+      },
+      {
+        find: "@services",
+        replacement: path.resolve(__dirname, "src/services")
       }
     ]
   }

@@ -1,29 +1,5 @@
-import { ICluster, ISensor, ISensorDetail } from "@interfaces";
+import { ISensor, ISensorDetail } from "@interfaces";
 import { SensorStatus } from "./sensor";
-
-export const mockClusters: ICluster[] = [
-  {
-    id: "1915940",
-    name: "BK HPC Laboratory",
-    numOfSensors: 7,
-    numOfActiveSensors: 5,
-    remarks: null
-  },
-  {
-    id: "1456984",
-    name: "TL cloud",
-    numOfSensors: 4,
-    numOfActiveSensors: 3,
-    remarks: null
-  },
-  {
-    id: "1433976",
-    name: "UIT Cluster",
-    numOfSensors: 6,
-    numOfActiveSensors: 5,
-    remarks: null
-  }
-];
 
 export const mockSensors: ISensor[] = [
   {

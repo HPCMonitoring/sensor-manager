@@ -6,7 +6,7 @@ export function RemoveSensorModal() {
   const { isOpen, close } = useRemoveSensorModalStore();
   return (
     <div>
-      <Modal show={isOpen} size='md' popup={true} onClose={close} dismissible>
+      <Modal show={isOpen} size='md' popup={true} onClose={close}>
         <Modal.Header />
         <Modal.Body>
           <div className='text-center'>

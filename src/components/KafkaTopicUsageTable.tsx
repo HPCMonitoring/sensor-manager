@@ -9,7 +9,7 @@ export function KafkaTopicUsageTable() {
   const [isOpenCodeBlock, setIsOpenCodeBlock] = useState(false);
   return (
     <div>
-      <Modal show={isOpenCodeBlock} onClose={() => setIsOpenCodeBlock(false)} dismissible position={"top-center"} size='3xl'>
+      <Modal show={isOpenCodeBlock} onClose={() => setIsOpenCodeBlock(false)} position={"top-center"} size='3xl'>
         <Modal.Body>
           <div className='mb-4 flex'>
             <div className='flex-1'>
@@ -31,7 +31,14 @@ export function KafkaTopicUsageTable() {
             </div>
             <div className='flex-1 ml-4'>
               <Label value='Data collection interval' className='mb-2' />
-              <TextInput required={true} sizing='sm' type={"number"} min={5} placeholder='Insert data collection interval ...' />
+              <TextInput
+                required={true}
+                sizing='sm'
+                autoComplete='off'
+                type={"number"}
+                min={5}
+                placeholder='Insert data collection interval ...'
+              />
             </div>
           </div>
           <div className='mb-4'>

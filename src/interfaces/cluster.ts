@@ -1,16 +1,10 @@
-import { ModalOpenMode } from "@types";
-
-export interface ICluster {
-  id: string;
-  name: string;
-  numOfSensors: number;
-  numOfActiveSensors: number;
-  remarks: string | null;
-}
-
 export interface IClusterStore {
-  clusters: ICluster[];
-  fetch: () => void;
+  clusters: ClusterSummary[];
+  fetch: () => Promise<void>;
+  create: (payload: CreateClusterPayload) => Promise<void>;
+  getById: (clusterId: string) => ClusterSummary;
+  update: (clusterId: string, payload: CreateClusterPayload) => Promise<void>;
+  delete: (clusterId: string) => Promise<void>;
 }
 
 export interface IClusterModalStore {
