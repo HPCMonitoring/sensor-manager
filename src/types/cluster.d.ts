@@ -1,14 +1,17 @@
-export type ClusterSummary = {
+type Cluster = {
   id: string;
   name: string;
   remarks: string | null;
+};
+
+type ClusterSummary = Cluster & {
   numOfSensors: number;
   numOfActiveSensors: number;
 };
 
-export type CreateClusterPayload = {
+type CreateClusterPayload = {
   name: string;
   remarks: string | null;
 };
 
-export type UpdateClusterPayload = CreateClusterPayload;
+type UpdateClusterPayload = CreateClusterPayload;

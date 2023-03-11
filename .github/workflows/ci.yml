@@ -4,18 +4,6 @@ on:
   pull_request:
     branches: ["master"]
 
-env:
-  # Use docker.io for Docker Hub if empty
-  REGISTRY: ghcr.io
-  # Image name MUST have a pattern like <org_name_lowercase>/<repo_name_lowercase>
-  IMAGE_NAME: hpcmonitoring/sensor-manager
-  IMAGE_TAG: 0.1.0
-  # username login to ghcr MUST be organization's name in lower case
-  ORG_USERNAME: hpcmonitoring
-
-permissions:
-  packages: write
-
 jobs:
   test:
     name: Build and test

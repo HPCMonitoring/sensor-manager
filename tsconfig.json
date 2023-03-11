@@ -25,7 +25,6 @@
       "@states": ["src/states"],
       "@interfaces": ["src/interfaces"],
       "@utils": ["src/utils"],
-      "@types": ["src/types"],
       "@services": ["src/services"]
     }
   },

@@ -16,7 +16,7 @@ export function AppSidebar() {
   const darkTheme = useDarkThemeStore((state) => state.dark);
   const toggleDarkTheme = useDarkThemeStore((state) => state.toggleTheme);
   const clusters = useClustersStore((state) => state.clusters);
-  const { isExpand: clusterExpand, expand: expandSidebarClusters, collapse: collapseSidebarClustes } = useClusterExpandStore();
+  const { isExpand: clusterExpand, expand: expandSidebarClusters, collapse: collapseSidebarClusters } = useClusterExpandStore();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,34 +40,47 @@ export function AppSidebar() {
 
         <Sidebar.Items className='flex flex-col justify-between h-full'>
           <Sidebar.ItemGroup>
-            <Sidebar.Collapse
-              icon={Squares2X2Icon}
-              label='Clusters'
-              open={clusterExpand}
-              onClick={(e) => {
-                navigate("/clusters");
-                e.preventDefault();
-                if (DEFAULT_PATH.includes(location.pathname)) {
-                  if (clusterExpand) collapseSidebarClustes();
-                  else expandSidebarClusters();
-                }
-              }}
-              className='cursor-pointer'
-            >
-              {clusters.map((cluster) => (
-                <div
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate(`/clusters/${cluster.id}`);
-                    expandSidebarClusters();
-                  }}
-                  key={cluster.id}
-                  className='cursor-pointer'
-                >
-                  <Sidebar.Item>{cluster.name}</Sidebar.Item>
-                </div>
-              ))}
-            </Sidebar.Collapse>
+            {clusters.length > 0 ? (
+              <Sidebar.Collapse
+                icon={Squares2X2Icon}
+                label='Clusters'
+                open={clusterExpand}
+                onClick={(e) => {
+                  navigate("/clusters");
+                  e.preventDefault();
+                  if (DEFAULT_PATH.includes(location.pathname)) {
+                    if (clusterExpand) collapseSidebarClusters();
+                    else expandSidebarClusters();
+                  }
+                }}
+                className='cursor-pointer'
+              >
+                {clusters.map((cluster) => (
+                  <div
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate(`/clusters/${cluster.id}`);
+                      expandSidebarClusters();
+                    }}
+                    key={cluster.id}
+                    className='cursor-pointer'
+                  >
+                    <Sidebar.Item>{cluster.name}</Sidebar.Item>
+                  </div>
+                ))}
+              </Sidebar.Collapse>
+            ) : (
+              <div
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(`/notifications`);
+                }}
+              >
+                <Sidebar.Item icon={Squares2X2Icon} className='cursor-pointer'>
+                  Clusters
+                </Sidebar.Item>
+              </div>
+            )}
 
             <div
               onClick={(e) => {

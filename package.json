@@ -23,6 +23,7 @@
     "monaco-editor": "0.34.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.5",
     "react-router-dom": "^6.8.1",
     "react-toastify": "^9.1.1",
     "zustand": "^4.3.3"
@@ -38,6 +39,7 @@
     "barrelsby": "^2.5.1",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.1",
     "is-ci": "^3.0.1",
     "lint-staged": "^13.1.0",

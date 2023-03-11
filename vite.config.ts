@@ -28,10 +28,6 @@ export default defineConfig({
         replacement: path.resolve(__dirname, "src/interfaces")
       },
       {
-        find: "@types",
-        replacement: path.resolve(__dirname, "src/types")
-      },
-      {
         find: "@states",
         replacement: path.resolve(__dirname, "src/states")
       },

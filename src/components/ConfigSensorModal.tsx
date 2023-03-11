@@ -27,7 +27,6 @@ export function ConfigSensorModal() {
       show={isOpenConfigSensorModal}
       onClose={closeConfigSensorModal}
       size={isOpenAdvancedConfig ? "6xl" : "md"}
-      dismissible
       position={"top-center"}
     >
       <Modal.Body>
@@ -54,7 +53,14 @@ export function ConfigSensorModal() {
 
               <div className='mb-4 block'>
                 <Label htmlFor={SensorFormField.NAME} value='Sensor name*' className='mb-2' />
-                <TextInput id={SensorFormField.NAME} type='text' required={true} shadow placeholder='Insert cluster name ...' />
+                <TextInput
+                  id={SensorFormField.NAME}
+                  type='text'
+                  required={true}
+                  shadow
+                  autoComplete='off'
+                  placeholder='Insert cluster name ...'
+                />
               </div>
 
               <div className='mb-4 block'>
