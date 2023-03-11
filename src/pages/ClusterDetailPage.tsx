@@ -40,7 +40,7 @@ export function ClusterDetailPage() {
   const openConfigSensorModal = useConfigSensorModalStore((state) => state.open);
   const openRemoveSensorModal = useRemoveSensorModalStore((state) => state.open);
 
-  useEffect(() => fetchSensors(), [clusterId]);
+  useEffect(() => fetchSensors(), [clusterId, fetchSensors]);
 
   return (
     <div>
