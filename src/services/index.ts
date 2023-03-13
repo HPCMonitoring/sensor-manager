@@ -3,4 +3,5 @@
  */
 
 export * from "./cluster";
+export * from "./sensor";
 export * from "./server";

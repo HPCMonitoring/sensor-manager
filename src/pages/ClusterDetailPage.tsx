@@ -1,29 +1,10 @@
-import { RemoveSensorModal, ConfigSensorModal } from "@components";
+import { RemoveSensorModal, ConfigSensorModal, SensorStatusBadge } from "@components";
 import { mockKafkaBrokers, mockKafkaTopics, SensorStatus } from "@constants";
-import { Cog6ToothIcon, MinusCircleIcon, PaperAirplaneIcon, SignalSlashIcon, StopIcon, WifiIcon } from "@heroicons/react/24/solid";
+import { Cog6ToothIcon, MinusCircleIcon, StopIcon } from "@heroicons/react/24/solid";
 import { useClustersStore, useConfigSensorModalStore, useRemoveSensorModalStore, useSensorsStore } from "@states";
 import { Badge, Button, Dropdown, Table, Tooltip } from "flowbite-react";
 import { useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
-
-function SensorStatusBadge(props: { status: SensorStatus }) {
-  const { color, icon } = useMemo(() => {
-    if (props.status === SensorStatus.ONLINE)
-      return {
-        color: "success",
-        icon: WifiIcon
-      };
-    if (props.status === SensorStatus.OFFLINE) return { color: "gray", icon: StopIcon };
-    if (props.status === SensorStatus.REQUESTED) return { color: "info", icon: PaperAirplaneIcon };
-    return { color: "failure", icon: SignalSlashIcon };
-  }, [props.status]);
-
-  return (
-    <Badge color={color} icon={icon} className='w-fit px-2 cursor-pointer'>
-      {props.status}
-    </Badge>
-  );
-}
 
 export function ClusterDetailPage() {
   const { clusterId } = useParams();
@@ -40,7 +21,9 @@ export function ClusterDetailPage() {
   const openConfigSensorModal = useConfigSensorModalStore((state) => state.open);
   const openRemoveSensorModal = useRemoveSensorModalStore((state) => state.open);
 
-  useEffect(() => fetchSensors(), [clusterId, fetchSensors]);
+  useEffect(() => {
+    if (clusterId) fetchSensors(clusterId);
+  }, [clusterId, fetchSensors]);
 
   return (
     <div>
@@ -53,8 +36,8 @@ export function ClusterDetailPage() {
         </Badge>
         <Button.Group>
           <Dropdown label='Status' size='sm' color={"gray"}>
-            <Dropdown.Item>{SensorStatus.ONLINE}</Dropdown.Item>
-            <Dropdown.Item>{SensorStatus.OFFLINE}</Dropdown.Item>
+            <Dropdown.Item>{SensorStatus.RUNNING}</Dropdown.Item>
+            <Dropdown.Item>{SensorStatus.STOPPED}</Dropdown.Item>
             <Dropdown.Item>{SensorStatus.DISCONNECTED}</Dropdown.Item>
             <Dropdown.Item>{SensorStatus.REQUESTED}</Dropdown.Item>
           </Dropdown>
@@ -89,7 +72,7 @@ export function ClusterDetailPage() {
               <Table.Cell>{sensor.ipAddr}</Table.Cell>
               <Table.Cell>{sensor.remarks ? sensor.remarks : "--"}</Table.Cell>
               <Table.Cell>
-                <SensorStatusBadge status={sensor.status} />
+                <SensorStatusBadge state={sensor.state} />
               </Table.Cell>
               <Table.Cell className='flex justify-end align-middle'>
                 <Tooltip content='Stop'>
