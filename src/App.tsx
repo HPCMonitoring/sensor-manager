@@ -8,12 +8,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
-  const fetchClusters = useClustersStore((state) => state.fetch);
   const { loadTheme, dark } = useDarkThemeStore();
+
+  const fetchClusters = useClustersStore((state) => state.fetch);
   useEffect(() => {
-    loadTheme();
     fetchClusters();
-  }, [fetchClusters, loadTheme]);
+  }, [fetchClusters]);
+  useEffect(loadTheme, [loadTheme]);
 
   return (
     <div>

@@ -73,7 +73,7 @@ export function AppSidebar() {
               <div
                 onClick={(e) => {
                   e.preventDefault();
-                  navigate(`/notifications`);
+                  navigate(`/clusters`);
                 }}
               >
                 <Sidebar.Item icon={Squares2X2Icon} className='cursor-pointer'>
