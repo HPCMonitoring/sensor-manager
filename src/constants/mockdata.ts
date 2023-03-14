@@ -1,24 +1,24 @@
 export const mockKafkaBrokers: string[] = ['All', 'localhost:9092', 'bkhpc.hcmut.edu.vn:1456'];
 export const mockKafkaTopics: string[] = ['All', 'memory', 'cpu-each-process'];
 export const mockSensorDetailInfo = {
-	kernelName: 'Linux',
-	kernelVersion: '5.19.0-32-generic',
-	arch: 'x86_64',
-	hostName: 'PhucVinh',
-	rootUser: 'root'
+  kernelName: 'Linux',
+  kernelVersion: '5.19.0-32-generic',
+  arch: 'x86_64',
+  hostName: 'PhucVinh',
+  rootUser: 'root'
 };
 
 export const kafkaTopicConfigs = [
-	{
-		broker: { url: 'http://localhost:8080', name: 'Local host' },
-		topic: { name: 'ram-cpu-usage', alias: 'RAM & CPU' },
-		usingTemplate: 'Template for RAM & CPU'
-	},
-	{
-		broker: { url: 'https://hpcc.tl.vn:9092', name: 'HPCC Center' },
-		topic: { name: 'process-basic', alias: 'Process basic' },
-		usingTemplate: null
-	}
+  {
+    broker: { url: 'http://localhost:8080', name: 'Local host' },
+    topic: { name: 'ram-cpu-usage', alias: 'RAM & CPU' },
+    usingTemplate: 'Template for RAM & CPU'
+  },
+  {
+    broker: { url: 'https://hpcc.tl.vn:9092', name: 'HPCC Center' },
+    topic: { name: 'process-basic', alias: 'Process basic' },
+    usingTemplate: null
+  }
 ];
 
 const longYamlCode = `name: CD
@@ -83,12 +83,12 @@ on:
 `;
 
 export const filterTemplates = [
-	{
-		name: 'Sample Kafka Topic rule',
-		value: longYamlCode
-	},
-	{
-		name: 'Short Yaml Rule',
-		value: shortYamlCode
-	}
+  {
+    name: 'Sample Kafka Topic rule',
+    value: longYamlCode
+  },
+  {
+    name: 'Short Yaml Rule',
+    value: shortYamlCode
+  }
 ];
