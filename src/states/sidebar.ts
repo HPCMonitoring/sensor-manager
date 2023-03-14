@@ -1,5 +1,5 @@
-import { LocalStorageName } from '@constants';
-import { IClusterExpandStore, IDarkThemeStore } from '@interfaces';
+import { LocalStorageName } from '@constants/storeName';
+import { IDarkThemeStore, IClusterExpandStore } from '@interfaces/sidebar';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 

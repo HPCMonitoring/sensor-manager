@@ -1,4 +1,4 @@
-export interface ISimpleModal {
+export interface ISimpleModalStore {
   isOpen: boolean;
   open: () => void;
   close: () => void;

@@ -1,12 +1,5 @@
 export const mockKafkaBrokers: string[] = ['All', 'localhost:9092', 'bkhpc.hcmut.edu.vn:1456'];
 export const mockKafkaTopics: string[] = ['All', 'memory', 'cpu-each-process'];
-export const mockSensorDetailInfo = {
-  kernelName: 'Linux',
-  kernelVersion: '5.19.0-32-generic',
-  arch: 'x86_64',
-  hostName: 'PhucVinh',
-  rootUser: 'root'
-};
 
 export const kafkaTopicConfigs = [
   {

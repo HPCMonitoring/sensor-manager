@@ -6,7 +6,8 @@
     "./src/interfaces",
     "./src/states",
     "./src/utils",
-    "./src/services"
+    "./src/services",
+    "./src/hooks"
   ],
   "exclude": [".test.ts"],
   "delete": true

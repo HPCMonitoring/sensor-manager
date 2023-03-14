@@ -38,6 +38,10 @@ export default defineConfig({
       {
         find: '@services',
         replacement: path.resolve(__dirname, 'src/services')
+      },
+      {
+        find: '@hooks',
+        replacement: path.resolve(__dirname, 'src/hooks')
       }
     ]
   }

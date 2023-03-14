@@ -1,15 +1,11 @@
 import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
-import {
-  useClusterExpandStore,
-  useClusterModalStore,
-  useClustersStore,
-  useDarkThemeStore,
-  useDeleteClusterModalStore
-} from '@states';
 import { Badge, Button, Table, TextInput } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
-import { ClusterModal, DeleteClusterModal } from '@components';
 import { useState } from 'react';
+import { ClusterModal } from '@components/ClusterModal';
+import { DeleteClusterModal } from '@components/DeleteClusterModal';
+import { useClustersStore, useClusterModalStore, useDeleteClusterModalStore } from '@states/cluster';
+import { useDarkThemeStore, useClusterExpandStore } from '@states/sidebar';
 
 export function ClustersPage() {
   const clusters = useClustersStore((state) => state.clusters);

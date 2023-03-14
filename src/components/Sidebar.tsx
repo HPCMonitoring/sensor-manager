@@ -7,10 +7,11 @@ import {
   SunIcon,
   WrenchScrewdriverIcon
 } from '@heroicons/react/24/solid';
-import { useClusterExpandStore, useClustersStore, useDarkThemeStore } from '@states';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../assets/vite.svg';
-import { DEFAULT_PATH } from '@constants';
+import { DEFAULT_PATH } from '@constants/sidebar';
+import { useClustersStore } from '@states/cluster';
+import { useDarkThemeStore, useClusterExpandStore } from '@states/sidebar';
 
 export function AppSidebar() {
   const darkTheme = useDarkThemeStore((state) => state.dark);
