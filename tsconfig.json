@@ -1,33 +1,33 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "target": "ESNext",
-    "sourceRoot": "src",
-    "sourceMap": true,
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "paths": {
-      "@components": ["src/components"],
-      "@pages": ["src/pages"],
-      "@constants": ["src/constants"],
-      "@states": ["src/states"],
-      "@interfaces": ["src/interfaces"],
-      "@utils": ["src/utils"],
-      "@services": ["src/services"]
-    }
-  },
-  "include": ["src", "**/*.ts", "**/*.tsx", "**/*.js", "*.cjs"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+	"compilerOptions": {
+		"baseUrl": ".",
+		"target": "ESNext",
+		"sourceRoot": "src",
+		"sourceMap": true,
+		"useDefineForClassFields": true,
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"allowJs": false,
+		"skipLibCheck": true,
+		"esModuleInterop": false,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"paths": {
+			"@components": ["src/components"],
+			"@pages": ["src/pages"],
+			"@constants": ["src/constants"],
+			"@states": ["src/states"],
+			"@interfaces": ["src/interfaces"],
+			"@utils": ["src/utils"],
+			"@services": ["src/services"]
+		}
+	},
+	"include": ["src", "**/*.ts", "**/*.tsx", "**/*.js", "*.cjs"],
+	"references": [{ "path": "./tsconfig.node.json" }]
 }

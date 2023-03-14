@@ -1,1 +1,1 @@
-type ModalOpenMode = { action: "create"; id?: never } | { action: "update"; id: string };
+type ModalOpenMode = { action: 'create'; id?: never } | { action: 'update'; id: string };
