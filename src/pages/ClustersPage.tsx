@@ -1,7 +1,6 @@
 import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { Badge, Button, Table, TextInput } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { ClusterModal, DeleteClusterModal } from '@components';
 import {
   useClustersStore,
@@ -20,12 +19,11 @@ export function ClustersPage() {
   const openDeleteClusterModal = useDeleteClusterModalStore((state) => state.open);
 
   const expandSidebarClusters = useClusterExpandStore((state) => state.expand);
-  const [deleteClusterId, setDeleteClusterId] = useState('');
 
   return (
     <div>
       <ClusterModal />
-      <DeleteClusterModal clusterId={deleteClusterId} />
+      <DeleteClusterModal />
 
       <div className='flex mb-4 justify-between'>
         <div className='flex flex-row items-center'>
@@ -92,8 +90,7 @@ export function ClustersPage() {
                   gradientMonochrome='failure'
                   onClick={(e) => {
                     e.stopPropagation();
-                    openDeleteClusterModal();
-                    setDeleteClusterId(cluster.id);
+                    openDeleteClusterModal(cluster.id);
                   }}
                   size='sm'
                 >

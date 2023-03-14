@@ -8,8 +8,15 @@ export interface IClusterStore {
 }
 
 export interface IClusterModalStore {
-  mode: ModalOpenMode;
+  mode: ModalMode;
   isOpen: boolean;
-  open: (mode: ModalOpenMode) => void;
+  open: (mode: ModalMode) => void;
   close: () => void;
+}
+
+export interface IClusterDeleteModalStore {
+  clusterId: string | null
+  isOpen: boolean
+  open: (clusterId: string) => void
+  close: () => void
 }

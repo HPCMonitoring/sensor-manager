@@ -1,7 +1,6 @@
 import { CLUSTER_NOT_FOUND, CREATE_CLUSTER_SUCCESS, UPDATE_CLUSTER_SUCCESS, DELETE_CLUSTER_SUCCESS } from '@constants';
-import { IClusterStore, IClusterModalStore } from '@interfaces';
+import { IClusterStore, IClusterModalStore, IClusterDeleteModalStore } from '@interfaces';
 import { clusterService } from '@services';
-import { createSimpleModalStore } from '@utils';
 import { toast } from 'react-toastify';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
@@ -74,9 +73,20 @@ export const useClusterModalStore = create<IClusterModalStore>()(
   devtools((set) => ({
     mode: { action: 'create' }, // Init state,
     isOpen: false,
-    open: (mode: ModalOpenMode) => set(() => ({ mode, isOpen: true })),
+    open: (mode: ModalMode) => set(() => ({ mode, isOpen: true })),
     close: () => set((state) => ({ ...state, isOpen: false }))
   }))
 );
 
-export const useDeleteClusterModalStore = createSimpleModalStore();
+export const useDeleteClusterModalStore = create<IClusterDeleteModalStore>()(
+  devtools((set) => ({
+    clusterId: null,
+    isOpen: false,
+    open(clusterId) {
+      set(() => ({ clusterId }))
+    },
+    close() {
+      set(() => ({ clusterId: null }))
+    }
+  }))
+);
