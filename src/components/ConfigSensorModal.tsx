@@ -21,8 +21,8 @@ type SensorFormData = {
   }>;
 };
 
-export const ConfigSensorModal: Component<{ sensorId: string | null }> = ({ sensorId }) => {
-  const isOpenConfigSensorModal = useConfigSensorModalStore((state) => state.isOpen);
+export function ConfigSensorModal() {
+  const { isOpen: isOpenConfigSensorModal, sensorId } = useConfigSensorModalStore();
   const closeConfigSensorModal = useConfigSensorModalStore((state) => state.close);
 
   const [isOpenAdvancedConfig, setIsOpenAdvancedConfig] = useState(false);
@@ -156,4 +156,4 @@ export const ConfigSensorModal: Component<{ sensorId: string | null }> = ({ sens
       )}
     </Modal>
   );
-};
+}

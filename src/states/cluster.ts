@@ -83,10 +83,10 @@ export const useDeleteClusterModalStore = create<IClusterDeleteModalStore>()(
     clusterId: null,
     isOpen: false,
     open(clusterId) {
-      set(() => ({ clusterId }))
+      set(() => ({ clusterId, isOpen: true }));
     },
     close() {
-      set(() => ({ clusterId: null }))
+      set(() => ({ clusterId: null, isOpen: false }));
     }
   }))
 );

@@ -6,7 +6,7 @@ export const sensorService = {
     return response.data;
   },
   getById: async function (sensorId: string): Promise<Sensor> {
-    const response = await server.get(`/sensors/${sensorId}`)
-    return response.data
+    const response = await server.get(`/sensors/${sensorId}`);
+    return response.data;
   }
 };

@@ -9,7 +9,13 @@ export function KafkaTopicUsageTable() {
   const [isOpenCodeBlock, setIsOpenCodeBlock] = useState(false);
   return (
     <div>
-      <Modal show={isOpenCodeBlock} onClose={() => setIsOpenCodeBlock(false)} position={'top-center'} size='3xl'>
+      <Modal
+        show={isOpenCodeBlock}
+        dismissible
+        onClose={() => setIsOpenCodeBlock(false)}
+        position={'top-center'}
+        size='3xl'
+      >
         <Modal.Body>
           <div className='mb-4 flex'>
             <div className='flex-1'>

@@ -1,9 +1,9 @@
 import { ConfigSensorModal, RemoveSensorModal, SensorStatusBadge } from '@components';
 import { SensorStatus, mockKafkaBrokers, mockKafkaTopics } from '@constants';
 import { Cog6ToothIcon, MinusCircleIcon, StopIcon } from '@heroicons/react/24/solid';
-import { useClustersStore, useSensorsStore, useConfigSensorModalStore, useRemoveSensorModalStore } from '@states';
+import { useClustersStore, useSensorsStore, useConfigSensorModalStore, useDeleteSensorModalStore } from '@states';
 import { Badge, Button, Dropdown, Table, Tooltip } from 'flowbite-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
 export function ClusterDetailPage() {
@@ -19,9 +19,7 @@ export function ClusterDetailPage() {
   const sensors = useSensorsStore((state) => state.sensors);
   const fetchSensors = useSensorsStore((state) => state.fetch);
   const openConfigSensorModal = useConfigSensorModalStore((state) => state.open);
-  const openRemoveSensorModal = useRemoveSensorModalStore((state) => state.open);
-
-  const [targetSensorId, setTargetSensorId] = useState<string | null>(null);
+  const openDeleteSensorModal = useDeleteSensorModalStore((state) => state.open);
 
   useEffect(() => {
     if (clusterId && clusterId.length > 0) fetchSensors(clusterId);
@@ -29,8 +27,8 @@ export function ClusterDetailPage() {
 
   return (
     <div>
-      <ConfigSensorModal sensorId={targetSensorId} />
-      <RemoveSensorModal sensorId={targetSensorId} />
+      <ConfigSensorModal />
+      <RemoveSensorModal />
 
       <div className='flex mb-4 justify-between align-middle text-gray-800 dark:text-gray-200'>
         <Badge size={'xl'} className='font-semibold' color={'gray'}>
@@ -96,8 +94,7 @@ export function ClusterDetailPage() {
                     color={'info'}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setTargetSensorId(sensor.id);
-                      openConfigSensorModal();
+                      openConfigSensorModal(sensor.id);
                     }}
                     size='xs'
                     className='ml-2'
@@ -111,8 +108,7 @@ export function ClusterDetailPage() {
                     color={'failure'}
                     onClick={(e) => {
                       e.stopPropagation();
-                      openRemoveSensorModal();
-                      setTargetSensorId(sensor.id);
+                      openDeleteSensorModal(sensor.id);
                     }}
                     size='xs'
                     className='ml-2'

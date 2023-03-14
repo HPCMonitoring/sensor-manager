@@ -15,8 +15,8 @@ export interface IClusterModalStore {
 }
 
 export interface IClusterDeleteModalStore {
-  clusterId: string | null
-  isOpen: boolean
-  open: (clusterId: string) => void
-  close: () => void
+  clusterId: string | null;
+  isOpen: boolean;
+  open: (clusterId: string) => void;
+  close: () => void;
 }
