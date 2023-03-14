@@ -1,4 +1,4 @@
-import { kafkaTopicConfigs, filterTemplates } from '@constants/mockdata';
+import { filterTemplates, kafkaTopicConfigs } from '@constants';
 import { WrenchIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { Button, Checkbox, Label, Modal, Select, Table, TextInput, Tooltip } from 'flowbite-react';

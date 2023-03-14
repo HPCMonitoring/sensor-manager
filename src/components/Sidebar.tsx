@@ -9,9 +9,8 @@ import {
 } from '@heroicons/react/24/solid';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../assets/vite.svg';
-import { DEFAULT_PATH } from '@constants/sidebar';
-import { useClustersStore } from '@states/cluster';
-import { useDarkThemeStore, useClusterExpandStore } from '@states/sidebar';
+import { DEFAULT_PATH } from '@constants';
+import { useDarkThemeStore, useClustersStore, useClusterExpandStore } from '@states';
 
 export function AppSidebar() {
   const darkTheme = useDarkThemeStore((state) => state.dark);

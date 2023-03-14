@@ -1,11 +1,7 @@
-import { ConfigSensorModal } from '@components/ConfigSensorModal';
-import { RemoveSensorModal } from '@components/RemoveSensorModal';
-import { SensorStatusBadge } from '@components/SensorStatusBadge';
-import { mockKafkaBrokers, mockKafkaTopics } from '@constants/mockdata';
-import { SensorStatus } from '@constants/sensor';
+import { ConfigSensorModal, RemoveSensorModal, SensorStatusBadge } from '@components';
+import { SensorStatus, mockKafkaBrokers, mockKafkaTopics } from '@constants';
 import { Cog6ToothIcon, MinusCircleIcon, StopIcon } from '@heroicons/react/24/solid';
-import { useClustersStore } from '@states/cluster';
-import { useSensorsStore, useConfigSensorModalStore, useRemoveSensorModalStore } from '@states/sensor';
+import { useClustersStore, useSensorsStore, useConfigSensorModalStore, useRemoveSensorModalStore } from '@states';
 import { Badge, Button, Dropdown, Table, Tooltip } from 'flowbite-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';

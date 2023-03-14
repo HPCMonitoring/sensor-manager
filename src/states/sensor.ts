@@ -1,6 +1,6 @@
-import { ISensorStore } from '@interfaces/sensor';
-import { sensorService } from '@services/sensor';
-import { createSimpleModalStore } from '@utils/createSimpleModalStore';
+import { ISensorStore } from '@interfaces';
+import { sensorService } from '@services';
+import { createSimpleModalStore } from '@utils';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 

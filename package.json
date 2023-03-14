@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite --host",
-    "build": "tsc && vite build",
+    "start": "cross-env NODE_ENV=development vite --host",
+    "build": "tsc && cross-env NODE_ENV=production vite build",
     "preview": "vite preview --host",
     "barrels": "barrelsby --config .barrelsby.json",
     "lint": "eslint '**/*.{tsx,ts,js}'",
@@ -37,6 +37,7 @@
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.13",
     "barrelsby": "^2.5.1",
+    "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.6.0",

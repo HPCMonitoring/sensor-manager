@@ -1,5 +1,5 @@
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
-import { useRemoveSensorModalStore } from '@states/sensor';
+import { useRemoveSensorModalStore } from '@states';
 import { Modal, Button } from 'flowbite-react';
 
 export const RemoveSensorModal: Component<{ sensorId: string | null }> = ({ sensorId }) => {

@@ -1,4 +1,4 @@
-import { SensorStatus } from '@constants/sensor';
+import { SensorStatus } from '@constants';
 import { WifiIcon, StopIcon, PaperAirplaneIcon, SignalSlashIcon } from '@heroicons/react/24/solid';
 import { Badge } from 'flowbite-react';
 import { useMemo } from 'react';

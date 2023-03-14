@@ -1,5 +1,5 @@
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
-import { useClustersStore, useDeleteClusterModalStore } from '@states/cluster';
+import { useClustersStore, useDeleteClusterModalStore } from '@states';
 import { Button, Modal } from 'flowbite-react';
 
 export const DeleteClusterModal: Component<{ clusterId: string }> = ({ clusterId }) => {

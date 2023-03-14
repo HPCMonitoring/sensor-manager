@@ -1,4 +1,4 @@
-import { ISimpleModalStore } from '@interfaces/modal';
+import { ISimpleModalStore } from '@interfaces';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 

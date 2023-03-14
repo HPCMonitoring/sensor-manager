@@ -1,5 +1,5 @@
-import { ClusterFormField } from '@constants/cluster';
-import { useClusterModalStore, useClustersStore } from '@states/cluster';
+import { ClusterFormField } from '@constants';
+import { useClusterModalStore, useClustersStore } from '@states';
 import { Button, Label, Modal, Textarea, TextInput } from 'flowbite-react';
 import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';

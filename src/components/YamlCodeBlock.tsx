@@ -1,5 +1,5 @@
 import Editor from '@monaco-editor/react';
-import { useDarkThemeStore } from '@states/sidebar';
+import { useDarkThemeStore } from '@states';
 
 export function YamlCodeBlock(props: { code: string }) {
   const darkTheme = useDarkThemeStore((state) => state.dark);

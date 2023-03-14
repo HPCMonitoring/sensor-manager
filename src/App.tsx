@@ -2,14 +2,10 @@ import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { AppSidebar } from '@components/Sidebar';
-import { useClustersStore } from '@states/cluster';
-import { useDarkThemeStore } from '@states/sidebar';
-import { ClustersPage } from '@pages/ClustersPage';
-import { ClusterDetailPage } from '@pages/ClusterDetailPage';
-import { NotificationPage } from '@pages/NotificationPage';
-import { SettingPage } from '@pages/SettingPage';
-import { SidebarWidth } from '@constants/sidebar';
+import { useClustersStore, useDarkThemeStore } from '@states';
+import { AppSidebar } from '@components';
+import { ClusterDetailPage, ClustersPage, NotificationPage, SettingPage } from '@pages';
+import { SidebarWidth } from '@constants';
 
 export default function App() {
   const { loadTheme, dark } = useDarkThemeStore();

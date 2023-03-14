@@ -19,21 +19,13 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@components/*": ["src/components/*"],
       "@components": ["src/components"],
-      "@pages/*": ["src/pages/*"],
       "@pages": ["src/pages"],
-      "@constants/*": ["src/constants/*"],
       "@constants": ["src/constants"],
-      "@states/*": ["src/states/*"],
       "@states": ["src/states"],
-      "@interfaces/*": ["src/interfaces/*"],
       "@interfaces": ["src/interfaces"],
-      "@utils/*": ["src/utils/*"],
       "@utils": ["src/utils"],
-      "@services/*": ["src/services/*"],
       "@services": ["src/services"],
-      "@hooks/*": ["src/hooks/*"],
       "@hooks": ["src/hooks"]
     }
   },

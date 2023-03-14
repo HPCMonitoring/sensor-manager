@@ -1,8 +1,8 @@
-import { SensorFormField } from '@constants/formId';
+import { SensorFormField } from '@constants';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
-import { sensorService } from '@services/sensor';
-import { useConfigSensorModalStore } from '@states/sensor';
+import { sensorService } from '@services';
+import { useConfigSensorModalStore } from '@states';
 
 import { Button, Card, Label, Modal, Textarea, TextInput } from 'flowbite-react';
 import { useEffect, useState } from 'react';
