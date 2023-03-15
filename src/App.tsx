@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useClustersStore, useDarkThemeStore, useFilterTemplateStore } from "@states";
+import { useClustersStore, useDarkThemeStore, useFilterTemplateStore, useKafkaBrokerStore } from "@states";
 import { AppSidebar } from "@components";
 import { ClusterDetailPage, ClustersPage, NotificationPage, SettingPage } from "@pages";
 import { SidebarWidth } from "@constants";
@@ -12,11 +12,14 @@ export default function App() {
 
   const fetchClusters = useClustersStore((state) => state.fetch);
   const fetchFilterTemplates = useFilterTemplateStore((state) => state.fetch);
+  const fetchKafkaBrokers = useKafkaBrokerStore((state) => state.fetch);
+
   useEffect(() => {
     fetchClusters();
     fetchFilterTemplates();
-  }, [fetchClusters, fetchFilterTemplates]);
-  useEffect(loadTheme, [loadTheme]);
+    fetchKafkaBrokers();
+    loadTheme();
+  }, [fetchClusters, fetchFilterTemplates, fetchKafkaBrokers, loadTheme]);
 
   return (
     <div>
