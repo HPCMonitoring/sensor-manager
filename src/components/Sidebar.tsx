@@ -1,4 +1,4 @@
-import { Sidebar } from 'flowbite-react';
+import { Sidebar } from "flowbite-react";
 import {
   ArrowRightOnRectangleIcon,
   BellAlertIcon,
@@ -6,11 +6,11 @@ import {
   Squares2X2Icon,
   SunIcon,
   WrenchScrewdriverIcon
-} from '@heroicons/react/24/solid';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Logo from '../assets/vite.svg';
-import { DEFAULT_PATH } from '@constants';
-import { useDarkThemeStore, useClustersStore, useClusterExpandStore } from '@states';
+} from "@heroicons/react/24/solid";
+import { useLocation, useNavigate } from "react-router-dom";
+import Logo from "../assets/vite.svg";
+import { DEFAULT_PATH } from "@constants";
+import { useDarkThemeStore, useClustersStore, useClusterExpandStore } from "@states";
 
 export function AppSidebar() {
   const darkTheme = useDarkThemeStore((state) => state.dark);
@@ -35,7 +35,7 @@ export function AppSidebar() {
             imgAlt='Logo'
             onClick={(e) => {
               e.preventDefault();
-              navigate('/clusters');
+              navigate("/clusters");
             }}
           >
             BKTracker
@@ -50,7 +50,7 @@ export function AppSidebar() {
                 label='Clusters'
                 open={clusterExpand}
                 onClick={(e) => {
-                  navigate('/clusters');
+                  navigate("/clusters");
                   e.preventDefault();
                   if (DEFAULT_PATH.includes(location.pathname)) {
                     if (clusterExpand) collapseSidebarClusters();
@@ -112,7 +112,7 @@ export function AppSidebar() {
           <div>
             <Sidebar.ItemGroup onClick={toggleDarkTheme}>
               <Sidebar.Item icon={darkTheme ? SunIcon : MoonIcon} className='cursor-pointer'>
-                {'Use ' + (darkTheme ? 'light' : 'dark') + ' theme'}
+                {"Use " + (darkTheme ? "light" : "dark") + " theme"}
               </Sidebar.Item>
             </Sidebar.ItemGroup>
             <Sidebar.ItemGroup>

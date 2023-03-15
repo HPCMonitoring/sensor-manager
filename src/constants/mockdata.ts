@@ -1,15 +1,15 @@
-export const mockKafkaBrokers: string[] = ['All', 'localhost:9092', 'bkhpc.hcmut.edu.vn:1456'];
-export const mockKafkaTopics: string[] = ['All', 'memory', 'cpu-each-process'];
+export const mockKafkaBrokers: string[] = ["All", "localhost:9092", "bkhpc.hcmut.edu.vn:1456"];
+export const mockKafkaTopics: string[] = ["All", "memory", "cpu-each-process"];
 
 export const kafkaTopicConfigs = [
   {
-    broker: { url: 'http://localhost:8080', name: 'Local host' },
-    topic: { name: 'ram-cpu-usage', alias: 'RAM & CPU' },
-    usingTemplate: 'Template for RAM & CPU'
+    broker: { url: "http://localhost:8080", name: "Local host" },
+    topic: { name: "ram-cpu-usage", alias: "RAM & CPU" },
+    usingTemplate: "Template for RAM & CPU"
   },
   {
-    broker: { url: 'https://hpcc.tl.vn:9092', name: 'HPCC Center' },
-    topic: { name: 'process-basic', alias: 'Process basic' },
+    broker: { url: "https://hpcc.tl.vn:9092", name: "HPCC Center" },
+    topic: { name: "process-basic", alias: "Process basic" },
     usingTemplate: null
   }
 ];
@@ -77,11 +77,11 @@ on:
 
 export const filterTemplates = [
   {
-    name: 'Sample Kafka Topic rule',
+    name: "Sample Kafka Topic rule",
     value: longYamlCode
   },
   {
-    name: 'Short Yaml Rule',
+    name: "Short Yaml Rule",
     value: shortYamlCode
   }
 ];

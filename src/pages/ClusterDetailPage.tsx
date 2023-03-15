@@ -1,10 +1,10 @@
-import { ConfigSensorModal, RemoveSensorModal, SensorStatusBadge } from '@components';
-import { SensorStatus, mockKafkaBrokers, mockKafkaTopics } from '@constants';
-import { Cog6ToothIcon, MinusCircleIcon, StopIcon } from '@heroicons/react/24/solid';
-import { useClustersStore, useSensorsStore, useConfigSensorModalStore, useDeleteSensorModalStore } from '@states';
-import { Badge, Button, Dropdown, Table, Tooltip } from 'flowbite-react';
-import { useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { ConfigSensorModal, RemoveSensorModal, SensorStatusBadge } from "@components";
+import { SensorStatus, mockKafkaBrokers, mockKafkaTopics } from "@constants";
+import { Cog6ToothIcon, MinusCircleIcon, StopIcon } from "@heroicons/react/24/solid";
+import { useClustersStore, useSensorsStore, useConfigSensorModalStore, useDeleteSensorModalStore } from "@states";
+import { Badge, Button, Dropdown, Table, Tooltip } from "flowbite-react";
+import { useEffect, useMemo } from "react";
+import { useParams } from "react-router-dom";
 
 export function ClusterDetailPage() {
   const { clusterId } = useParams();
@@ -12,7 +12,7 @@ export function ClusterDetailPage() {
 
   const clusterName = useMemo(() => {
     const cluster = clusters.find((item) => item.id === clusterId);
-    if (!cluster) return '';
+    if (!cluster) return "";
     return cluster.name;
   }, [clusterId, clusters]);
 
@@ -31,22 +31,22 @@ export function ClusterDetailPage() {
       <RemoveSensorModal />
 
       <div className='flex mb-4 justify-between align-middle text-gray-800 dark:text-gray-200'>
-        <Badge size={'xl'} className='font-semibold' color={'gray'}>
+        <Badge size={"xl"} className='font-semibold' color={"gray"}>
           {clusterName}
         </Badge>
         <Button.Group>
-          <Dropdown label='Status' size='sm' color={'gray'}>
+          <Dropdown label='Status' size='sm' color={"gray"}>
             <Dropdown.Item>{SensorStatus.RUNNING}</Dropdown.Item>
             <Dropdown.Item>{SensorStatus.STOPPED}</Dropdown.Item>
             <Dropdown.Item>{SensorStatus.DISCONNECTED}</Dropdown.Item>
             <Dropdown.Item>{SensorStatus.REQUESTED}</Dropdown.Item>
           </Dropdown>
-          <Dropdown label='Kafka Broker' size='sm' color={'gray'}>
+          <Dropdown label='Kafka Broker' size='sm' color={"gray"}>
             {mockKafkaBrokers.map((broker) => (
               <Dropdown.Item key={broker}>{broker}</Dropdown.Item>
             ))}
           </Dropdown>
-          <Dropdown label='Kafka Topic' size='sm' color={'gray'}>
+          <Dropdown label='Kafka Topic' size='sm' color={"gray"}>
             {mockKafkaTopics.map((broker) => (
               <Dropdown.Item key={broker}>{broker}</Dropdown.Item>
             ))}
@@ -72,14 +72,14 @@ export function ClusterDetailPage() {
                 {sensor.name}
               </Table.Cell>
               <Table.Cell>{sensor.ipAddr}</Table.Cell>
-              <Table.Cell>{sensor.remarks ? sensor.remarks : '--'}</Table.Cell>
+              <Table.Cell>{sensor.remarks ? sensor.remarks : "--"}</Table.Cell>
               <Table.Cell>
                 <SensorStatusBadge state={sensor.state} />
               </Table.Cell>
               <Table.Cell className='flex justify-end align-middle'>
                 <Tooltip content='Stop'>
                   <Button
-                    color={'warning'}
+                    color={"warning"}
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
@@ -91,7 +91,7 @@ export function ClusterDetailPage() {
 
                 <Tooltip content='Config'>
                   <Button
-                    color={'info'}
+                    color={"info"}
                     onClick={(e) => {
                       e.stopPropagation();
                       openConfigSensorModal(sensor.id);
@@ -105,7 +105,7 @@ export function ClusterDetailPage() {
 
                 <Tooltip content='Remove' className='ml-2'>
                   <Button
-                    color={'failure'}
+                    color={"failure"}
                     onClick={(e) => {
                       e.stopPropagation();
                       openDeleteSensorModal(sensor.id);

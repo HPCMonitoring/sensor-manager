@@ -1,14 +1,14 @@
-import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
-import { Badge, Button, Table, TextInput } from 'flowbite-react';
-import { useNavigate } from 'react-router-dom';
-import { ClusterModal, DeleteClusterModal } from '@components';
+import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { Badge, Button, Table, TextInput } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
+import { ClusterModal, DeleteClusterModal } from "@components";
 import {
   useClustersStore,
   useDarkThemeStore,
   useClusterModalStore,
   useDeleteClusterModalStore,
   useClusterExpandStore
-} from '@states';
+} from "@states";
 
 export function ClustersPage() {
   const clusters = useClustersStore((state) => state.clusters);
@@ -27,10 +27,10 @@ export function ClustersPage() {
 
       <div className='flex mb-4 justify-between'>
         <div className='flex flex-row items-center'>
-          <Badge size='2xl' color={darkTheme ? 'gray' : 'info'}>
+          <Badge size='2xl' color={darkTheme ? "gray" : "info"}>
             {clusters.length} Clusters
           </Badge>
-          <Badge size='2xl' color={darkTheme ? 'gray' : 'info'} className='ml-2'>
+          <Badge size='2xl' color={darkTheme ? "gray" : "info"} className='ml-2'>
             {clusters.reduce((numSensors: number, cluster) => numSensors + cluster.numOfSensors, 0)} Sensors
           </Badge>
         </div>
@@ -42,7 +42,7 @@ export function ClustersPage() {
             placeholder='Search ...'
             required={true}
           />
-          <Button gradientMonochrome='info' className='ml-2' onClick={() => openClusterModal({ action: 'create' })}>
+          <Button gradientMonochrome='info' className='ml-2' onClick={() => openClusterModal({ action: "create" })}>
             New cluster
           </Button>
         </div>
@@ -72,13 +72,13 @@ export function ClustersPage() {
               </Table.Cell>
               <Table.Cell>{cluster.numOfSensors}</Table.Cell>
               <Table.Cell>{cluster.numOfSensors}</Table.Cell>
-              <Table.Cell>{cluster.remarks ? cluster.remarks : '--'}</Table.Cell>
+              <Table.Cell>{cluster.remarks ? cluster.remarks : "--"}</Table.Cell>
               <Table.Cell className='flex justify-end'>
                 <Button
                   gradientMonochrome='info'
                   onClick={(e) => {
                     e.stopPropagation();
-                    openClusterModal({ action: 'update', id: cluster.id });
+                    openClusterModal({ action: "update", id: cluster.id });
                   }}
                   size='sm'
                   className='mr-2'

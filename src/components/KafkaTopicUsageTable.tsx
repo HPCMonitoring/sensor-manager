@@ -1,9 +1,9 @@
-import { filterTemplates, kafkaTopicConfigs } from '@constants';
-import { WrenchIcon } from '@heroicons/react/24/outline';
-import { XMarkIcon } from '@heroicons/react/24/solid';
-import { Button, Checkbox, Label, Modal, Select, Table, TextInput, Tooltip } from 'flowbite-react';
-import { useState } from 'react';
-import { YamlCodeBlock } from './YamlCodeBlock';
+import { filterTemplates, kafkaTopicConfigs } from "@constants";
+import { WrenchIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+import { Button, Checkbox, Label, Modal, Select, Table, TextInput, Tooltip } from "flowbite-react";
+import { useState } from "react";
+import { YamlCodeBlock } from "./YamlCodeBlock";
 
 export function KafkaTopicUsageTable() {
   const [isOpenCodeBlock, setIsOpenCodeBlock] = useState(false);
@@ -13,7 +13,7 @@ export function KafkaTopicUsageTable() {
         show={isOpenCodeBlock}
         dismissible
         onClose={() => setIsOpenCodeBlock(false)}
-        position={'top-center'}
+        position={"top-center"}
         size='3xl'
       >
         <Modal.Body>
@@ -41,7 +41,7 @@ export function KafkaTopicUsageTable() {
                 required={true}
                 sizing='sm'
                 autoComplete='off'
-                type={'number'}
+                type={"number"}
                 min={5}
                 placeholder='Insert data collection interval ...'
               />
@@ -64,9 +64,9 @@ export function KafkaTopicUsageTable() {
             <YamlCodeBlock code={filterTemplates[1].value} />
           </div>
           <div className='flex justify-end'>
-            <Button color={'light'}>Discard</Button>
+            <Button color={"light"}>Discard</Button>
             <Button gradientMonochrome='info' className='ml-2'>
-              {' '}
+              {" "}
               Add
             </Button>
           </div>
@@ -91,7 +91,7 @@ export function KafkaTopicUsageTable() {
                 <Tooltip content={config.broker.url}>{config.broker.name}</Tooltip>
               </Table.Cell>
               <Table.Cell>
-                <Tooltip content={config.topic.name}>{config.topic.alias}</Tooltip>{' '}
+                <Tooltip content={config.topic.name}>{config.topic.alias}</Tooltip>{" "}
               </Table.Cell>
               <Table.Cell>{config.usingTemplate}</Table.Cell>
               <Table.Cell className='flex justify-end'>

@@ -15,4 +15,4 @@ type CreateClusterPayload = {
 };
 
 type UpdateClusterPayload = CreateClusterPayload;
-type ModalMode = { action: 'create'; id?: never } | { action: 'update'; id: string };
+type ModalMode = { action: "create"; id?: never } | { action: "update"; id: string };

@@ -1,14 +1,14 @@
-import { SensorFormField } from '@constants';
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
-import { sensorService } from '@services';
-import { useConfigSensorModalStore } from '@states';
+import { SensorFormField } from "@constants";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
+import { sensorService } from "@services";
+import { useConfigSensorModalStore } from "@states";
 
-import { Button, Card, Label, Modal, Textarea, TextInput } from 'flowbite-react';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { KafkaTopicUsageTable } from './KafkaTopicUsageTable';
-import { SystemInfoCard } from './SystemInfoCard';
+import { Button, Card, Label, Modal, Textarea, TextInput } from "flowbite-react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { KafkaTopicUsageTable } from "./KafkaTopicUsageTable";
+import { SystemInfoCard } from "./SystemInfoCard";
 
 type SensorFormData = {
   name: string;
@@ -34,8 +34,8 @@ export function ConfigSensorModal() {
     if (sensorId)
       sensorService.getById(sensorId).then((sensor) => {
         setSensorData(sensor);
-        setValue('name', sensor.name);
-        setValue('remarks', sensor.remarks ? sensor.remarks : '');
+        setValue("name", sensor.name);
+        setValue("remarks", sensor.remarks ? sensor.remarks : "");
       });
   }, [sensorId, setValue]);
 
@@ -43,8 +43,8 @@ export function ConfigSensorModal() {
     <Modal
       show={isOpenConfigSensorModal}
       onClose={closeConfigSensorModal}
-      size={isOpenAdvancedConfig ? '6xl' : 'md'}
-      position={'top-center'}
+      size={isOpenAdvancedConfig ? "6xl" : "md"}
+      position={"top-center"}
     >
       {sensorData && (
         <Modal.Body>
@@ -55,14 +55,14 @@ export function ConfigSensorModal() {
             }}
           >
             <div className='border-b-2 dark:border-gray-600 mb-4 w-full flex'>
-              <div className={isOpenAdvancedConfig ? 'flex-none w-1/3' : 'w-full'}>
+              <div className={isOpenAdvancedConfig ? "flex-none w-1/3" : "w-full"}>
                 <Label htmlFor={SensorFormField.SYSTEM_INFO} value='SYSTEM INFO' className='mb-2' />
                 <Card className='mb-4 mt-1 p-0 w-full' id={SensorFormField.SYSTEM_INFO}>
-                  <SystemInfoCard attr={'Kernel Name'} value={sensorData.kernelName} />
-                  <SystemInfoCard attr={'Kernel Version'} value={sensorData.kernelVersion} />
-                  <SystemInfoCard attr={'Architecture'} value={sensorData.arch} />
-                  <SystemInfoCard attr={'Hostname'} value={sensorData.hostname} />
-                  <SystemInfoCard attr={'Root user'} value={sensorData.rootUser} />
+                  <SystemInfoCard attr={"Kernel Name"} value={sensorData.kernelName} />
+                  <SystemInfoCard attr={"Kernel Version"} value={sensorData.kernelVersion} />
+                  <SystemInfoCard attr={"Architecture"} value={sensorData.arch} />
+                  <SystemInfoCard attr={"Hostname"} value={sensorData.hostname} />
+                  <SystemInfoCard attr={"Root user"} value={sensorData.rootUser} />
                 </Card>
 
                 <div className='mb-4 block'>
@@ -73,7 +73,7 @@ export function ConfigSensorModal() {
                     shadow
                     autoComplete='off'
                     placeholder='Insert sensor name ...'
-                    {...register('name', { required: true })}
+                    {...register("name", { required: true })}
                   />
                 </div>
 
@@ -84,7 +84,7 @@ export function ConfigSensorModal() {
                     placeholder='Insert remarks ...'
                     rows={2}
                     shadow
-                    {...register('remarks')}
+                    {...register("remarks")}
                   />
                 </div>
 
@@ -101,7 +101,7 @@ export function ConfigSensorModal() {
               </div>
 
               <div
-                style={{ display: isOpenAdvancedConfig ? 'block' : 'none' }}
+                style={{ display: isOpenAdvancedConfig ? "block" : "none" }}
                 className='flex-1 ml-4 pl-4 border-l-2 dark:border-gray-600'
               >
                 <div className='w-full mb-6'>
@@ -143,11 +143,11 @@ export function ConfigSensorModal() {
             </div>
 
             <div className='flex justify-end'>
-              <Button color={'light'} onClick={closeConfigSensorModal}>
+              <Button color={"light"} onClick={closeConfigSensorModal}>
                 Cancel
               </Button>
               <Button gradientMonochrome='info' className='ml-2' onClick={closeConfigSensorModal} type='submit'>
-                {' '}
+                {" "}
                 Save
               </Button>
             </div>

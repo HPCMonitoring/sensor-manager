@@ -1,4 +1,4 @@
-import { server } from './server';
+import { server } from "./server";
 
 export const sensorService = {
   getByClusterId: async function (clusterId: string): Promise<SensorSummary[]> {

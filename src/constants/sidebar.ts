@@ -3,4 +3,4 @@ export enum SidebarWidth {
   EXPAND = 256
 }
 
-export const DEFAULT_PATH = ['/clusters', '/', ''];
+export const DEFAULT_PATH = ["/clusters", "/", ""];

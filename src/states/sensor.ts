@@ -1,7 +1,7 @@
-import { IConfigSensorModalStore, IDeleteSensorModalStore, ISensorStore } from '@interfaces';
-import { sensorService } from '@services';
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { IConfigSensorModalStore, IDeleteSensorModalStore, ISensorStore } from "@interfaces";
+import { sensorService } from "@services";
+import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 
 export const useSensorsStore = create<ISensorStore>()(
   devtools((set) => ({
