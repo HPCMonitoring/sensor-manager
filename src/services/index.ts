@@ -5,3 +5,4 @@
 export * from './cluster';
 export * from './sensor';
 export * from './server';
+export * from './user';
