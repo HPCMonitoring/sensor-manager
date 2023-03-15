@@ -12,13 +12,20 @@ export interface ISensorStore {
 export interface IConfigSensorModalStore {
   sensorId: string | null;
   isOpen: boolean;
-  open: (clusterId: string) => void;
+  open: (sensorId: string) => void;
   close: () => void;
 }
 
 export interface IDeleteSensorModalStore {
   sensorId: string | null;
   isOpen: boolean;
-  open: (clusterId: string) => void;
+  open: (sensorId: string) => void;
+  close: () => void;
+}
+
+export interface IConfigSensorSendingModalStore {
+  sensor: Sensor | null;
+  isOpen: boolean;
+  open: (sensor: Sensor) => void;
   close: () => void;
 }

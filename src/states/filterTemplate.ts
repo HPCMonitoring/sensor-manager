@@ -9,7 +9,6 @@ export const useFilterTemplateStore = create<IFilterTemplateStore>()(
     fetch: async function () {
       const filterTemplates = await userService.getFilterTemplates();
       set({ filterTemplates });
-      console.log(filterTemplates);
     }
   }))
 );

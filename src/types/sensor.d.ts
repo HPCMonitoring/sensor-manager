@@ -8,19 +8,32 @@ type SensorSummary = {
   state: SensorState;
 };
 
-type Sensor = SensorSummary & {
+type SubscribingTopic = {
+  id: string;
+  name: string;
+  interval: number;
+  usingTemplate: {
+    id: string;
+    name: string;
+  } | null;
+  script: string;
+  broker: {
+    id: string;
+    name: string;
+    url: string;
+  };
+};
+
+type Sensor = {
+  id: string;
+  name: string;
+  ipAddr: string;
+  remarks: string | null;
   kernelName: string;
   kernelVersion: string;
   arch: string;
   hostname: string;
   rootUser: string;
-  subscribingTopics: Array<{
-    id: string;
-    name: string;
-    interval: 0;
-    usingTemplateId: string | null;
-    script: string;
-    brokerId: string;
-    brokerName: string;
-  }>;
+  state: SensorState;
+  subscribingTopics: SubscribingTopic[];
 };

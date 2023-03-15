@@ -1,4 +1,9 @@
-import { IConfigSensorModalStore, IDeleteSensorModalStore, ISensorStore } from "@interfaces";
+import {
+  IConfigSensorModalStore,
+  IConfigSensorSendingModalStore,
+  IDeleteSensorModalStore,
+  ISensorStore
+} from "@interfaces";
 import { sensorService } from "@services";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
@@ -35,6 +40,19 @@ export const useDeleteSensorModalStore = create<IDeleteSensorModalStore>()(
     },
     close() {
       set(() => ({ sensorId: null, isOpen: false }));
+    }
+  }))
+);
+
+export const useConfigSensorSendingModalStore = create<IConfigSensorSendingModalStore>()(
+  devtools((set) => ({
+    sensor: null,
+    isOpen: false,
+    open: (sensor) => {
+      set(() => ({ isOpen: true, sensor }));
+    },
+    close: () => {
+      set(() => ({ isOpen: false, sensor: null }));
     }
   }))
 );

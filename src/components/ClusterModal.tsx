@@ -29,7 +29,6 @@ export function ClusterModal() {
   }, [getClusterById, mode.action, mode.id, setValue]);
 
   const submit = (formData: ClusterModalFormData) => {
-    console.log(formData);
     const payload = {
       name: formData.name,
       remarks: formData.remarks.length === 0 ? null : formData.remarks

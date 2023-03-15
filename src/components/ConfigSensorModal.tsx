@@ -7,7 +7,7 @@ import { useConfigSensorModalStore } from "@states";
 import { Button, Card, Label, Modal, Textarea, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { KafkaTopicUsageTable } from "./KafkaTopicUsageTable";
+import { KafkaTopicConfigTable } from "./KafkaTopicUsageTable";
 import { SystemInfoCard } from "./SystemInfoCard";
 
 type SensorFormData = {
@@ -46,7 +46,7 @@ export function ConfigSensorModal() {
       size={isOpenAdvancedConfig ? "6xl" : "md"}
       position={"top-center"}
     >
-      {sensorData && (
+      {sensorData && sensorId && (
         <Modal.Body>
           <form
             className='w-full'
@@ -106,10 +106,10 @@ export function ConfigSensorModal() {
               >
                 <div className='w-full mb-6'>
                   <div className='flex justify-between align-middle text-gray-500 dark:text-gray-200 font-bold w-full dark:border-gray-600 border-b-2 pb-1'>
-                    <div>Kafka Topics</div>
+                    Kafka Topics
                   </div>
                   <div className='mb-2'>
-                    <KafkaTopicUsageTable />
+                    <KafkaTopicConfigTable sensor={sensorData} />
                   </div>
                   <Button
                     color='light'

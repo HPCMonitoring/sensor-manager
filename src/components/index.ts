@@ -4,6 +4,7 @@
 
 export * from "./ClusterModal";
 export * from "./ConfigSensorModal";
+export * from "./ConfigSensorSendingModal";
 export * from "./DeleteClusterModal";
 export * from "./KafkaTopicUsageTable";
 export * from "./RemoveSensorModal";

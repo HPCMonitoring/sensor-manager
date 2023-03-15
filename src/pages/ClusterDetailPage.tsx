@@ -1,9 +1,15 @@
-import { ConfigSensorModal, RemoveSensorModal, SensorStatusBadge } from "@components";
-import { SensorStatus, mockKafkaBrokers, mockKafkaTopics } from "@constants";
+import { ConfigSensorModal, ConfigSensorSendingModal, RemoveSensorModal, SensorStatusBadge } from "@components";
+import { SensorStatus } from "@constants";
 import { Cog6ToothIcon, MinusCircleIcon, StopIcon } from "@heroicons/react/24/solid";
-import { useClustersStore, useSensorsStore, useConfigSensorModalStore, useDeleteSensorModalStore } from "@states";
+import {
+  useClustersStore,
+  useSensorsStore,
+  useConfigSensorModalStore,
+  useDeleteSensorModalStore,
+  useKafkaBrokerStore
+} from "@states";
 import { Badge, Button, Dropdown, Table, Tooltip } from "flowbite-react";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export function ClusterDetailPage() {
@@ -20,6 +26,16 @@ export function ClusterDetailPage() {
   const fetchSensors = useSensorsStore((state) => state.fetch);
   const openConfigSensorModal = useConfigSensorModalStore((state) => state.open);
   const openDeleteSensorModal = useDeleteSensorModalStore((state) => state.open);
+  const kafkaBrokers = useKafkaBrokerStore((state) => state.brokers);
+
+  const [currKafkaBrokerId, setCurrKafkaBrokerId] = useState<string | null>(null);
+
+  const kafkaTopics = useMemo(() => {
+    if (!currKafkaBrokerId) return [];
+    const broker = kafkaBrokers.find((item) => item.id === currKafkaBrokerId);
+    if (!broker) return [];
+    return broker.topics;
+  }, [kafkaBrokers, currKafkaBrokerId]);
 
   useEffect(() => {
     if (clusterId && clusterId.length > 0) fetchSensors(clusterId);
@@ -29,6 +45,7 @@ export function ClusterDetailPage() {
     <div>
       <ConfigSensorModal />
       <RemoveSensorModal />
+      <ConfigSensorSendingModal />
 
       <div className='flex mb-4 justify-between align-middle text-gray-800 dark:text-gray-200'>
         <Badge size={"xl"} className='font-semibold' color={"gray"}>
@@ -42,13 +59,15 @@ export function ClusterDetailPage() {
             <Dropdown.Item>{SensorStatus.REQUESTED}</Dropdown.Item>
           </Dropdown>
           <Dropdown label='Kafka Broker' size='sm' color={"gray"}>
-            {mockKafkaBrokers.map((broker) => (
-              <Dropdown.Item key={broker}>{broker}</Dropdown.Item>
+            {kafkaBrokers.map((broker) => (
+              <Dropdown.Item key={broker.id} onClick={() => setCurrKafkaBrokerId(broker.id)}>
+                {broker.name}
+              </Dropdown.Item>
             ))}
           </Dropdown>
           <Dropdown label='Kafka Topic' size='sm' color={"gray"}>
-            {mockKafkaTopics.map((broker) => (
-              <Dropdown.Item key={broker}>{broker}</Dropdown.Item>
+            {kafkaTopics.map((topic) => (
+              <Dropdown.Item key={topic.id}>{topic.name}</Dropdown.Item>
             ))}
           </Dropdown>
         </Button.Group>
