@@ -14,7 +14,6 @@ export const useKafkaBrokerStore = create<IKafkaBrokerStore>()(
       const brokers = get().brokers;
       const broker = brokers.find((item) => item.id === brokerId);
       if (!broker) return [];
-      console.log(broker.topics);
       return broker.topics;
     }
   }))

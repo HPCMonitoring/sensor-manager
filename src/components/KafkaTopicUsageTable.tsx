@@ -3,7 +3,7 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useConfigSensorSendingModalStore } from "@states";
 import { Button, Table, Tooltip } from "flowbite-react";
 
-export const KafkaTopicConfigTable: Component<{ sensor: Sensor }> = ({ sensor }) => {
+export const KafkaTopicConfigTable: Component<{ configs: SubscribingTopic[] }> = ({ configs }) => {
   const openConfigModal = useConfigSensorSendingModalStore((state) => state.open);
 
   return (
@@ -18,7 +18,7 @@ export const KafkaTopicConfigTable: Component<{ sensor: Sensor }> = ({ sensor })
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className='divide-y'>
-          {sensor.subscribingTopics.map((topic) => (
+          {configs.map((topic) => (
             <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800' key={topic.id}>
               <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
                 <Tooltip content={topic.broker.url}>{topic.broker.name}</Tooltip>
@@ -26,7 +26,7 @@ export const KafkaTopicConfigTable: Component<{ sensor: Sensor }> = ({ sensor })
               <Table.Cell> {topic.name} </Table.Cell>
               <Table.Cell>{topic.usingTemplate ? topic.usingTemplate.name : ""}</Table.Cell>
               <Table.Cell className='flex justify-end'>
-                <Button gradientMonochrome='info' size='xs' onClick={() => openConfigModal(sensor)}>
+                <Button gradientMonochrome='info' size='xs' onClick={() => openConfigModal(topic)}>
                   <WrenchIcon className='h-4 w-4' />
                 </Button>
                 <Button gradientMonochrome='failure' size='xs' className='ml-2'>

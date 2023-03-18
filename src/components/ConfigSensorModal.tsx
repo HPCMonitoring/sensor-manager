@@ -10,15 +10,17 @@ import { useForm } from "react-hook-form";
 import { KafkaTopicConfigTable } from "./KafkaTopicUsageTable";
 import { SystemInfoCard } from "./SystemInfoCard";
 
+type SubscribingTopicFormData = {
+  topicId: string;
+  interval: 0;
+  usingTemplateId: string | null;
+  script: string;
+};
+
 type SensorFormData = {
   name: string;
   remarks: string;
-  subscribingTopics: Array<{
-    topicId: string;
-    interval: 0;
-    usingTemplateId: string | null;
-    script: string;
-  }>;
+  subscribingTopics: SubscribingTopicFormData[];
 };
 
 export function ConfigSensorModal() {
@@ -109,7 +111,7 @@ export function ConfigSensorModal() {
                     Kafka Topics
                   </div>
                   <div className='mb-2'>
-                    <KafkaTopicConfigTable sensor={sensorData} />
+                    <KafkaTopicConfigTable configs={sensorData.subscribingTopics} />
                   </div>
                   <Button
                     color='light'

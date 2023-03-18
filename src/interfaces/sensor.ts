@@ -24,8 +24,13 @@ export interface IDeleteSensorModalStore {
 }
 
 export interface IConfigSensorSendingModalStore {
-  sensor: Sensor | null;
+  topic: SubscribingTopic | null;
   isOpen: boolean;
-  open: (sensor: Sensor) => void;
+  setTopic: (topicId: string) => void;
+  setBroker: (brokerId: string) => void;
+  setInterval: (interval: number) => void;
+  setUsingTemplate: (templateId: string) => void;
+  setScript: (script: string) => void;
+  open: (topic: SubscribingTopic) => void;
   close: () => void;
 }
