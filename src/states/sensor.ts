@@ -1,4 +1,4 @@
-import { BROKER_NOT_HAVE_TOPICS } from "@constants";
+import { BROKER_NOT_HAVE_TOPICS, UPDATE_SENSOR_SUCCESS } from "@constants";
 import {
   IConfigSensorModalStore,
   IConfigSensorTopicModalStore as IConfigTopicSubscriptionModalStore,
@@ -22,11 +22,12 @@ export const useSensorsStore = create<ISensorStore>()(
     delete: async (sensorId: string) => {
       try {
         await sensorService.delete(sensorId);
-      } catch (error) {
         const sensors: SensorSummary[] = JSON.parse(JSON.stringify(get().sensors));
         const deletedSensorIdx = sensors.findIndex((sensor) => sensor.id === sensorId);
         if (deletedSensorIdx !== -1) sensors.splice(deletedSensorIdx, 1);
         set(() => ({ sensors }));
+      } catch (error) {
+        toast.error((error as Error).message);
       }
     },
     update: async (sensorId: string, payload: UpdateSensorPayload) => {
@@ -38,6 +39,7 @@ export const useSensorsStore = create<ISensorStore>()(
           modifiedSensor.name = payload.name;
           modifiedSensor.remarks = payload.remarks;
           set(() => ({ sensors }));
+          toast.success(UPDATE_SENSOR_SUCCESS);
         }
       } catch (err) {
         toast.error((err as Error).message);

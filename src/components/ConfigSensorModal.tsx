@@ -1,14 +1,17 @@
-import { SensorFormField } from "@constants";
+import { NOT_FOUND_ANY_TOPICS, SensorFormField } from "@constants";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
 import {
   useConfigSensorModalStore,
   useConfigTopicSubscriptionModalStore,
+  useKafkaBrokerStore,
   useSensorsStore
 } from "@states";
 import { Button, Card, Label, Modal, Textarea, TextInput } from "flowbite-react";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { KafkaTopicConfigTable } from "./KafkaTopicUsageTable";
 import { SystemInfoCard } from "./SystemInfoCard";
 
@@ -17,8 +20,9 @@ export function ConfigSensorModal() {
   const [isOpenAdvancedConfig, setIsOpenAdvancedConfig] = useState(false);
   const { update: updateSensor } = useSensorsStore();
 
-  const modifyingTopic = useConfigTopicSubscriptionModalStore((state) => state.topic);
-  const { register, setValue, getValues: getFormValues } = useForm<Sensor>();
+  const { topic: modifyingTopic, open: openConfigTopicSubscriptionModal } =
+    useConfigTopicSubscriptionModalStore();
+  const { register, setValue, getValues: getFormValues, watch, handleSubmit } = useForm<Sensor>();
 
   useEffect(() => {
     if (modifyingTopic === null) return;
@@ -34,15 +38,31 @@ export function ConfigSensorModal() {
 
   useEffect(() => {
     if (!targetSensor) return;
+    setValue("id", targetSensor.id);
     setValue("name", targetSensor.name);
     setValue("remarks", targetSensor.remarks ? targetSensor.remarks : "");
     setValue("subscribingTopics", targetSensor.subscribingTopics);
   }, [targetSensor, setValue]);
 
-  const topicConfigs = getFormValues("subscribingTopics");
+  const deleteConfig = (key: string) => {
+    const subscribingTopics: SubscribingTopic[] = getFormValues("subscribingTopics");
+    const targetTopicIdx = subscribingTopics.findIndex((topic) => topic.key === key);
+    if (targetTopicIdx === -1) return;
+    subscribingTopics.splice(targetTopicIdx, 1);
+    setValue("subscribingTopics", subscribingTopics);
+  };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const topicConfigs = watch("subscribingTopics");
+
+  const defaultKafkaBroker = useKafkaBrokerStore((state) => {
+    if (state.brokers.length === 0) return null;
+    for (const item of state.brokers) {
+      if (item.topics.length > 0) return item;
+    }
+    return null;
+  });
+
+  const onSubmit = () => {
     const modifiedSensor = getFormValues();
     updateSensor(modifiedSensor.id, {
       name: modifiedSensor.name,
@@ -53,7 +73,7 @@ export function ConfigSensorModal() {
         script: item.script,
         interval: item.interval
       }))
-    });
+    }).then(() => close());
   };
 
   return (
@@ -65,7 +85,7 @@ export function ConfigSensorModal() {
     >
       {targetSensor && (
         <Modal.Body>
-          <form className='w-full' onSubmit={handleSubmit}>
+          <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
             <div className='border-b-2 dark:border-gray-600 mb-4 w-full flex'>
               <div className={isOpenAdvancedConfig ? "flex-none w-1/3" : "w-full"}>
                 <Label htmlFor={SensorFormField.SYSTEM_INFO} value='SYSTEM INFO' className='mb-2' />
@@ -121,12 +141,30 @@ export function ConfigSensorModal() {
                     Kafka Topics
                   </div>
                   <div className='mb-2'>
-                    <KafkaTopicConfigTable configs={topicConfigs ? topicConfigs : []} />
+                    <KafkaTopicConfigTable
+                      deleteItem={deleteConfig}
+                      configs={topicConfigs ? topicConfigs : []}
+                    />
                   </div>
                   <Button
                     color='light'
-                    onClick={(e) => {
-                      e.stopPropagation();
+                    onClick={() => {
+                      if (!defaultKafkaBroker) {
+                        toast.warning(NOT_FOUND_ANY_TOPICS);
+                      } else
+                        openConfigTopicSubscriptionModal({
+                          key: moment().unix().toString(),
+                          id: defaultKafkaBroker.topics[0].id,
+                          name: defaultKafkaBroker.topics[0].name,
+                          interval: 10,
+                          script: "",
+                          broker: {
+                            id: defaultKafkaBroker.id,
+                            name: defaultKafkaBroker.name,
+                            url: defaultKafkaBroker.url
+                          },
+                          usingTemplate: null
+                        });
                     }}
                     size='xs'
                     className='w-full text-left cursor-pointer'
@@ -158,7 +196,7 @@ export function ConfigSensorModal() {
               <Button color={"light"} onClick={close}>
                 Cancel
               </Button>
-              <Button gradientMonochrome='info' className='ml-2' onClick={close} type='submit'>
+              <Button gradientMonochrome='info' className='ml-2' type='submit'>
                 {" "}
                 Save
               </Button>
