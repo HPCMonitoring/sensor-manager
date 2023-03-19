@@ -31,7 +31,8 @@ export function ClustersPage() {
             {clusters.length} Clusters
           </Badge>
           <Badge size='2xl' color={darkTheme ? "gray" : "info"} className='ml-2'>
-            {clusters.reduce((numSensors: number, cluster) => numSensors + cluster.numOfSensors, 0)} Sensors
+            {clusters.reduce((numSensors: number, cluster) => numSensors + cluster.numOfSensors, 0)}{" "}
+            Sensors
           </Badge>
         </div>
         <div className='flex flex-row'>
@@ -42,7 +43,11 @@ export function ClustersPage() {
             placeholder='Search ...'
             required={true}
           />
-          <Button gradientMonochrome='info' className='ml-2' onClick={() => openClusterModal({ action: "create" })}>
+          <Button
+            gradientMonochrome='info'
+            className='ml-2'
+            onClick={() => openClusterModal({ action: "create" })}
+          >
             New cluster
           </Button>
         </div>

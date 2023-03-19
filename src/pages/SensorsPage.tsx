@@ -1,4 +1,9 @@
-import { ConfigSensorModal, ConfigTopicSubscriptionModal, RemoveSensorModal, SensorStatusBadge } from "@components";
+import {
+  ConfigSensorModal,
+  ConfigTopicSubscriptionModal,
+  RemoveSensorModal,
+  SensorStatusBadge
+} from "@components";
 import { SensorStatus } from "@constants";
 import { Cog6ToothIcon, MinusCircleIcon, StopIcon } from "@heroicons/react/24/solid";
 import {
@@ -33,8 +38,7 @@ export function SensorsPage() {
   const kafkaTopics = useMemo(() => {
     if (!currKafkaBrokerId) return [];
     const broker = kafkaBrokers.find((item) => item.id === currKafkaBrokerId);
-    if (!broker) return [];
-    return broker.topics;
+    return broker ? broker.topics : [];
   }, [kafkaBrokers, currKafkaBrokerId]);
 
   useEffect(() => {

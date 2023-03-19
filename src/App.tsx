@@ -2,7 +2,12 @@ import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useClustersStore, useDarkThemeStore, useFilterTemplateStore, useKafkaBrokerStore } from "@states";
+import {
+  useClustersStore,
+  useDarkThemeStore,
+  useFilterTemplateStore,
+  useKafkaBrokerStore
+} from "@states";
 import { AppSidebar } from "@components";
 import { SensorsPage, ClustersPage, NotificationPage, SettingPage } from "@pages";
 import { SidebarWidth } from "@constants";

@@ -13,9 +13,16 @@ export function ClusterModal() {
   const { register, handleSubmit, setValue } = useForm<ClusterModalFormData>();
 
   const { mode, isOpen, close } = useClusterModalStore();
-  const header = useMemo(() => mode.action[0].toUpperCase() + mode.action.slice(1) + " cluster", [mode]);
+  const header = useMemo(
+    () => mode.action[0].toUpperCase() + mode.action.slice(1) + " cluster",
+    [mode]
+  );
 
-  const { create: createCluster, update: updateCluster, getById: getClusterById } = useClustersStore();
+  const {
+    create: createCluster,
+    update: updateCluster,
+    getById: getClusterById
+  } = useClustersStore();
 
   useEffect(() => {
     if (mode.action === "update") {

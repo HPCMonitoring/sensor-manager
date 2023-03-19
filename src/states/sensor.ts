@@ -1,3 +1,4 @@
+import { BROKER_NOT_HAVE_TOPICS } from "@constants";
 import {
   IConfigSensorModalStore,
   IConfigSensorTopicModalStore as IConfigTopicSubscriptionModalStore,
@@ -77,21 +78,26 @@ export const useDeleteSensorModalStore = create<IDeleteSensorModalStore>()(
 export const useConfigTopicSubscriptionModalStore = create<IConfigTopicSubscriptionModalStore>()(
   devtools((set, get) => ({
     topic: null,
-    open: (topic) => {
-      set(() => ({ topic }));
-    },
-    close: () => {
-      set(() => ({ topic: null }));
-    },
+    open: (topic) => set(() => ({ topic })),
+    close: () => set(() => ({ topic: null })),
     setBroker: (brokerId) => {
       const brokers = useKafkaBrokerStore.getState().brokers;
       const broker = brokers.find((item) => item.id === brokerId);
       if (!broker) return;
+      if (broker.topics.length === 0) {
+        toast.warning(BROKER_NOT_HAVE_TOPICS);
+        return;
+      }
       set((state) => {
         if (!state.topic) return {};
         return {
           topic: {
-            ...state.topic,
+            key: state.topic.key,
+            id: broker.topics[0].id,
+            name: broker.topics[0].name,
+            interval: state.topic.interval,
+            usingTemplate: null,
+            script: "",
             broker: {
               id: broker.id,
               name: broker.name,
@@ -107,7 +113,7 @@ export const useConfigTopicSubscriptionModalStore = create<IConfigTopicSubscript
         return {
           topic: {
             ...state.topic,
-            interval: interval
+            interval
           }
         };
       });
@@ -126,15 +132,13 @@ export const useConfigTopicSubscriptionModalStore = create<IConfigTopicSubscript
       if (!topic) return;
       set((state) => {
         if (!state.topic) return {};
-        return JSON.parse(
-          JSON.stringify({
-            topic: {
-              ...state.topic,
-              id: topic.id,
-              name: topic.name
-            }
-          })
-        );
+        return {
+          topic: {
+            ...state.topic,
+            id: topic.id,
+            name: topic.name
+          }
+        };
       });
     },
     setUsingTemplate(templateId) {

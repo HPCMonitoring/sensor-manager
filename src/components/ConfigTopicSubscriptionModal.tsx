@@ -4,30 +4,18 @@ import {
   useKafkaBrokerStore
 } from "@states";
 import { Modal, Label, Select, TextInput, Checkbox, Button } from "flowbite-react";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { YamlCodeBlock } from "./YamlCodeBlock";
 
 export function ConfigTopicSubscriptionModal() {
-  const { close, topic, setBroker, setTopic, setInterval, setUsingTemplate } = useConfigTopicSubscriptionModalStore();
+  const { close, topic, setBroker, setTopic, setInterval, setUsingTemplate } =
+    useConfigTopicSubscriptionModalStore();
   const { brokers: kafkaBrokers, getTopicsById: getTopicsByBrokerId } = useKafkaBrokerStore();
 
-  const kafkaTopics = useMemo(() => {
-    if (!topic) return [];
-    return getTopicsByBrokerId(topic.broker.id);
-  }, [topic, getTopicsByBrokerId]);
-
-  const currentBroker = useMemo(() => {
-    if (!topic) return null;
-    const broker = kafkaBrokers.find((item) => item.id === topic.broker.id);
-    if (!broker) return null;
-    return broker;
-  }, [kafkaBrokers, topic]);
-
-  useEffect(() => {
-    if (currentBroker && currentBroker.topics.length > 0) {
-      setTopic(currentBroker.topics[0].id);
-    }
-  }, [currentBroker, setTopic]);
+  const kafkaTopics = useMemo(
+    () => (topic ? getTopicsByBrokerId(topic.broker.id) : []),
+    [topic, getTopicsByBrokerId]
+  );
 
   const filterTemplates = useFilterTemplateStore((state) => state.filterTemplates);
 

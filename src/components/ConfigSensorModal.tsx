@@ -1,8 +1,11 @@
 import { SensorFormField } from "@constants";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
-import { useConfigSensorModalStore, useSensorsStore } from "@states";
-
+import {
+  useConfigSensorModalStore,
+  useConfigTopicSubscriptionModalStore,
+  useSensorsStore
+} from "@states";
 import { Button, Card, Label, Modal, Textarea, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -14,7 +17,20 @@ export function ConfigSensorModal() {
   const [isOpenAdvancedConfig, setIsOpenAdvancedConfig] = useState(false);
   const { update: updateSensor } = useSensorsStore();
 
+  const modifyingTopic = useConfigTopicSubscriptionModalStore((state) => state.topic);
   const { register, setValue, getValues: getFormValues } = useForm<Sensor>();
+
+  useEffect(() => {
+    if (modifyingTopic === null) return;
+    const subscribingTopics = getFormValues("subscribingTopics");
+    const targetTopicIdx = subscribingTopics.findIndex((topic) => topic.key === modifyingTopic.key);
+    if (targetTopicIdx === -1) {
+      subscribingTopics.push(modifyingTopic);
+    } else {
+      Object.assign(subscribingTopics[targetTopicIdx], modifyingTopic);
+    }
+    setValue("subscribingTopics", subscribingTopics);
+  }, [modifyingTopic, getFormValues, setValue]);
 
   useEffect(() => {
     if (!targetSensor) return;
@@ -22,6 +38,8 @@ export function ConfigSensorModal() {
     setValue("remarks", targetSensor.remarks ? targetSensor.remarks : "");
     setValue("subscribingTopics", targetSensor.subscribingTopics);
   }, [targetSensor, setValue]);
+
+  const topicConfigs = getFormValues("subscribingTopics");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -103,7 +121,7 @@ export function ConfigSensorModal() {
                     Kafka Topics
                   </div>
                   <div className='mb-2'>
-                    <KafkaTopicConfigTable configs={targetSensor.subscribingTopics} />
+                    <KafkaTopicConfigTable configs={topicConfigs ? topicConfigs : []} />
                   </div>
                   <Button
                     color='light'
