@@ -1,4 +1,4 @@
-import { ConfigSensorModal, ConfigSensorSendingModal, RemoveSensorModal, SensorStatusBadge } from "@components";
+import { ConfigSensorModal, ConfigTopicSubscriptionModal, RemoveSensorModal, SensorStatusBadge } from "@components";
 import { SensorStatus } from "@constants";
 import { Cog6ToothIcon, MinusCircleIcon, StopIcon } from "@heroicons/react/24/solid";
 import {
@@ -45,7 +45,7 @@ export function SensorsPage() {
     <div>
       <ConfigSensorModal />
       <RemoveSensorModal />
-      <ConfigSensorSendingModal />
+      <ConfigTopicSubscriptionModal />
 
       <div className='flex mb-4 justify-between align-middle text-gray-800 dark:text-gray-200'>
         <Badge size={"xl"} className='font-semibold' color={"gray"}>

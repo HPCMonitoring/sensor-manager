@@ -1,10 +1,14 @@
-import { useConfigSensorTopicModalStore, useFilterTemplateStore, useKafkaBrokerStore } from "@states";
+import {
+  useConfigTopicSubscriptionModalStore as useConfigTopicSubscriptionModalStore,
+  useFilterTemplateStore,
+  useKafkaBrokerStore
+} from "@states";
 import { Modal, Label, Select, TextInput, Checkbox, Button } from "flowbite-react";
 import { useEffect, useMemo } from "react";
 import { YamlCodeBlock } from "./YamlCodeBlock";
 
-export function ConfigSensorSendingModal() {
-  const { close, topic, setBroker, setTopic, setInterval, setUsingTemplate } = useConfigSensorTopicModalStore();
+export function ConfigTopicSubscriptionModal() {
+  const { close, topic, setBroker, setTopic, setInterval, setUsingTemplate } = useConfigTopicSubscriptionModalStore();
   const { brokers: kafkaBrokers, getTopicsById: getTopicsByBrokerId } = useKafkaBrokerStore();
 
   const kafkaTopics = useMemo(() => {

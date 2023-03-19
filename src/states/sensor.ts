@@ -1,6 +1,6 @@
 import {
   IConfigSensorModalStore,
-  IConfigSensorTopicModalStore,
+  IConfigSensorTopicModalStore as IConfigTopicSubscriptionModalStore,
   IDeleteSensorModalStore,
   ISensorStore
 } from "@interfaces";
@@ -74,7 +74,7 @@ export const useDeleteSensorModalStore = create<IDeleteSensorModalStore>()(
   }))
 );
 
-export const useConfigSensorTopicModalStore = create<IConfigSensorTopicModalStore>()(
+export const useConfigTopicSubscriptionModalStore = create<IConfigTopicSubscriptionModalStore>()(
   devtools((set, get) => ({
     topic: null,
     open: (topic) => {

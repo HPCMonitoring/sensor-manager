@@ -1,10 +1,10 @@
 import { WrenchIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useConfigSensorTopicModalStore } from "@states";
+import { useConfigTopicSubscriptionModalStore } from "@states";
 import { Button, Table, Tooltip } from "flowbite-react";
 
 export const KafkaTopicConfigTable: Component<{ configs: SubscribingTopic[] }> = ({ configs }) => {
-  const openConfigModal = useConfigSensorTopicModalStore((state) => state.open);
+  const openConfigModal = useConfigTopicSubscriptionModalStore((state) => state.open);
 
   return (
     <Table className='overflow'>
