@@ -1,8 +1,7 @@
 import { SensorFormField } from "@constants";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
-import { sensorService } from "@services";
-import { useConfigSensorModalStore } from "@states";
+import { useConfigSensorModalStore, useSensorsStore } from "@states";
 
 import { Button, Card, Label, Modal, Textarea, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
@@ -10,61 +9,54 @@ import { useForm } from "react-hook-form";
 import { KafkaTopicConfigTable } from "./KafkaTopicUsageTable";
 import { SystemInfoCard } from "./SystemInfoCard";
 
-type SubscribingTopicFormData = {
-  topicId: string;
-  interval: 0;
-  usingTemplateId: string | null;
-  script: string;
-};
-
-type SensorFormData = {
-  name: string;
-  remarks: string;
-  subscribingTopics: SubscribingTopicFormData[];
-};
-
 export function ConfigSensorModal() {
-  const { isOpen: isOpenConfigSensorModal, sensorId } = useConfigSensorModalStore();
-  const closeConfigSensorModal = useConfigSensorModalStore((state) => state.close);
-
+  const { sensor: targetSensor, close } = useConfigSensorModalStore();
   const [isOpenAdvancedConfig, setIsOpenAdvancedConfig] = useState(false);
-  const [sensorData, setSensorData] = useState<Sensor>();
+  const { update: updateSensor } = useSensorsStore();
 
-  const { register, setValue } = useForm<SensorFormData>();
+  const { register, setValue, getValues: getFormValues } = useForm<Sensor>();
 
   useEffect(() => {
-    if (sensorId)
-      sensorService.getById(sensorId).then((sensor) => {
-        setSensorData(sensor);
-        setValue("name", sensor.name);
-        setValue("remarks", sensor.remarks ? sensor.remarks : "");
-      });
-  }, [sensorId, setValue]);
+    if (!targetSensor) return;
+    setValue("name", targetSensor.name);
+    setValue("remarks", targetSensor.remarks ? targetSensor.remarks : "");
+    setValue("subscribingTopics", targetSensor.subscribingTopics);
+  }, [targetSensor, setValue]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const modifiedSensor = getFormValues();
+    updateSensor(modifiedSensor.id, {
+      name: modifiedSensor.name,
+      remarks: modifiedSensor.remarks,
+      subscribingTopics: modifiedSensor.subscribingTopics.map((item) => ({
+        id: item.id,
+        usingTemplateId: item.usingTemplate ? item.usingTemplate.id : null,
+        script: item.script,
+        interval: item.interval
+      }))
+    });
+  };
 
   return (
     <Modal
-      show={isOpenConfigSensorModal}
-      onClose={closeConfigSensorModal}
+      show={targetSensor !== null}
+      onClose={close}
       size={isOpenAdvancedConfig ? "6xl" : "md"}
       position={"top-center"}
     >
-      {sensorData && sensorId && (
+      {targetSensor && (
         <Modal.Body>
-          <form
-            className='w-full'
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
+          <form className='w-full' onSubmit={handleSubmit}>
             <div className='border-b-2 dark:border-gray-600 mb-4 w-full flex'>
               <div className={isOpenAdvancedConfig ? "flex-none w-1/3" : "w-full"}>
                 <Label htmlFor={SensorFormField.SYSTEM_INFO} value='SYSTEM INFO' className='mb-2' />
                 <Card className='mb-4 mt-1 p-0 w-full' id={SensorFormField.SYSTEM_INFO}>
-                  <SystemInfoCard attr={"Kernel Name"} value={sensorData.kernelName} />
-                  <SystemInfoCard attr={"Kernel Version"} value={sensorData.kernelVersion} />
-                  <SystemInfoCard attr={"Architecture"} value={sensorData.arch} />
-                  <SystemInfoCard attr={"Hostname"} value={sensorData.hostname} />
-                  <SystemInfoCard attr={"Root user"} value={sensorData.rootUser} />
+                  <SystemInfoCard attr={"Kernel Name"} value={targetSensor.kernelName} />
+                  <SystemInfoCard attr={"Kernel Version"} value={targetSensor.kernelVersion} />
+                  <SystemInfoCard attr={"Architecture"} value={targetSensor.arch} />
+                  <SystemInfoCard attr={"Hostname"} value={targetSensor.hostname} />
+                  <SystemInfoCard attr={"Root user"} value={targetSensor.rootUser} />
                 </Card>
 
                 <div className='mb-4 block'>
@@ -111,7 +103,7 @@ export function ConfigSensorModal() {
                     Kafka Topics
                   </div>
                   <div className='mb-2'>
-                    <KafkaTopicConfigTable configs={sensorData.subscribingTopics} />
+                    <KafkaTopicConfigTable configs={targetSensor.subscribingTopics} />
                   </div>
                   <Button
                     color='light'
@@ -145,10 +137,10 @@ export function ConfigSensorModal() {
             </div>
 
             <div className='flex justify-end'>
-              <Button color={"light"} onClick={closeConfigSensorModal}>
+              <Button color={"light"} onClick={close}>
                 Cancel
               </Button>
-              <Button gradientMonochrome='info' className='ml-2' onClick={closeConfigSensorModal} type='submit'>
+              <Button gradientMonochrome='info' className='ml-2' onClick={close} type='submit'>
                 {" "}
                 Save
               </Button>

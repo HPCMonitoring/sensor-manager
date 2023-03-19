@@ -10,7 +10,12 @@ export const useKafkaBrokerStore = create<IKafkaBrokerStore>()(
       const brokers = await userService.getKafkaBrokers();
       set(() => ({ brokers }));
     },
-    getTopicsByBrokerId(brokerId) {
+    getById(brokerId) {
+      const broker = get().brokers.find((item) => item.id === brokerId);
+      if (!broker) return null;
+      return broker;
+    },
+    getTopicsById(brokerId) {
       const brokers = get().brokers;
       const broker = brokers.find((item) => item.id === brokerId);
       if (!broker) return [];

@@ -12,7 +12,7 @@ import { Badge, Button, Dropdown, Table, Tooltip } from "flowbite-react";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
-export function ClusterDetailPage() {
+export function SensorsPage() {
   const { clusterId } = useParams();
   const clusters = useClustersStore((state) => state.clusters);
 
@@ -24,8 +24,8 @@ export function ClusterDetailPage() {
 
   const sensors = useSensorsStore((state) => state.sensors);
   const fetchSensors = useSensorsStore((state) => state.fetch);
-  const openConfigSensorModal = useConfigSensorModalStore((state) => state.open);
-  const openDeleteSensorModal = useDeleteSensorModalStore((state) => state.open);
+  const openConfigModal = useConfigSensorModalStore((state) => state.open);
+  const openDeleteModal = useDeleteSensorModalStore((state) => state.open);
   const kafkaBrokers = useKafkaBrokerStore((state) => state.brokers);
 
   const [currKafkaBrokerId, setCurrKafkaBrokerId] = useState<string | null>(null);
@@ -113,7 +113,7 @@ export function ClusterDetailPage() {
                     color={"info"}
                     onClick={(e) => {
                       e.stopPropagation();
-                      openConfigSensorModal(sensor.id);
+                      openConfigModal(sensor.id);
                     }}
                     size='xs'
                     className='ml-2'
@@ -127,7 +127,7 @@ export function ClusterDetailPage() {
                     color={"failure"}
                     onClick={(e) => {
                       e.stopPropagation();
-                      openDeleteSensorModal(sensor.id);
+                      openDeleteModal(sensor.id);
                     }}
                     size='xs'
                     className='ml-2'

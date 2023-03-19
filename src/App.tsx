@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useClustersStore, useDarkThemeStore, useFilterTemplateStore, useKafkaBrokerStore } from "@states";
 import { AppSidebar } from "@components";
-import { ClusterDetailPage, ClustersPage, NotificationPage, SettingPage } from "@pages";
+import { SensorsPage, ClustersPage, NotificationPage, SettingPage } from "@pages";
 import { SidebarWidth } from "@constants";
 
 export default function App() {
@@ -32,7 +32,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<ClustersPage />} />
           <Route path='/clusters' element={<ClustersPage />} />
-          <Route path='/clusters/:clusterId' element={<ClusterDetailPage />} />
+          <Route path='/clusters/:clusterId' element={<SensorsPage />} />
           <Route path='/notifications' element={<NotificationPage />} />
           <Route path='/settings' element={<SettingPage />} />
         </Routes>

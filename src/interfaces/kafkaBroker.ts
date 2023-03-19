@@ -1,5 +1,6 @@
 export interface IKafkaBrokerStore {
   brokers: KafkaBroker[];
   fetch: () => Promise<void>;
-  getTopicsByBrokerId: (brokerId: string) => KafkaTopic[];
+  getTopicsById: (brokerId: string) => KafkaTopic[];
+  getById: (brokerId: string) => KafkaBroker | null;
 }

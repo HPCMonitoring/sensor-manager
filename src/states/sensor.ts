@@ -1,34 +1,63 @@
 import {
   IConfigSensorModalStore,
-  IConfigSensorSendingModalStore,
+  IConfigSensorTopicModalStore,
   IDeleteSensorModalStore,
   ISensorStore
 } from "@interfaces";
 import { sensorService } from "@services";
+import { toast } from "react-toastify";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { useFilterTemplateStore } from "./filterTemplate";
 import { useKafkaBrokerStore } from "./kafkaBroker";
 
 export const useSensorsStore = create<ISensorStore>()(
-  devtools((set) => ({
-    sensors: [], // Init state
+  devtools((set, get) => ({
+    sensors: [],
     fetch: async (clusterId: string) => {
       const sensors = await sensorService.getByClusterId(clusterId);
       set(() => ({ sensors }));
+    },
+    delete: async (sensorId: string) => {
+      try {
+        await sensorService.delete(sensorId);
+      } catch (error) {
+        const sensors: SensorSummary[] = JSON.parse(JSON.stringify(get().sensors));
+        const deletedSensorIdx = sensors.findIndex((sensor) => sensor.id === sensorId);
+        if (deletedSensorIdx !== -1) sensors.splice(deletedSensorIdx, 1);
+        set(() => ({ sensors }));
+      }
+    },
+    update: async (sensorId: string, payload: UpdateSensorPayload) => {
+      try {
+        await sensorService.update(sensorId, payload);
+        const sensors: SensorSummary[] = JSON.parse(JSON.stringify(get().sensors));
+        const modifiedSensor = sensors.find((sensor) => sensor.id === sensorId);
+        if (modifiedSensor) {
+          modifiedSensor.name = payload.name;
+          modifiedSensor.remarks = payload.remarks;
+          set(() => ({ sensors }));
+        }
+      } catch (err) {
+        toast.error((err as Error).message);
+      }
     }
   }))
 );
 
 export const useConfigSensorModalStore = create<IConfigSensorModalStore>()(
   devtools((set) => ({
-    sensorId: null,
-    isOpen: false,
-    open(sensorId) {
-      set(() => ({ sensorId, isOpen: true }));
+    sensor: null,
+    open: async (sensorId) => {
+      try {
+        const sensor = await sensorService.getById(sensorId);
+        set(() => ({ sensor }));
+      } catch (err) {
+        toast.error((err as Error).message);
+      }
     },
     close() {
-      set(() => ({ sensorId: null, isOpen: false }));
+      set(() => ({ sensor: null }));
     }
   }))
 );
@@ -36,25 +65,23 @@ export const useConfigSensorModalStore = create<IConfigSensorModalStore>()(
 export const useDeleteSensorModalStore = create<IDeleteSensorModalStore>()(
   devtools((set) => ({
     sensorId: null,
-    isOpen: false,
     open(sensorId) {
-      set(() => ({ sensorId, isOpen: true }));
+      set(() => ({ sensorId }));
     },
     close() {
-      set(() => ({ sensorId: null, isOpen: false }));
+      set(() => ({ sensorId: null }));
     }
   }))
 );
 
-export const useConfigSensorSendingModalStore = create<IConfigSensorSendingModalStore>()(
+export const useConfigSensorTopicModalStore = create<IConfigSensorTopicModalStore>()(
   devtools((set, get) => ({
     topic: null,
-    isOpen: false,
     open: (topic) => {
-      set(() => ({ isOpen: true, topic }));
+      set(() => ({ topic }));
     },
     close: () => {
-      set(() => ({ isOpen: false, topic: null }));
+      set(() => ({ topic: null }));
     },
     setBroker: (brokerId) => {
       const brokers = useKafkaBrokerStore.getState().brokers;
@@ -94,18 +121,20 @@ export const useConfigSensorSendingModalStore = create<IConfigSensorSendingModal
     setTopic(topicId) {
       const currData = get().topic;
       if (!currData) return;
-      const topics = useKafkaBrokerStore.getState().getTopicsByBrokerId(currData?.broker.id);
+      const topics = useKafkaBrokerStore.getState().getTopicsById(currData.broker.id);
       const topic = topics.find((item) => item.id === topicId);
       if (!topic) return;
       set((state) => {
         if (!state.topic) return {};
-        return {
-          topic: {
-            ...state.topic,
-            id: topic.id,
-            name: topic.name
-          }
-        };
+        return JSON.parse(
+          JSON.stringify({
+            topic: {
+              ...state.topic,
+              id: topic.id,
+              name: topic.name
+            }
+          })
+        );
       });
     },
     setUsingTemplate(templateId) {

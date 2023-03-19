@@ -32,7 +32,7 @@ export const useClustersStore = create<IClusterStore>()(
         }));
         toast.success(CREATE_CLUSTER_SUCCESS);
       } catch (err) {
-        toast.error((err as Exception).message);
+        toast.error((err as Error).message);
       }
     },
     update: async (clusterId: string, payload: UpdateClusterPayload) => {
@@ -48,7 +48,7 @@ export const useClustersStore = create<IClusterStore>()(
         });
         toast.success(UPDATE_CLUSTER_SUCCESS);
       } catch (err) {
-        toast.error((err as Exception).message);
+        toast.error((err as Error).message);
       }
     },
     delete: async (clusterId: string) => {
@@ -63,7 +63,7 @@ export const useClustersStore = create<IClusterStore>()(
         });
         toast.success(DELETE_CLUSTER_SUCCESS);
       } catch (err) {
-        toast.error((err as Exception).message);
+        toast.error((err as Error).message);
       }
     }
   }))

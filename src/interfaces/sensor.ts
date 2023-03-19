@@ -1,31 +1,24 @@
-export interface ISensorKafkaTopic {
-  brokerUrl: string;
-  topicName: string;
-  filterRule: string; // In SQL
-}
-
 export interface ISensorStore {
   sensors: SensorSummary[];
+  update: (sensorId: string, payload: UpdateSensorPayload) => Promise<void>;
+  delete: (sensorId: string) => Promise<void>;
   fetch: (clusterId: string) => Promise<void>;
 }
 
 export interface IConfigSensorModalStore {
-  sensorId: string | null;
-  isOpen: boolean;
-  open: (sensorId: string) => void;
+  sensor: Sensor | null;
+  open: (sensorId: string) => Promise<void>;
   close: () => void;
 }
 
 export interface IDeleteSensorModalStore {
   sensorId: string | null;
-  isOpen: boolean;
   open: (sensorId: string) => void;
   close: () => void;
 }
 
-export interface IConfigSensorSendingModalStore {
+export interface IConfigSensorTopicModalStore {
   topic: SubscribingTopic | null;
-  isOpen: boolean;
   setTopic: (topicId: string) => void;
   setBroker: (brokerId: string) => void;
   setInterval: (interval: number) => void;

@@ -8,5 +8,13 @@ export const sensorService = {
   getById: async function (sensorId: string): Promise<Sensor> {
     const response = await server.get(`/sensors/${sensorId}`);
     return response.data;
+  },
+  update: async function (sensorId: string, payload: UpdateSensorPayload): Promise<string> {
+    const response = await server.put(`/sensors/${sensorId}`, payload);
+    return response.data;
+  },
+  delete: async function (sensorId: string): Promise<string> {
+    const response = await server.delete(`/sensors/${sensorId}`);
+    return response.data;
   }
 };

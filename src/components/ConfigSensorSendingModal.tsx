@@ -1,23 +1,35 @@
-import { useConfigSensorSendingModalStore, useFilterTemplateStore, useKafkaBrokerStore } from "@states";
+import { useConfigSensorTopicModalStore, useFilterTemplateStore, useKafkaBrokerStore } from "@states";
 import { Modal, Label, Select, TextInput, Checkbox, Button } from "flowbite-react";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { YamlCodeBlock } from "./YamlCodeBlock";
 
 export function ConfigSensorSendingModal() {
-  const { isOpen, close, topic, setBroker, setTopic, setInterval, setUsingTemplate } =
-    useConfigSensorSendingModalStore();
-  const { brokers: kafkaBrokers, getTopicsByBrokerId } = useKafkaBrokerStore();
+  const { close, topic, setBroker, setTopic, setInterval, setUsingTemplate } = useConfigSensorTopicModalStore();
+  const { brokers: kafkaBrokers, getTopicsById: getTopicsByBrokerId } = useKafkaBrokerStore();
 
   const kafkaTopics = useMemo(() => {
     if (!topic) return [];
     return getTopicsByBrokerId(topic.broker.id);
   }, [topic, getTopicsByBrokerId]);
 
+  const currentBroker = useMemo(() => {
+    if (!topic) return null;
+    const broker = kafkaBrokers.find((item) => item.id === topic.broker.id);
+    if (!broker) return null;
+    return broker;
+  }, [kafkaBrokers, topic]);
+
+  useEffect(() => {
+    if (currentBroker && currentBroker.topics.length > 0) {
+      setTopic(currentBroker.topics[0].id);
+    }
+  }, [currentBroker, setTopic]);
+
   const filterTemplates = useFilterTemplateStore((state) => state.filterTemplates);
 
   return (
-    <Modal show={isOpen} dismissible onClose={close} position={"top-center"} size='3xl'>
-      {topic !== null && (
+    <Modal show={topic !== null} dismissible onClose={close} position={"top-center"} size='3xl'>
+      {topic && (
         <Modal.Body>
           <div className='mb-4 flex'>
             <div className='flex-1'>
@@ -25,10 +37,7 @@ export function ConfigSensorSendingModal() {
               <Select
                 required={true}
                 sizing='sm'
-                onChange={(e) => {
-                  console.log(e.target.value);
-                  setBroker(e.target.value);
-                }}
+                onChange={(e) => setBroker(e.target.value)}
                 value={topic ? topic.broker.id : ""}
               >
                 <option disabled value={""}>
@@ -72,6 +81,7 @@ export function ConfigSensorSendingModal() {
                 min={1}
                 placeholder='Insert data collection interval ...'
                 onChange={(e) => setInterval(e.target.valueAsNumber)}
+                value={topic ? topic.interval : ""}
               />
             </div>
           </div>
@@ -102,12 +112,9 @@ export function ConfigSensorSendingModal() {
             <YamlCodeBlock />
           </div>
           <div className='flex justify-end'>
-            <Button color={"light"} onClick={close}>
-              Discard
-            </Button>
             <Button gradientMonochrome='info' className='ml-2' onClick={close}>
               {" "}
-              Add
+              Close
             </Button>
           </div>
         </Modal.Body>

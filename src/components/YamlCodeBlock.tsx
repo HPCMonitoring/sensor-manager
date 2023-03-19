@@ -1,8 +1,8 @@
 import Editor from "@monaco-editor/react";
-import { useConfigSensorSendingModalStore, useDarkThemeStore } from "@states";
+import { useConfigSensorTopicModalStore, useDarkThemeStore } from "@states";
 
 export function YamlCodeBlock() {
-  const { topic, setScript } = useConfigSensorSendingModalStore();
+  const { topic, setScript } = useConfigSensorTopicModalStore();
   const darkTheme = useDarkThemeStore((state) => state.dark);
   return (
     <Editor
