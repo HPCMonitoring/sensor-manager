@@ -4,7 +4,7 @@ import { useConfigTopicSubscriptionModalStore } from "@states";
 import { Button, Table, Tooltip } from "flowbite-react";
 
 export const KafkaTopicConfigTable: Component<{
-  configs: SubscribingTopic[];
+  configs: SubscribeTopic[];
   deleteItem: (key: string) => void;
 }> = ({ configs, deleteItem }) => {
   const openConfigModal = useConfigTopicSubscriptionModalStore((state) => state.open);

@@ -76,7 +76,7 @@ export function ClustersPage() {
                 {cluster.name}
               </Table.Cell>
               <Table.Cell>{cluster.numOfSensors}</Table.Cell>
-              <Table.Cell>{cluster.numOfSensors}</Table.Cell>
+              <Table.Cell>{cluster.numOfActiveSensors}</Table.Cell>
               <Table.Cell>{cluster.remarks ? cluster.remarks : "--"}</Table.Cell>
               <Table.Cell className='flex justify-end'>
                 <Button

@@ -26,14 +26,14 @@ export function ConfigSensorModal() {
 
   useEffect(() => {
     if (modifyingTopic === null) return;
-    const subscribingTopics = getFormValues("subscribingTopics");
-    const targetTopicIdx = subscribingTopics.findIndex((topic) => topic.key === modifyingTopic.key);
+    const subscribeTopics = getFormValues("subscribeTopics");
+    const targetTopicIdx = subscribeTopics.findIndex((topic) => topic.key === modifyingTopic.key);
     if (targetTopicIdx === -1) {
-      subscribingTopics.push(modifyingTopic);
+      subscribeTopics.push(modifyingTopic);
     } else {
-      Object.assign(subscribingTopics[targetTopicIdx], modifyingTopic);
+      Object.assign(subscribeTopics[targetTopicIdx], modifyingTopic);
     }
-    setValue("subscribingTopics", subscribingTopics);
+    setValue("subscribeTopics", subscribeTopics);
   }, [modifyingTopic, getFormValues, setValue]);
 
   useEffect(() => {
@@ -41,18 +41,18 @@ export function ConfigSensorModal() {
     setValue("id", targetSensor.id);
     setValue("name", targetSensor.name);
     setValue("remarks", targetSensor.remarks ? targetSensor.remarks : "");
-    setValue("subscribingTopics", targetSensor.subscribingTopics);
+    setValue("subscribeTopics", targetSensor.subscribeTopics);
   }, [targetSensor, setValue]);
 
   const deleteConfig = (key: string) => {
-    const subscribingTopics: SubscribingTopic[] = getFormValues("subscribingTopics");
-    const targetTopicIdx = subscribingTopics.findIndex((topic) => topic.key === key);
+    const subscribeTopics: SubscribeTopic[] = getFormValues("subscribeTopics");
+    const targetTopicIdx = subscribeTopics.findIndex((topic) => topic.key === key);
     if (targetTopicIdx === -1) return;
-    subscribingTopics.splice(targetTopicIdx, 1);
-    setValue("subscribingTopics", subscribingTopics);
+    subscribeTopics.splice(targetTopicIdx, 1);
+    setValue("subscribeTopics", subscribeTopics);
   };
 
-  const topicConfigs = watch("subscribingTopics");
+  const topicConfigs = watch("subscribeTopics");
 
   const defaultKafkaBroker = useKafkaBrokerStore((state) => {
     if (state.brokers.length === 0) return null;
@@ -67,7 +67,7 @@ export function ConfigSensorModal() {
     updateSensor(modifiedSensor.id, {
       name: modifiedSensor.name,
       remarks: modifiedSensor.remarks,
-      subscribingTopics: modifiedSensor.subscribingTopics.map((item) => ({
+      subscribeTopics: modifiedSensor.subscribeTopics.map((item) => ({
         id: item.id,
         usingTemplateId: item.usingTemplate ? item.usingTemplate.id : null,
         script: item.script,

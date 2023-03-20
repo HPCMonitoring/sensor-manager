@@ -8,7 +8,7 @@ type SensorSummary = {
   state: SensorState;
 };
 
-type SubscribingTopic = {
+type SubscribeTopic = {
   key: string;
   id: string;
   name: string;
@@ -36,13 +36,13 @@ type Sensor = {
   hostname: string;
   rootUser: string;
   state: SensorState;
-  subscribingTopics: SubscribingTopic[];
+  subscribeTopics: SubscribeTopic[];
 };
 
 type UpdateSensorPayload = {
   name: string;
   remarks: string | null;
-  subscribingTopics: {
+  subscribeTopics: {
     id: string;
     usingTemplateId: string | null;
     script: string;

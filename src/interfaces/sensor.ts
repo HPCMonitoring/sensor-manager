@@ -18,12 +18,12 @@ export interface IDeleteSensorModalStore {
 }
 
 export interface IConfigSensorTopicModalStore {
-  topic: SubscribingTopic | null;
+  topic: SubscribeTopic | null;
   setTopic: (topicId: string) => void;
   setBroker: (brokerId: string) => void;
   setInterval: (interval: number) => void;
   setUsingTemplate: (templateId: string) => void;
   setScript: (script: string) => void;
-  open: (topic: SubscribingTopic) => void;
+  open: (topic: SubscribeTopic) => void;
   close: () => void;
 }
