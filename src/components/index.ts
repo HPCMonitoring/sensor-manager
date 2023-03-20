@@ -4,8 +4,11 @@
 
 export * from "./ClusterModal";
 export * from "./ConfigSensorModal";
+export * from "./ConfigTopicSubscriptionModal";
 export * from "./DeleteClusterModal";
 export * from "./KafkaTopicUsageTable";
 export * from "./RemoveSensorModal";
+export * from "./SensorStatusBadge";
 export * from "./Sidebar";
+export * from "./SystemInfoCard";
 export * from "./YamlCodeBlock";

@@ -3,6 +3,8 @@
  */
 
 export * from "./cluster";
+export * from "./filterTemplate";
+export * from "./kafkaBroker";
 export * from "./modal";
 export * from "./sensor";
 export * from "./sidebar";

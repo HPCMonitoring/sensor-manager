@@ -1,20 +1,30 @@
-import { SidebarWidth } from "@constants";
 import { Route, Routes } from "react-router-dom";
-import { AppSidebar } from "@components";
-import { ClusterDetailPage, ClustersPage, NotificationPage, SettingPage } from "@pages";
-import { useClustersStore, useDarkThemeStore } from "@states";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  useClustersStore,
+  useDarkThemeStore,
+  useFilterTemplateStore,
+  useKafkaBrokerStore
+} from "@states";
+import { AppSidebar } from "@components";
+import { SensorsPage, ClustersPage, NotificationPage, SettingPage } from "@pages";
+import { SidebarWidth } from "@constants";
 
 export default function App() {
   const { loadTheme, dark } = useDarkThemeStore();
 
   const fetchClusters = useClustersStore((state) => state.fetch);
+  const fetchFilterTemplates = useFilterTemplateStore((state) => state.fetch);
+  const fetchKafkaBrokers = useKafkaBrokerStore((state) => state.fetch);
+
   useEffect(() => {
     fetchClusters();
-  }, [fetchClusters]);
-  useEffect(loadTheme, [loadTheme]);
+    fetchFilterTemplates();
+    fetchKafkaBrokers();
+    loadTheme();
+  }, [fetchClusters, fetchFilterTemplates, fetchKafkaBrokers, loadTheme]);
 
   return (
     <div>
@@ -27,7 +37,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<ClustersPage />} />
           <Route path='/clusters' element={<ClustersPage />} />
-          <Route path='/clusters/:clusterId' element={<ClusterDetailPage />} />
+          <Route path='/clusters/:clusterId' element={<SensorsPage />} />
           <Route path='/notifications' element={<NotificationPage />} />
           <Route path='/settings' element={<SettingPage />} />
         </Routes>

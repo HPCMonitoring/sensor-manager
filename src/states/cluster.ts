@@ -1,7 +1,11 @@
-import { CLUSTER_NOT_FOUND, CREATE_CLUSTER_SUCCESS, DELETE_CLUSTER_SUCCESS, UPDATE_CLUSTER_SUCCESS } from "@constants";
-import { IClusterModalStore, IClusterStore } from "@interfaces";
+import {
+  CLUSTER_NOT_FOUND,
+  CREATE_CLUSTER_SUCCESS,
+  UPDATE_CLUSTER_SUCCESS,
+  DELETE_CLUSTER_SUCCESS
+} from "@constants";
+import { IClusterStore, IClusterModalStore, IClusterDeleteModalStore } from "@interfaces";
 import { clusterService } from "@services";
-import { createSimpleModalStore } from "@utils";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
@@ -33,7 +37,7 @@ export const useClustersStore = create<IClusterStore>()(
         }));
         toast.success(CREATE_CLUSTER_SUCCESS);
       } catch (err) {
-        toast.error((err as Exception).message);
+        toast.error((err as Error).message);
       }
     },
     update: async (clusterId: string, payload: UpdateClusterPayload) => {
@@ -49,7 +53,7 @@ export const useClustersStore = create<IClusterStore>()(
         });
         toast.success(UPDATE_CLUSTER_SUCCESS);
       } catch (err) {
-        toast.error((err as Exception).message);
+        toast.error((err as Error).message);
       }
     },
     delete: async (clusterId: string) => {
@@ -64,7 +68,7 @@ export const useClustersStore = create<IClusterStore>()(
         });
         toast.success(DELETE_CLUSTER_SUCCESS);
       } catch (err) {
-        toast.error((err as Exception).message);
+        toast.error((err as Error).message);
       }
     }
   }))
@@ -74,9 +78,20 @@ export const useClusterModalStore = create<IClusterModalStore>()(
   devtools((set) => ({
     mode: { action: "create" }, // Init state,
     isOpen: false,
-    open: (mode: ModalOpenMode) => set(() => ({ mode, isOpen: true })),
+    open: (mode: ModalMode) => set(() => ({ mode, isOpen: true })),
     close: () => set((state) => ({ ...state, isOpen: false }))
   }))
 );
 
-export const useDeleteClusterModalStore = createSimpleModalStore();
+export const useDeleteClusterModalStore = create<IClusterDeleteModalStore>()(
+  devtools((set) => ({
+    clusterId: null,
+    isOpen: false,
+    open(clusterId) {
+      set(() => ({ clusterId, isOpen: true }));
+    },
+    close() {
+      set(() => ({ clusterId: null, isOpen: false }));
+    }
+  }))
+);

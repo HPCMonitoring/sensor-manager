@@ -13,9 +13,16 @@ export function ClusterModal() {
   const { register, handleSubmit, setValue } = useForm<ClusterModalFormData>();
 
   const { mode, isOpen, close } = useClusterModalStore();
-  const header = useMemo(() => mode.action[0].toUpperCase() + mode.action.slice(1) + " cluster", [mode]);
+  const header = useMemo(
+    () => mode.action[0].toUpperCase() + mode.action.slice(1) + " cluster",
+    [mode]
+  );
 
-  const { create: createCluster, update: updateCluster, getById: getClusterById } = useClustersStore();
+  const {
+    create: createCluster,
+    update: updateCluster,
+    getById: getClusterById
+  } = useClustersStore();
 
   useEffect(() => {
     if (mode.action === "update") {
@@ -29,7 +36,6 @@ export function ClusterModal() {
   }, [getClusterById, mode.action, mode.id, setValue]);
 
   const submit = (formData: ClusterModalFormData) => {
-    console.log(formData);
     const payload = {
       name: formData.name,
       remarks: formData.remarks.length === 0 ? null : formData.remarks
@@ -47,7 +53,12 @@ export function ClusterModal() {
       <Modal.Body>
         <form onSubmit={handleSubmit(submit)}>
           <div className='mb-4 block'>
-            <Label htmlFor={ClusterFormField.NAME} value='Cluster name*' className='mb-2' placeholder='Insert cluster name ...' />
+            <Label
+              htmlFor={ClusterFormField.NAME}
+              value='Cluster name*'
+              className='mb-2'
+              placeholder='Insert cluster name ...'
+            />
             <TextInput
               id={ClusterFormField.NAME}
               type='text'

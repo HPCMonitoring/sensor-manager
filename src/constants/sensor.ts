@@ -1,6 +1,6 @@
 export enum SensorStatus {
-  ONLINE = "Online",
-  OFFLINE = "Offline",
+  RUNNING = "Running",
+  STOPPED = "Stopped",
   DISCONNECTED = "Disconnected",
   REQUESTED = "Requested"
 }

@@ -1,9 +1,14 @@
 import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { useClusterExpandStore, useClusterModalStore, useClustersStore, useDarkThemeStore, useDeleteClusterModalStore } from "@states";
 import { Badge, Button, Table, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { ClusterModal, DeleteClusterModal } from "@components";
-import { useState } from "react";
+import {
+  useClustersStore,
+  useDarkThemeStore,
+  useClusterModalStore,
+  useDeleteClusterModalStore,
+  useClusterExpandStore
+} from "@states";
 
 export function ClustersPage() {
   const clusters = useClustersStore((state) => state.clusters);
@@ -14,12 +19,11 @@ export function ClustersPage() {
   const openDeleteClusterModal = useDeleteClusterModalStore((state) => state.open);
 
   const expandSidebarClusters = useClusterExpandStore((state) => state.expand);
-  const [deleteClusterId, setDeleteClusterId] = useState("");
 
   return (
     <div>
       <ClusterModal />
-      <DeleteClusterModal clusterId={deleteClusterId} />
+      <DeleteClusterModal />
 
       <div className='flex mb-4 justify-between'>
         <div className='flex flex-row items-center'>
@@ -27,12 +31,23 @@ export function ClustersPage() {
             {clusters.length} Clusters
           </Badge>
           <Badge size='2xl' color={darkTheme ? "gray" : "info"} className='ml-2'>
-            {clusters.reduce((numSensors: number, cluster) => numSensors + cluster.numOfSensors, 0)} Sensors
+            {clusters.reduce((numSensors: number, cluster) => numSensors + cluster.numOfSensors, 0)}{" "}
+            Sensors
           </Badge>
         </div>
         <div className='flex flex-row'>
-          <TextInput type='text' autoComplete='off' icon={MagnifyingGlassIcon} placeholder='Search ...' required={true} />
-          <Button gradientMonochrome='info' className='ml-2' onClick={() => openClusterModal({ action: "create" })}>
+          <TextInput
+            type='text'
+            autoComplete='off'
+            icon={MagnifyingGlassIcon}
+            placeholder='Search ...'
+            required={true}
+          />
+          <Button
+            gradientMonochrome='info'
+            className='ml-2'
+            onClick={() => openClusterModal({ action: "create" })}
+          >
             New cluster
           </Button>
         </div>
@@ -57,9 +72,11 @@ export function ClustersPage() {
                 expandSidebarClusters();
               }}
             >
-              <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>{cluster.name}</Table.Cell>
+              <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                {cluster.name}
+              </Table.Cell>
               <Table.Cell>{cluster.numOfSensors}</Table.Cell>
-              <Table.Cell>{cluster.numOfSensors}</Table.Cell>
+              <Table.Cell>{cluster.numOfActiveSensors}</Table.Cell>
               <Table.Cell>{cluster.remarks ? cluster.remarks : "--"}</Table.Cell>
               <Table.Cell className='flex justify-end'>
                 <Button
@@ -78,8 +95,7 @@ export function ClustersPage() {
                   gradientMonochrome='failure'
                   onClick={(e) => {
                     e.stopPropagation();
-                    openDeleteClusterModal();
-                    setDeleteClusterId(cluster.id);
+                    openDeleteClusterModal(cluster.id);
                   }}
                   size='sm'
                 >

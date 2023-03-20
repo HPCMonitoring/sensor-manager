@@ -7,16 +7,20 @@ import {
   SunIcon,
   WrenchScrewdriverIcon
 } from "@heroicons/react/24/solid";
-import { useClusterExpandStore, useClustersStore, useDarkThemeStore } from "@states";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "../assets/vite.svg";
 import { DEFAULT_PATH } from "@constants";
+import { useDarkThemeStore, useClustersStore, useClusterExpandStore } from "@states";
 
 export function AppSidebar() {
   const darkTheme = useDarkThemeStore((state) => state.dark);
   const toggleDarkTheme = useDarkThemeStore((state) => state.toggleTheme);
   const clusters = useClustersStore((state) => state.clusters);
-  const { isExpand: clusterExpand, expand: expandSidebarClusters, collapse: collapseSidebarClusters } = useClusterExpandStore();
+  const {
+    isExpand: clusterExpand,
+    expand: expandSidebarClusters,
+    collapse: collapseSidebarClusters
+  } = useClusterExpandStore();
 
   const navigate = useNavigate();
   const location = useLocation();

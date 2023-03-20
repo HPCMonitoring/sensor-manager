@@ -25,7 +25,8 @@
       "@states": ["src/states"],
       "@interfaces": ["src/interfaces"],
       "@utils": ["src/utils"],
-      "@services": ["src/services"]
+      "@services": ["src/services"],
+      "@hooks": ["src/hooks"]
     }
   },
   "include": ["src", "**/*.ts", "**/*.tsx", "**/*.js", "*.cjs"],

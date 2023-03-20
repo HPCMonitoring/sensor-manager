@@ -1,30 +1,29 @@
-import { SensorStatus } from "@constants";
-
-export interface ISensorDetail {
-  kernelName: string;
-  hostName: string;
-  arch: string;
-  kernelVersion: string;
-  rootUser: string;
-}
-
-export interface ISensorKafkaTopic {
-  brokerUrl: string;
-  topicName: string;
-  filterRule: string; // In SQL
-}
-
-export interface ISensor {
-  clusterId?: string;
-  id: string;
-  name: string;
-  remarks: string | null;
-  ipAddr: string;
-  status: SensorStatus;
-  detail?: ISensorDetail;
-}
-
 export interface ISensorStore {
-  sensors: ISensor[];
-  fetch: () => void;
+  sensors: SensorSummary[];
+  update: (sensorId: string, payload: UpdateSensorPayload) => Promise<void>;
+  delete: (sensorId: string) => Promise<void>;
+  fetch: (clusterId: string) => Promise<void>;
+}
+
+export interface IConfigSensorModalStore {
+  sensor: Sensor | null;
+  open: (sensorId: string) => Promise<void>;
+  close: () => void;
+}
+
+export interface IDeleteSensorModalStore {
+  sensorId: string | null;
+  open: (sensorId: string) => void;
+  close: () => void;
+}
+
+export interface IConfigSensorTopicModalStore {
+  topic: SubscribeTopic | null;
+  setTopic: (topicId: string) => void;
+  setBroker: (brokerId: string) => void;
+  setInterval: (interval: number) => void;
+  setUsingTemplate: (templateId: string) => void;
+  setScript: (script: string) => void;
+  open: (topic: SubscribeTopic) => void;
+  close: () => void;
 }
