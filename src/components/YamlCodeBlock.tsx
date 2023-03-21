@@ -1,7 +1,7 @@
 import Editor from "@monaco-editor/react";
 import { useConfigTopicSubscriptionModalStore, useDarkThemeStore } from "@states";
 
-export function YamlCodeBlock() {
+export function YamlCodeBlock(props: { turnOffTemplateUsage: () => void }) {
   const { topic, setScript } = useConfigTopicSubscriptionModalStore();
   const darkTheme = useDarkThemeStore((state) => state.dark);
   return (
@@ -10,7 +10,10 @@ export function YamlCodeBlock() {
       language='yaml'
       value={topic ? topic.script : ""}
       theme={darkTheme ? "vs-dark" : "vs"}
-      onChange={(code) => code && setScript(code)}
+      onChange={(code) => {
+        if (code) setScript(code);
+        props.turnOffTemplateUsage();
+      }}
     />
   );
 }

@@ -1,7 +1,7 @@
-import { BROKER_NOT_HAVE_TOPICS, UPDATE_SENSOR_SUCCESS } from "@constants";
+import { BROKER_NOT_HAVE_TOPICS, REMOVE_SENSOR_SUCCESS, UPDATE_SENSOR_SUCCESS } from "@constants";
 import {
   IConfigSensorModalStore,
-  IConfigSensorTopicModalStore as IConfigTopicSubscriptionModalStore,
+  IConfigTopicSubscriptionModalStore,
   IDeleteSensorModalStore,
   ISensorStore
 } from "@interfaces";
@@ -25,6 +25,7 @@ export const useSensorsStore = create<ISensorStore>()(
         const sensors: SensorSummary[] = JSON.parse(JSON.stringify(get().sensors));
         const deletedSensorIdx = sensors.findIndex((sensor) => sensor.id === sensorId);
         if (deletedSensorIdx !== -1) sensors.splice(deletedSensorIdx, 1);
+        toast.success(REMOVE_SENSOR_SUCCESS);
         set(() => ({ sensors }));
       } catch (error) {
         toast.error((error as Error).message);
@@ -144,6 +145,18 @@ export const useConfigTopicSubscriptionModalStore = create<IConfigTopicSubscript
       });
     },
     setUsingTemplate(templateId) {
+      if (templateId === null) {
+        set((state) => {
+          if (!state.topic) return {};
+          return {
+            topic: {
+              ...state.topic,
+              usingTemplate: null
+            }
+          };
+        });
+        return;
+      }
       const templates = useFilterTemplateStore.getState().filterTemplates;
       const template = templates.find((item) => item.id === templateId);
       if (!template) return;

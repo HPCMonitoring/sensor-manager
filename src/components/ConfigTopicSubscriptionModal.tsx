@@ -1,16 +1,18 @@
 import {
-  useConfigTopicSubscriptionModalStore as useConfigTopicSubscriptionModalStore,
+  useConfigTopicSubscriptionModalStore,
   useFilterTemplateStore,
   useKafkaBrokerStore
 } from "@states";
 import { Modal, Label, Select, TextInput, Checkbox, Button } from "flowbite-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { YamlCodeBlock } from "./YamlCodeBlock";
 
 export function ConfigTopicSubscriptionModal() {
   const { close, topic, setBroker, setTopic, setInterval, setUsingTemplate } =
     useConfigTopicSubscriptionModalStore();
   const { brokers: kafkaBrokers, getTopicsById: getTopicsByBrokerId } = useKafkaBrokerStore();
+
+  const [isUseTemplate, setIsUseTemplate] = useState<boolean>(true);
 
   const kafkaTopics = useMemo(
     () => (topic ? getTopicsByBrokerId(topic.broker.id) : []),
@@ -84,6 +86,7 @@ export function ConfigTopicSubscriptionModal() {
               sizing='sm'
               onChange={(e) => setUsingTemplate(e.target.value)}
               value={topic && topic.usingTemplate ? topic.usingTemplate.id : ""}
+              disabled={!isUseTemplate}
             >
               <option disabled value={""}>
                 --Select template--
@@ -96,12 +99,24 @@ export function ConfigTopicSubscriptionModal() {
             </Select>
           </div>
           <div className=' mb-4 flex items-center gap-2 flex-1'>
-            <Checkbox id='use-template-topic-rule' />
+            <Checkbox
+              id='use-template-topic-rule'
+              onChange={(e) => {
+                setIsUseTemplate(e.target.checked);
+                if (!e.target.checked) setUsingTemplate(null);
+              }}
+              checked={isUseTemplate}
+            />
             <Label htmlFor='use-template-topic-rule'>Use template rule</Label>
           </div>
           <div className='mb-4'>
             <Label value='FILTER RULE' className='mb-2' />
-            <YamlCodeBlock />
+            <YamlCodeBlock
+              turnOffTemplateUsage={() => {
+                setUsingTemplate(null);
+                setIsUseTemplate(false);
+              }}
+            />
           </div>
           <div className='flex justify-end'>
             <Button gradientMonochrome='info' className='ml-2' onClick={close}>
