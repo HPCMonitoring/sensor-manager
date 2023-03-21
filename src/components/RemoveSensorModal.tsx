@@ -19,8 +19,7 @@ export function RemoveSensorModal() {
             <Button
               color='failure'
               onClick={() => {
-                if (sensorId !== null) deleteSensor(sensorId);
-                close();
+                if (sensorId !== null) deleteSensor(sensorId).then(() => close());
               }}
             >
               Remove
