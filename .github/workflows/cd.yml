@@ -51,19 +51,17 @@ jobs:
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@master
-        if: github.event_name == 'push'
         with:
           host: ${{ secrets.VPS_HOST }}
           port: ${{ secrets.VPS_PORT }}
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
 
-          # TODO: Remove docker volumes in Dev stage only
           script: |
             export CR_PAT=${{ secrets.GITHUB_TOKEN }}
             echo $CR_PAT | docker login ${{ env.REGISTRY }} -u ${{ env.ORG_USERNAME }} --password-stdin
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-            docker rm -f hpcmonitoring_sensor_manager
-            docker run --name hpcmonitoring_sensor_manager -p 3000:3000 --restart always -d ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            docker rm -f sensor_manager_ui
+            docker run --name sensor_manager_ui -p 3000:3000 --restart always -d ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
             docker logout ${{ env.REGISTRY }}
             
