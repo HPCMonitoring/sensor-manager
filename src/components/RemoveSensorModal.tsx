@@ -1,6 +1,6 @@
-import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { useDeleteSensorModalStore, useSensorsStore } from "@states";
-import { Modal, Button } from "flowbite-react";
+import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
+import { useDeleteSensorModalStore, useSensorsStore } from '@states';
+import { Modal, Button } from 'flowbite-react';
 
 export function RemoveSensorModal() {
   const { close, sensorId } = useDeleteSensorModalStore();

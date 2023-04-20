@@ -1,13 +1,13 @@
-import { SensorFormField } from "@constants";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
-import { useConfigSensorModalStore, useKafkaJobConfigModalStore, useSensorsStore } from "@states";
-import { Button, Card, Label, Modal, Textarea, TextInput } from "flowbite-react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { KafkaJobsTable } from "./KafkaJobsTable";
-import { SystemInfoCard } from "./SystemInfoCard";
-import moment from "moment";
+import { SensorFormField } from '@constants';
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
+import { useConfigSensorModalStore, useKafkaJobConfigModalStore, useSensorsStore } from '@states';
+import { Button, Card, Label, Modal, Textarea, TextInput } from 'flowbite-react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { KafkaJobsTable } from './KafkaJobsTable';
+import { SystemInfoCard } from './SystemInfoCard';
+import moment from 'moment';
 
 export function ConfigSensorModal() {
   const { sensor: targetSensor, close } = useConfigSensorModalStore();
@@ -19,33 +19,33 @@ export function ConfigSensorModal() {
 
   useEffect(() => {
     if (modifyingTopic === null) return;
-    const kafkaJobs = getFormValues("kafkaJobs");
+    const kafkaJobs = getFormValues('kafkaJobs');
     const targetTopicIdx = kafkaJobs.findIndex((topic) => topic.id === modifyingTopic.id);
     if (targetTopicIdx === -1) {
       kafkaJobs.push(modifyingTopic);
     } else {
       Object.assign(kafkaJobs[targetTopicIdx], modifyingTopic);
     }
-    setValue("kafkaJobs", kafkaJobs);
+    setValue('kafkaJobs', kafkaJobs);
   }, [modifyingTopic, getFormValues, setValue]);
 
   useEffect(() => {
     if (!targetSensor) return;
-    setValue("id", targetSensor.id);
-    setValue("name", targetSensor.name);
-    setValue("remarks", targetSensor.remarks ? targetSensor.remarks : "");
-    setValue("kafkaJobs", targetSensor.kafkaJobs);
+    setValue('id', targetSensor.id);
+    setValue('name', targetSensor.name);
+    setValue('remarks', targetSensor.remarks ? targetSensor.remarks : '');
+    setValue('kafkaJobs', targetSensor.kafkaJobs);
   }, [targetSensor, setValue]);
 
   const deleteConfig = (id: string) => {
-    const jobs: KafkaJob[] = getFormValues("kafkaJobs");
+    const jobs: KafkaJob[] = getFormValues('kafkaJobs');
     const targetJobIdx = jobs.findIndex((topic) => topic.id === id);
     if (targetJobIdx === -1) return;
     jobs.splice(targetJobIdx, 1);
-    setValue("kafkaJobs", jobs);
+    setValue('kafkaJobs', jobs);
   };
 
-  const topicConfigs = watch("kafkaJobs");
+  const topicConfigs = watch('kafkaJobs');
 
   const onSubmit = () => {
     const modifiedSensor = getFormValues();
@@ -67,21 +67,21 @@ export function ConfigSensorModal() {
     <Modal
       show={targetSensor !== null}
       onClose={close}
-      size={isOpenAdvancedConfig ? "6xl" : "md"}
-      position={"top-center"}
+      size={isOpenAdvancedConfig ? '6xl' : 'md'}
+      position={'top-center'}
     >
       {targetSensor && (
         <Modal.Body>
           <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
             <div className='border-b-2 dark:border-gray-600 mb-4 w-full flex'>
-              <div className={isOpenAdvancedConfig ? "flex-none w-1/3" : "w-full"}>
+              <div className={isOpenAdvancedConfig ? 'flex-none w-1/3' : 'w-full'}>
                 <Label htmlFor={SensorFormField.SYSTEM_INFO} value='SYSTEM INFO' className='mb-2' />
                 <Card className='mb-4 mt-1 p-0 w-full' id={SensorFormField.SYSTEM_INFO}>
-                  <SystemInfoCard attr={"Kernel Name"} value={targetSensor.kernelName} />
-                  <SystemInfoCard attr={"Kernel Version"} value={targetSensor.kernelVersion} />
-                  <SystemInfoCard attr={"Architecture"} value={targetSensor.arch} />
-                  <SystemInfoCard attr={"Hostname"} value={targetSensor.hostname} />
-                  <SystemInfoCard attr={"Root user"} value={targetSensor.rootUser} />
+                  <SystemInfoCard attr={'Kernel Name'} value={targetSensor.kernelName} />
+                  <SystemInfoCard attr={'Kernel Version'} value={targetSensor.kernelVersion} />
+                  <SystemInfoCard attr={'Architecture'} value={targetSensor.arch} />
+                  <SystemInfoCard attr={'Hostname'} value={targetSensor.hostname} />
+                  <SystemInfoCard attr={'Root user'} value={targetSensor.rootUser} />
                 </Card>
 
                 <div className='mb-4 block'>
@@ -92,7 +92,7 @@ export function ConfigSensorModal() {
                     shadow
                     autoComplete='off'
                     placeholder='Insert sensor name ...'
-                    {...register("name", { required: true })}
+                    {...register('name', { required: true })}
                   />
                 </div>
 
@@ -103,7 +103,7 @@ export function ConfigSensorModal() {
                     placeholder='Insert remarks ...'
                     rows={2}
                     shadow
-                    {...register("remarks")}
+                    {...register('remarks')}
                   />
                 </div>
 
@@ -120,7 +120,7 @@ export function ConfigSensorModal() {
               </div>
 
               <div
-                style={{ display: isOpenAdvancedConfig ? "block" : "none" }}
+                style={{ display: isOpenAdvancedConfig ? 'block' : 'none' }}
                 className='flex-1 ml-4 pl-4 border-l-2 dark:border-gray-600'
               >
                 <div className='w-full mb-6'>
@@ -138,9 +138,9 @@ export function ConfigSensorModal() {
                     onClick={() => {
                       openKafkaJobConfigModal({
                         id: moment().unix().toString(),
-                        topicName: "",
-                        brokerUrl: "",
-                        script: "",
+                        topicName: '',
+                        brokerUrl: '',
+                        script: '',
                         usingTemplate: null,
                         interval: 10
                       });
@@ -172,11 +172,11 @@ export function ConfigSensorModal() {
             </div>
 
             <div className='flex justify-end'>
-              <Button color={"light"} onClick={close}>
+              <Button color={'light'} onClick={close}>
                 Cancel
               </Button>
               <Button gradientMonochrome='info' className='ml-2' type='submit'>
-                {" "}
+                {' '}
                 Save
               </Button>
             </div>

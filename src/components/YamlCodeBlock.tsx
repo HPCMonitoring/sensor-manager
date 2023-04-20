@@ -1,6 +1,6 @@
-import Editor from "@monaco-editor/react";
-import { useKafkaJobConfigModalStore, useDarkThemeStore, useFilterTemplateStore } from "@states";
-import { useMemo } from "react";
+import Editor from '@monaco-editor/react';
+import { useKafkaJobConfigModalStore, useDarkThemeStore, useFilterTemplateStore } from '@states';
+import { useMemo } from 'react';
 
 export function YamlCodeBlock(props: { turnOffTemplateUsage: () => void }) {
   const { job, setScript } = useKafkaJobConfigModalStore();
@@ -18,8 +18,8 @@ export function YamlCodeBlock(props: { turnOffTemplateUsage: () => void }) {
     <Editor
       height='45vh'
       language='yaml'
-      value={job ? job.script : ""}
-      theme={darkTheme ? "vs-dark" : "vs"}
+      value={job ? job.script : ''}
+      theme={darkTheme ? 'vs-dark' : 'vs'}
       onChange={(code) => {
         if (code) setScript(code);
         if (currTemplate && currTemplate.script !== code) props.turnOffTemplateUsage();

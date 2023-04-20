@@ -1,7 +1,7 @@
-import { WrenchIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useKafkaJobConfigModalStore } from "@states";
-import { Button, Table } from "flowbite-react";
+import { WrenchIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon } from '@heroicons/react/24/solid';
+import { useKafkaJobConfigModalStore } from '@states';
+import { Button, Table } from 'flowbite-react';
 
 export const KafkaJobsTable: Component<{
   kafkaJobs: KafkaJob[];
@@ -26,7 +26,7 @@ export const KafkaJobsTable: Component<{
               {job.brokerUrl}
             </Table.Cell>
             <Table.Cell>{job.topicName}</Table.Cell>
-            <Table.Cell>{job.usingTemplate ? job.usingTemplate.name : ""}</Table.Cell>
+            <Table.Cell>{job.usingTemplate ? job.usingTemplate.name : ''}</Table.Cell>
             <Table.Cell className='flex justify-end'>
               <Button gradientMonochrome='info' size='xs' onClick={() => openConfigModal(job)}>
                 <WrenchIcon className='h-4 w-4' />

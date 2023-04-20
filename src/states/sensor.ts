@@ -1,15 +1,15 @@
-import { REMOVE_SENSOR_SUCCESS, UPDATE_SENSOR_SUCCESS } from "@constants";
+import { REMOVE_SENSOR_SUCCESS, UPDATE_SENSOR_SUCCESS } from '@constants';
 import {
   IConfigSensorModalStore,
   IKafkaJobConfigModalStore,
   IDeleteSensorModalStore,
   ISensorStore
-} from "@interfaces";
-import { sensorService } from "@services";
-import { toast } from "react-toastify";
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
-import { useFilterTemplateStore } from "./filterTemplate";
+} from '@interfaces';
+import { sensorService } from '@services';
+import { toast } from 'react-toastify';
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+import { useFilterTemplateStore } from './filterTemplate';
 
 export const useSensorsStore = create<ISensorStore>()(
   devtools((set, get) => ({

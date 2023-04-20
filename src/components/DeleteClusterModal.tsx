@@ -1,7 +1,7 @@
-import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { useClustersStore, useDeleteClusterModalStore } from "@states";
-import { Button, Modal } from "flowbite-react";
-import { useCallback } from "react";
+import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
+import { useClustersStore, useDeleteClusterModalStore } from '@states';
+import { Button, Modal } from 'flowbite-react';
+import { useCallback } from 'react';
 
 export function DeleteClusterModal() {
   const { isOpen, close, clusterId } = useDeleteClusterModalStore();

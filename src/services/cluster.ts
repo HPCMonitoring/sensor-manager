@@ -1,12 +1,12 @@
-import { server } from "./server";
+import { server } from './server';
 
 export const clusterService = {
   getAll: async function (): Promise<ClusterSummary[]> {
-    const response = await server.get("/clusters");
+    const response = await server.get('/clusters');
     return response.data;
   },
   create: async function (payload: CreateClusterPayload): Promise<Cluster> {
-    const response = await server.post("/clusters", payload);
+    const response = await server.post('/clusters', payload);
     return response.data;
   },
   update: async function (clusterId: string, payload: CreateClusterPayload): Promise<Cluster> {

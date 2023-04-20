@@ -1,7 +1,7 @@
-import { LocalStorageName } from "@constants";
-import { IDarkThemeStore, IClusterExpandStore } from "@interfaces";
-import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { LocalStorageName } from '@constants';
+import { IDarkThemeStore, IClusterExpandStore } from '@interfaces';
+import { create } from 'zustand';
+import { devtools, persist } from 'zustand/middleware';
 
 export const useDarkThemeStore = create<IDarkThemeStore>()(
   devtools(
@@ -12,28 +12,28 @@ export const useDarkThemeStore = create<IDarkThemeStore>()(
           set((state) => {
             const isDark = !state.dark;
             if (isDark) {
-              document.documentElement.classList.add("dark-bg");
-              document.documentElement.classList.add("dark");
-              document.documentElement.classList.remove("white-bg");
+              document.documentElement.classList.add('dark-bg');
+              document.documentElement.classList.add('dark');
+              document.documentElement.classList.remove('white-bg');
             } else {
-              document.documentElement.classList.remove("dark");
-              document.documentElement.classList.add("white-bg");
-              document.documentElement.classList.remove("dark-bg");
+              document.documentElement.classList.remove('dark');
+              document.documentElement.classList.add('white-bg');
+              document.documentElement.classList.remove('dark-bg');
             }
-            window.localStorage.setItem("dark", isDark ? "true" : "false");
+            window.localStorage.setItem('dark', isDark ? 'true' : 'false');
             return { dark: isDark };
           }),
         loadTheme: () =>
           set(() => {
-            const isDark = window.localStorage.getItem("dark") === "true";
+            const isDark = window.localStorage.getItem('dark') === 'true';
             if (isDark) {
-              document.documentElement.classList.add("dark-bg");
-              document.documentElement.classList.add("dark");
-              document.documentElement.classList.remove("white-bg");
+              document.documentElement.classList.add('dark-bg');
+              document.documentElement.classList.add('dark');
+              document.documentElement.classList.remove('white-bg');
             } else {
-              document.documentElement.classList.remove("dark");
-              document.documentElement.classList.add("white-bg");
-              document.documentElement.classList.remove("dark-bg");
+              document.documentElement.classList.remove('dark');
+              document.documentElement.classList.add('white-bg');
+              document.documentElement.classList.remove('dark-bg');
             }
             return { dark: isDark };
           })
