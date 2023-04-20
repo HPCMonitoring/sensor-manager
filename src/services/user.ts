@@ -1,8 +1,5 @@
-import { server } from './server';
+import { server, invoke } from './server';
 
 export const userService = {
-  getFilterTemplates: async function (): Promise<FilterTemplate[]> {
-    const response = await server.get('/user/filter-templates');
-    return response.data;
-  }
+  getFilterTemplates: () => invoke<FilterTemplate[]>(server.get('/user/filter-templates'))
 };

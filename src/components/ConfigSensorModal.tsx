@@ -53,7 +53,6 @@ export function ConfigSensorModal() {
       name: modifiedSensor.name,
       remarks: modifiedSensor.remarks,
       kafkaJobs: modifiedSensor.kafkaJobs.map((item) => ({
-        id: item.id,
         usingTemplateId: item.usingTemplate ? item.usingTemplate.id : null,
         script: item.script,
         interval: item.interval,

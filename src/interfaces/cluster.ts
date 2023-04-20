@@ -1,8 +1,8 @@
 export interface IClusterStore {
-  clusters: ClusterSummary[];
+  clusters: Cluster[];
   fetch: () => Promise<void>;
   create: (payload: CreateClusterPayload) => Promise<void>;
-  getById: (clusterId: string) => ClusterSummary;
+  getById: (clusterId: string) => Cluster;
   update: (clusterId: string, payload: CreateClusterPayload) => Promise<void>;
   delete: (clusterId: string) => Promise<void>;
 }

@@ -38,7 +38,6 @@ type UpdateSensorPayload = {
   name: string;
   remarks: string | null;
   kafkaJobs: {
-    id: string;
     usingTemplateId: string | null;
     brokerUrl: string;
     topicName: string;

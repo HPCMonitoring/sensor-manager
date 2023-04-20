@@ -42,7 +42,8 @@ export const useSensorsStore = create<ISensorStore>()(
           toast.success(UPDATE_SENSOR_SUCCESS);
         }
       } catch (err) {
-        toast.error((err as Error).message);
+        console.log(err);
+        toast.error((err as ResponseError).message);
       }
     }
   }))
@@ -56,7 +57,7 @@ export const useConfigSensorModalStore = create<IConfigSensorModalStore>()(
         const sensor = await sensorService.getById(sensorId);
         set(() => ({ sensor }));
       } catch (err) {
-        toast.error((err as Error).message);
+        toast.error((err as ResponseError).message);
       }
     },
     close() {

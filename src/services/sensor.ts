@@ -1,20 +1,10 @@
-import { server } from './server';
+import { invoke, server } from './server';
 
 export const sensorService = {
-  getByClusterId: async function (clusterId: string): Promise<SensorSummary[]> {
-    const response = await server.get(`/sensors?clusterId=${clusterId}`);
-    return response.data;
-  },
-  getById: async function (sensorId: string): Promise<Sensor> {
-    const response = await server.get(`/sensors/${sensorId}`);
-    return response.data;
-  },
-  update: async function (sensorId: string, payload: UpdateSensorPayload): Promise<string> {
-    const response = await server.put(`/sensors/${sensorId}`, payload);
-    return response.data;
-  },
-  delete: async function (sensorId: string): Promise<string> {
-    const response = await server.delete(`/sensors/${sensorId}`);
-    return response.data;
-  }
+  getByClusterId: (clusterId: string) =>
+    invoke<SensorSummary[]>(server.get(`/sensors?clusterId=${clusterId}`)),
+  getById: (sensorId: string) => invoke<Sensor>(server.get(`/sensors/${sensorId}`)),
+  update: (sensorId: string, payload: UpdateSensorPayload) =>
+    invoke<string>(server.put(`/sensors/${sensorId}`, payload)),
+  delete: (sensorId: string) => invoke<string>(server.delete(`/sensors/${sensorId}`))
 };

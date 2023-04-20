@@ -1,20 +1,9 @@
-import { server } from './server';
+import { server, invoke } from './server';
 
 export const clusterService = {
-  getAll: async function (): Promise<ClusterSummary[]> {
-    const response = await server.get('/clusters');
-    return response.data;
-  },
-  create: async function (payload: CreateClusterPayload): Promise<Cluster> {
-    const response = await server.post('/clusters', payload);
-    return response.data;
-  },
-  update: async function (clusterId: string, payload: CreateClusterPayload): Promise<Cluster> {
-    const response = await server.put(`/clusters/${clusterId}`, payload);
-    return response.data;
-  },
-  delete: async function (clusterId: string): Promise<Cluster> {
-    const response = await server.delete(`/clusters/${clusterId}`);
-    return response.data;
-  }
+  getAll: () => invoke<Cluster[]>(server.get('/clusters')),
+  create: (payload: CreateClusterPayload) => invoke<string>(server.post('/clusters', payload)),
+  update: (clusterId: string, payload: CreateClusterPayload) =>
+    invoke<string>(server.put(`/clusters/${clusterId}`, payload)),
+  delete: (clusterId: string) => invoke<string>(server.delete(`/clusters/${clusterId}`))
 };
