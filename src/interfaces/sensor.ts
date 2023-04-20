@@ -17,13 +17,13 @@ export interface IDeleteSensorModalStore {
   close: () => void;
 }
 
-export interface IConfigTopicSubscriptionModalStore {
-  topic: SubscribeTopic | null;
-  setTopic: (topicId: string) => void;
-  setBroker: (brokerId: string) => void;
+export interface IKafkaJobConfigModalStore {
+  job: KafkaJob | null;
+  setTopicName: (topicName: string) => void;
+  setBrokerUrl: (brokerUrl: string) => void;
   setInterval: (interval: number) => void;
   setUsingTemplate: (templateId: string | null) => void;
   setScript: (script: string) => void;
-  open: (topic: SubscribeTopic) => void;
+  open: (job: KafkaJob) => void;
   close: () => void;
 }

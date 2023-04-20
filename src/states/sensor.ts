@@ -1,7 +1,7 @@
-import { BROKER_NOT_HAVE_TOPICS, REMOVE_SENSOR_SUCCESS, UPDATE_SENSOR_SUCCESS } from "@constants";
+import { REMOVE_SENSOR_SUCCESS, UPDATE_SENSOR_SUCCESS } from "@constants";
 import {
   IConfigSensorModalStore,
-  IConfigTopicSubscriptionModalStore,
+  IKafkaJobConfigModalStore,
   IDeleteSensorModalStore,
   ISensorStore
 } from "@interfaces";
@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { useFilterTemplateStore } from "./filterTemplate";
-import { useKafkaBrokerStore } from "./kafkaBroker";
 
 export const useSensorsStore = create<ISensorStore>()(
   devtools((set, get) => ({
@@ -78,79 +77,42 @@ export const useDeleteSensorModalStore = create<IDeleteSensorModalStore>()(
   }))
 );
 
-export const useConfigTopicSubscriptionModalStore = create<IConfigTopicSubscriptionModalStore>()(
-  devtools((set, get) => ({
-    topic: null,
-    open: (topic) => set(() => ({ topic })),
-    close: () => set(() => ({ topic: null })),
-    setBroker: (brokerId) => {
-      const brokers = useKafkaBrokerStore.getState().brokers;
-      const broker = brokers.find((item) => item.id === brokerId);
-      if (!broker) return;
-      if (broker.topics.length === 0) {
-        toast.warning(BROKER_NOT_HAVE_TOPICS);
-        return;
-      }
+export const useKafkaJobConfigModalStore = create<IKafkaJobConfigModalStore>()(
+  devtools((set) => ({
+    job: null,
+    open: (job) => set(() => ({ job })),
+    close: () => set(() => ({ job: null })),
+    setBrokerUrl: (brokerUrl) => {
       set((state) => {
-        if (!state.topic) return {};
-        return {
-          topic: {
-            key: state.topic.key,
-            id: broker.topics[0].id,
-            name: broker.topics[0].name,
-            interval: state.topic.interval,
-            usingTemplate: null,
-            script: "",
-            broker: {
-              id: broker.id,
-              name: broker.name,
-              url: broker.url
-            }
-          }
-        };
+        if (!state.job) return {};
+        return { job: { ...state.job, brokerUrl } };
       });
     },
     setInterval: (interval) => {
       set((state) => {
-        if (!state.topic) return {};
-        return {
-          topic: {
-            ...state.topic,
-            interval
-          }
-        };
+        if (!state.job) return {};
+        return { job: { ...state.job, interval } };
       });
     },
     setScript(script) {
       set((state) => {
-        if (!state.topic) return {};
-        return { topic: { ...state.topic, script } };
+        if (!state.job) return {};
+        return { job: { ...state.job, script } };
       });
     },
-    setTopic(topicId) {
-      const currData = get().topic;
-      if (!currData) return;
-      const topics = useKafkaBrokerStore.getState().getTopicsById(currData.broker.id);
-      const topic = topics.find((item) => item.id === topicId);
-      if (!topic) return;
+    setTopicName(topicName) {
       set((state) => {
-        if (!state.topic) return {};
-        return {
-          topic: {
-            ...state.topic,
-            id: topic.id,
-            name: topic.name
-          }
-        };
+        if (!state.job) return {};
+        return { job: { ...state.job, topicName } };
       });
     },
     setUsingTemplate(templateId) {
       if (templateId === null) {
         set((state) => {
-          if (!state.topic) return {};
+          if (!state.job) return {};
           return {
-            topic: {
-              ...state.topic,
+            job: {
+              ...state.job,
               usingTemplate: null
             }
           };
@@ -161,10 +123,10 @@ export const useConfigTopicSubscriptionModalStore = create<IConfigTopicSubscript
       const template = templates.find((item) => item.id === templateId);
       if (!template) return;
       set((state) => {
-        if (!state.topic) return {};
+        if (!state.job) return {};
         return {
-          topic: {
-            ...state.topic,
+          job: {
+            ...state.job,
             usingTemplate: {
               id: template.id,
               name: template.name

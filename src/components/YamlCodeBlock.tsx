@@ -1,28 +1,24 @@
 import Editor from "@monaco-editor/react";
-import {
-  useConfigTopicSubscriptionModalStore,
-  useDarkThemeStore,
-  useFilterTemplateStore
-} from "@states";
+import { useKafkaJobConfigModalStore, useDarkThemeStore, useFilterTemplateStore } from "@states";
 import { useMemo } from "react";
 
 export function YamlCodeBlock(props: { turnOffTemplateUsage: () => void }) {
-  const { topic, setScript } = useConfigTopicSubscriptionModalStore();
+  const { job, setScript } = useKafkaJobConfigModalStore();
   const darkTheme = useDarkThemeStore((state) => state.dark);
 
   const filterTemplates = useFilterTemplateStore((state) => state.filterTemplates);
   const currTemplate = useMemo(() => {
-    if (!topic) return null;
-    if (topic.usingTemplate === null) return null;
-    const template = filterTemplates.find((item) => item.id === topic.usingTemplate?.id);
+    if (!job) return null;
+    if (job.usingTemplate === null) return null;
+    const template = filterTemplates.find((item) => item.id === job.usingTemplate?.id);
     return !template ? null : template;
-  }, [filterTemplates, topic]);
+  }, [filterTemplates, job]);
 
   return (
     <Editor
       height='45vh'
       language='yaml'
-      value={topic ? topic.script : ""}
+      value={job ? job.script : ""}
       theme={darkTheme ? "vs-dark" : "vs"}
       onChange={(code) => {
         if (code) setScript(code);

@@ -1,6 +1,6 @@
 import {
   ConfigSensorModal,
-  ConfigTopicSubscriptionModal,
+  KakfaJobConfigModal,
   RemoveSensorModal,
   SensorStatusBadge
 } from "@components";
@@ -10,11 +10,10 @@ import {
   useClustersStore,
   useSensorsStore,
   useConfigSensorModalStore,
-  useDeleteSensorModalStore,
-  useKafkaBrokerStore
+  useDeleteSensorModalStore
 } from "@states";
 import { Badge, Button, Dropdown, Table, Tooltip } from "flowbite-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 export function SensorsPage() {
@@ -31,15 +30,6 @@ export function SensorsPage() {
   const fetchSensors = useSensorsStore((state) => state.fetch);
   const openConfigModal = useConfigSensorModalStore((state) => state.open);
   const openDeleteModal = useDeleteSensorModalStore((state) => state.open);
-  const kafkaBrokers = useKafkaBrokerStore((state) => state.brokers);
-
-  const [currKafkaBrokerId, setCurrKafkaBrokerId] = useState<string | null>(null);
-
-  const kafkaTopics = useMemo(() => {
-    if (!currKafkaBrokerId) return [];
-    const broker = kafkaBrokers.find((item) => item.id === currKafkaBrokerId);
-    return broker ? broker.topics : [];
-  }, [kafkaBrokers, currKafkaBrokerId]);
 
   useEffect(() => {
     if (clusterId && clusterId.length > 0) fetchSensors(clusterId);
@@ -49,7 +39,7 @@ export function SensorsPage() {
     <div>
       <ConfigSensorModal />
       <RemoveSensorModal />
-      <ConfigTopicSubscriptionModal />
+      <KakfaJobConfigModal />
 
       <div className='flex mb-4 justify-between align-middle text-gray-800 dark:text-gray-200'>
         <Badge size={"xl"} className='font-semibold' color={"gray"}>
@@ -61,18 +51,6 @@ export function SensorsPage() {
             <Dropdown.Item>{SensorStatus.STOPPED}</Dropdown.Item>
             <Dropdown.Item>{SensorStatus.DISCONNECTED}</Dropdown.Item>
             <Dropdown.Item>{SensorStatus.REQUESTED}</Dropdown.Item>
-          </Dropdown>
-          <Dropdown label='Kafka Broker' size='sm' color={"gray"}>
-            {kafkaBrokers.map((broker) => (
-              <Dropdown.Item key={broker.id} onClick={() => setCurrKafkaBrokerId(broker.id)}>
-                {broker.name}
-              </Dropdown.Item>
-            ))}
-          </Dropdown>
-          <Dropdown label='Kafka Topic' size='sm' color={"gray"}>
-            {kafkaTopics.map((topic) => (
-              <Dropdown.Item key={topic.id}>{topic.name}</Dropdown.Item>
-            ))}
           </Dropdown>
         </Button.Group>
       </div>

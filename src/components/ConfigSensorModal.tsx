@@ -1,39 +1,32 @@
-import { NOT_FOUND_ANY_TOPICS, SensorFormField } from "@constants";
+import { SensorFormField } from "@constants";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
-import {
-  useConfigSensorModalStore,
-  useConfigTopicSubscriptionModalStore,
-  useKafkaBrokerStore,
-  useSensorsStore
-} from "@states";
+import { useConfigSensorModalStore, useKafkaJobConfigModalStore, useSensorsStore } from "@states";
 import { Button, Card, Label, Modal, Textarea, TextInput } from "flowbite-react";
-import moment from "moment";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { KafkaTopicConfigTable } from "./KafkaTopicUsageTable";
+import { KafkaJobsTable } from "./KafkaJobsTable";
 import { SystemInfoCard } from "./SystemInfoCard";
+import moment from "moment";
 
 export function ConfigSensorModal() {
   const { sensor: targetSensor, close } = useConfigSensorModalStore();
   const [isOpenAdvancedConfig, setIsOpenAdvancedConfig] = useState(false);
   const { update: updateSensor } = useSensorsStore();
 
-  const { topic: modifyingTopic, open: openConfigTopicSubscriptionModal } =
-    useConfigTopicSubscriptionModalStore();
+  const { job: modifyingTopic, open: openKafkaJobConfigModal } = useKafkaJobConfigModalStore();
   const { register, setValue, getValues: getFormValues, watch, handleSubmit } = useForm<Sensor>();
 
   useEffect(() => {
     if (modifyingTopic === null) return;
-    const subscribeTopics = getFormValues("subscribeTopics");
-    const targetTopicIdx = subscribeTopics.findIndex((topic) => topic.key === modifyingTopic.key);
+    const kafkaJobs = getFormValues("kafkaJobs");
+    const targetTopicIdx = kafkaJobs.findIndex((topic) => topic.id === modifyingTopic.id);
     if (targetTopicIdx === -1) {
-      subscribeTopics.push(modifyingTopic);
+      kafkaJobs.push(modifyingTopic);
     } else {
-      Object.assign(subscribeTopics[targetTopicIdx], modifyingTopic);
+      Object.assign(kafkaJobs[targetTopicIdx], modifyingTopic);
     }
-    setValue("subscribeTopics", subscribeTopics);
+    setValue("kafkaJobs", kafkaJobs);
   }, [modifyingTopic, getFormValues, setValue]);
 
   useEffect(() => {
@@ -41,37 +34,31 @@ export function ConfigSensorModal() {
     setValue("id", targetSensor.id);
     setValue("name", targetSensor.name);
     setValue("remarks", targetSensor.remarks ? targetSensor.remarks : "");
-    setValue("subscribeTopics", targetSensor.subscribeTopics);
+    setValue("kafkaJobs", targetSensor.kafkaJobs);
   }, [targetSensor, setValue]);
 
-  const deleteConfig = (key: string) => {
-    const subscribeTopics: SubscribeTopic[] = getFormValues("subscribeTopics");
-    const targetTopicIdx = subscribeTopics.findIndex((topic) => topic.key === key);
-    if (targetTopicIdx === -1) return;
-    subscribeTopics.splice(targetTopicIdx, 1);
-    setValue("subscribeTopics", subscribeTopics);
+  const deleteConfig = (id: string) => {
+    const jobs: KafkaJob[] = getFormValues("kafkaJobs");
+    const targetJobIdx = jobs.findIndex((topic) => topic.id === id);
+    if (targetJobIdx === -1) return;
+    jobs.splice(targetJobIdx, 1);
+    setValue("kafkaJobs", jobs);
   };
 
-  const topicConfigs = watch("subscribeTopics");
-
-  const defaultKafkaBroker = useKafkaBrokerStore((state) => {
-    if (state.brokers.length === 0) return null;
-    for (const item of state.brokers) {
-      if (item.topics.length > 0) return item;
-    }
-    return null;
-  });
+  const topicConfigs = watch("kafkaJobs");
 
   const onSubmit = () => {
     const modifiedSensor = getFormValues();
     updateSensor(modifiedSensor.id, {
       name: modifiedSensor.name,
       remarks: modifiedSensor.remarks,
-      subscribeTopics: modifiedSensor.subscribeTopics.map((item) => ({
+      kafkaJobs: modifiedSensor.kafkaJobs.map((item) => ({
         id: item.id,
         usingTemplateId: item.usingTemplate ? item.usingTemplate.id : null,
         script: item.script,
-        interval: item.interval
+        interval: item.interval,
+        brokerUrl: item.brokerUrl,
+        topicName: item.topicName
       }))
     }).then(() => close());
   };
@@ -138,33 +125,25 @@ export function ConfigSensorModal() {
               >
                 <div className='w-full mb-6'>
                   <div className='flex justify-between align-middle text-gray-500 dark:text-gray-200 font-bold w-full dark:border-gray-600 border-b-2 pb-1'>
-                    Kafka Topics
+                    Kafka Jobs
                   </div>
                   <div className='mb-2'>
-                    <KafkaTopicConfigTable
+                    <KafkaJobsTable
                       deleteItem={deleteConfig}
-                      configs={topicConfigs ? topicConfigs : []}
+                      kafkaJobs={topicConfigs ? topicConfigs : []}
                     />
                   </div>
                   <Button
                     color='light'
                     onClick={() => {
-                      if (!defaultKafkaBroker) {
-                        toast.warning(NOT_FOUND_ANY_TOPICS);
-                      } else
-                        openConfigTopicSubscriptionModal({
-                          key: moment().unix().toString(),
-                          id: defaultKafkaBroker.topics[0].id,
-                          name: defaultKafkaBroker.topics[0].name,
-                          interval: 10,
-                          script: "",
-                          broker: {
-                            id: defaultKafkaBroker.id,
-                            name: defaultKafkaBroker.name,
-                            url: defaultKafkaBroker.url
-                          },
-                          usingTemplate: null
-                        });
+                      openKafkaJobConfigModal({
+                        id: moment().unix().toString(),
+                        topicName: "",
+                        brokerUrl: "",
+                        script: "",
+                        usingTemplate: null,
+                        interval: 10
+                      });
                     }}
                     size='xs'
                     className='w-full text-left cursor-pointer'

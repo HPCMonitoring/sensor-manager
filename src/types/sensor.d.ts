@@ -8,21 +8,16 @@ type SensorSummary = {
   state: SensorState;
 };
 
-type SubscribeTopic = {
-  key: string;
+type KafkaJob = {
   id: string;
-  name: string;
+  brokerUrl: string;
+  topicName: string;
   interval: number;
+  script: string;
   usingTemplate: {
     id: string;
     name: string;
   } | null;
-  script: string;
-  broker: {
-    id: string;
-    name: string;
-    url: string;
-  };
 };
 
 type Sensor = {
@@ -36,15 +31,17 @@ type Sensor = {
   hostname: string;
   rootUser: string;
   state: SensorState;
-  subscribeTopics: SubscribeTopic[];
+  kafkaJobs: KafkaJob[];
 };
 
 type UpdateSensorPayload = {
   name: string;
   remarks: string | null;
-  subscribeTopics: {
+  kafkaJobs: {
     id: string;
     usingTemplateId: string | null;
+    brokerUrl: string;
+    topicName: string;
     script: string;
     interval: number;
   }[];
