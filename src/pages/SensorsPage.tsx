@@ -5,7 +5,7 @@ import {
   SensorStatusBadge
 } from '@components';
 import { SensorStatus } from '@constants';
-import { Cog6ToothIcon, MinusCircleIcon, StopIcon } from '@heroicons/react/24/solid';
+import { Cog6ToothIcon, MinusCircleIcon } from '@heroicons/react/24/solid';
 import {
   useClustersStore,
   useSensorsStore,
@@ -78,7 +78,7 @@ export function SensorsPage() {
                 <SensorStatusBadge state={sensor.state} />
               </Table.Cell>
               <Table.Cell className='flex justify-end align-middle'>
-                <Tooltip content='Stop'>
+                {/* <Tooltip content='Stop'>
                   <Button
                     color={'warning'}
                     onClick={(e) => {
@@ -88,7 +88,7 @@ export function SensorsPage() {
                   >
                     <StopIcon className='h-4 w-4' />
                   </Button>
-                </Tooltip>
+                </Tooltip> */}
 
                 <Tooltip content='Config'>
                   <Button
