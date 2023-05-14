@@ -11,6 +11,8 @@ Visit our [documentation](https://hpcmonitoring.github.io/docs) for more details
 
 ## How to start
 
+![deps](ui_pkg.svg)
+
 Install dependencies:
 
 ```bash
